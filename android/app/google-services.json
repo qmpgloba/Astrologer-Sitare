@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "75462424835",
+    "project_id": "sitare-astrologer",
+    "storage_bucket": "sitare-astrologer.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:75462424835:android:7e81cedf27ed8bce015136",
+        "android_client_info": {
+          "package_name": "com.example.sitare_astrologer_partner"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCB-Mk4fhwtGIZrxCVdtaAriG8Yw-z4L94"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
