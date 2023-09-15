@@ -1,6 +1,4 @@
-import 'dart:io';
 
-import 'package:file_picker/file_picker.dart';
 
 class AstrologerModel {
   final String fullName;
@@ -9,7 +7,7 @@ class AstrologerModel {
   final String officeAddress;
   final String description;
   final int years;
-   PlatformFile? portfolio;
+   String? portfolio;
 
   AstrologerModel(
       {required this.fullName,

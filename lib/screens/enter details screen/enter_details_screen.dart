@@ -1,6 +1,4 @@
-import 'dart:io';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:sitare_astrologer_partner/constants/ui_constants.dart';
@@ -33,18 +31,18 @@ class _EnterDetailsScreenState extends State<EnterDetailsScreen> {
   final TextEditingController _descriptionTextController =
       TextEditingController();
 
-  final TextEditingController _fileNameController = TextEditingController();
 
   // String? fileName;
   PlatformFile? _selectedFile;
+  String? portfolioURL;
 
   void _pickFile() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    FilePickerResult? result = await FilePicker.platform
+        .pickFiles(type: FileType.custom, allowedExtensions: ['pdf', 'docx']);
 
     if (result != null) {
       setState(() {
         // Store the selected file in the variable
-        File file = File(result.files.single.path!);
         // fileName = file.path;
         _selectedFile = result.files.single;
       });
@@ -129,20 +127,22 @@ class _EnterDetailsScreenState extends State<EnterDetailsScreen> {
                           ? const Text('Attach file')
                           : Text(_selectedFile!.name)),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 GestureDetector(
-                  onTap: () {
+                  onTap: () async {
                     if (_formKey.currentState!.validate()) {
+                      portfolioURL = await uploadFile(_selectedFile);
                       AstrologerModel astrologer = AstrologerModel(
-                          fullName: _nameTextController.text,
-                          emailAddress: _emailTextController.text,
-                          phoneNumber: _phoneNumberTextController.text,
-                          officeAddress: _adressTextController.text,
-                          description: _descriptionTextController.text,
-                          years: int.parse(_experienceTextController.text),
-                          );
+                        fullName: _nameTextController.text,
+                        emailAddress: _emailTextController.text,
+                        phoneNumber: _phoneNumberTextController.text,
+                        officeAddress: _adressTextController.text,
+                        description: _descriptionTextController.text,
+                        years: int.parse(_experienceTextController.text),
+                        portfolio: portfolioURL,
+                      );
                       createAstrologer(astrologer);
                     }
                   },
