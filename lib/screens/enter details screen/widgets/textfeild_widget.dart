@@ -71,7 +71,7 @@ String? validateEmail(String? value) {
 String? validatePhoneNumber(String? value) {
   if (value!.isEmpty) {
     return 'Please enter your phone number';
-  } else if (value.isEmpty || value.length < 10) {
+  } else if (value.isEmpty || value.length < 10 || value.length>10) {
     return 'Enter valid phone number';
   } else {
     return null;
