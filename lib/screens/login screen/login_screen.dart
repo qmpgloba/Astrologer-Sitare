@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sitare_astrologer_partner/constants/ui_constants.dart';
 import 'package:sitare_astrologer_partner/functions/firebase_auth_methods.dart';
+import 'package:sitare_astrologer_partner/screens/enter%20details%20screen/enter_details_screen.dart';
+import 'package:sitare_astrologer_partner/screens/profile%20screen/profile_screen.dart';
 import 'package:sitare_astrologer_partner/screens/signup%20screen/signup_screen.dart';
 import 'package:sitare_astrologer_partner/widgets/alertbox.dart';
 
@@ -27,11 +29,11 @@ class LoginScreen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Login',
+                  const Text('Login',
                       style:
                           TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
-                  Text('Welcome back!'),
-                  SizedBox(
+                  const Text('Welcome back!'),
+                  const SizedBox(
                     height: 20,
                   ),
                   CustomTextField(
@@ -40,7 +42,7 @@ class LoginScreen extends StatelessWidget {
                     hintname: 'Email',
                     feildName: 'Email',
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   CustomTextField(
@@ -48,17 +50,25 @@ class LoginScreen extends StatelessWidget {
                     controller: passwordTextController,
                     hintname: 'Password',
                     feildName: 'Password',
+                    obscureText: true,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   GestureDetector(
-                    onTap: () async{
-                      if(_formKey.currentState!.validate()){
-            var result = await loginWithEmail(email: emailTextController.text, password: passwordTextController.text);
-            if (result == null) {
+                    onTap: () async {
+                      if (_formKey.currentState!.validate()) {
+                        var result = await loginWithEmail(
+                            email: emailTextController.text,
+                            password: passwordTextController.text);
+                        if (result == null) {
                           //Navigate the screen
-                          print('done');
+                          Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(
+                                builder: (context) => const ProfileScreen(),
+                              ),
+                              (route) => false);
+                          // print('done');
                         } else {
                           // showToast(signUpSuccess, redColor);
                           // showSnackbar(context, signUpSuccess, redColor);
@@ -88,7 +98,7 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   Row(
@@ -106,7 +116,9 @@ class LoginScreen extends StatelessWidget {
                       ),
                       InkWell(
                         onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(builder:  (context) => SignUpScreen(),));
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => SignUpScreen(),
+                          ));
                         },
                         child: const Text(
                           "Sign Up",

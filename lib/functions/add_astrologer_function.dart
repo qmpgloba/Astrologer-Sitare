@@ -38,8 +38,32 @@ Future<String?> uploadFile(PlatformFile? selectedFile) async {
   } catch (e) {}
   return null;
 
-  // TaskSnapshot taskSnapshot = await uploadTask.whenComplete(() {});
+  
+}
 
-  // The downloadURL now contains the URL of the uploaded file in Firebase Storage
-  // print('File uploaded to: $downloadURL');
+
+Future<void> updateAstrologerInformation(AstrologerModel astrologer,String docID) async {
+  final CollectionReference astrologersCollection = FirebaseFirestore.instance.collection('Astrologerdetails');
+  String documentID = docID;
+   
+    try {
+     astrologersCollection.doc(documentID).update({
+  'name': astrologer.fullName,
+  'email': astrologer.emailAddress,
+  'phone number': astrologer.phoneNumber,
+  'office address': astrologer.officeAddress,
+  'personal description': astrologer.description,
+  'experience(in years)': astrologer.years,
+  'portfolio': astrologer.portfolio,
+});
+    } catch (e) {}
+  }
+
+String? getFileNameFromUrl(String url) {
+  Uri uri = Uri.parse(url);
+  List<String> pathSegments = uri.pathSegments;
+  if (pathSegments.isNotEmpty) {
+    return pathSegments.last;
+  }
+  return null; // No filename found
 }

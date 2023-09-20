@@ -4,36 +4,51 @@ import 'package:sitare_astrologer_partner/constants/ui_constants.dart';
 import 'package:sitare_astrologer_partner/functions/add_astrologer_function.dart';
 import 'package:sitare_astrologer_partner/model/astrologer_model.dart';
 import 'package:sitare_astrologer_partner/screens/profile%20screen/profile_screen.dart';
-import 'widgets/textfeild_widget.dart';
 
-class EnterDetailsScreen extends StatefulWidget {
-  EnterDetailsScreen({super.key});
+import '../enter details screen/widgets/textfeild_widget.dart';
+
+
+class EditProfileScreen extends StatefulWidget {
+  EditProfileScreen({super.key});
 
   @override
-  State<EnterDetailsScreen> createState() => _EnterDetailsScreenState();
+  State<EditProfileScreen> createState() => _EnterDetailsScreenState();
 }
 
-class _EnterDetailsScreenState extends State<EnterDetailsScreen> {
+class _EnterDetailsScreenState extends State<EditProfileScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+   PlatformFile? _selectedFile;
+  late String portfolioURL;
+   String? currentFileName;
 
-  final TextEditingController _nameTextController = TextEditingController();
+  late final TextEditingController _nameTextController;
 
-  final TextEditingController _emailTextController = TextEditingController();
+  late final TextEditingController _emailTextController;
 
-  final TextEditingController _adressTextController = TextEditingController();
+  late final TextEditingController _adressTextController;
 
-  final TextEditingController _phoneNumberTextController =
-      TextEditingController();
+  late final TextEditingController _phoneNumberTextController;
 
-  final TextEditingController _experienceTextController =
-      TextEditingController();
+  late final TextEditingController _experienceTextController;
 
-  final TextEditingController _descriptionTextController =
-      TextEditingController();
+  late final TextEditingController _descriptionTextController;
+      @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _nameTextController = TextEditingController(text: userData!['name']);
+    _emailTextController = TextEditingController(text: userData!['email']);
+    _adressTextController = TextEditingController(text: userData!['office address']);
+    _phoneNumberTextController = TextEditingController(text: userData!['phone number']);
+    _experienceTextController = TextEditingController(text: userData!['experience(in years)'].toString());
+    _descriptionTextController = TextEditingController(text: userData!['personal description']);
+portfolioURL = userData!['portfolio'];
+
+currentFileName= getFileNameFromUrl(userData!['portfolio']);
+  }
 
   // String? fileName;
-  PlatformFile? _selectedFile;
-  String? portfolioURL;
+ 
 
   void _pickFile() async {
     FilePickerResult? result = await FilePicker.platform
@@ -52,12 +67,13 @@ class _EnterDetailsScreenState extends State<EnterDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print(userData!['name']);
     Size size = MediaQuery.sizeOf(context);
     return Scaffold(
       backgroundColor: whiteColor,
       appBar: AppBar(
         backgroundColor: PRIMARY_COLOR,
-        title: const Text('Astrologer Information'),
+        title: const Text('Edit Information'),
         centerTitle: true,
       ),
       body: Padding(
@@ -123,7 +139,7 @@ class _EnterDetailsScreenState extends State<EnterDetailsScreen> {
                       },
                       icon: const Icon(Icons.attach_file),
                       label: _selectedFile == null
-                          ? const Text('Attach file')
+                          ?  Text(currentFileName??'Attach file')
                           : Text(_selectedFile!.name)),
                 ),
                 const SizedBox(
@@ -132,7 +148,7 @@ class _EnterDetailsScreenState extends State<EnterDetailsScreen> {
                 GestureDetector(
                   onTap: () async {
                     if (_formKey.currentState!.validate()) {
-                      portfolioURL = await uploadFile(_selectedFile);
+                      portfolioURL = await uploadFile(_selectedFile)?? portfolioURL;
                       AstrologerModel astrologer = AstrologerModel(
                         fullName: _nameTextController.text,
                         emailAddress: _emailTextController.text,
@@ -142,10 +158,10 @@ class _EnterDetailsScreenState extends State<EnterDetailsScreen> {
                         years: int.parse(_experienceTextController.text),
                         portfolio: portfolioURL,
                       );
-                      await createAstrologer(astrologer);
+                      await updateAstrologerInformation(astrologer,documentID!);
                       Navigator.of(context).pushAndRemoveUntil(
                           MaterialPageRoute(
-                            builder: (context) => ProfileScreen(),
+                            builder: (context) => const ProfileScreen(),
                           ),
                           (route) => false);
                     }

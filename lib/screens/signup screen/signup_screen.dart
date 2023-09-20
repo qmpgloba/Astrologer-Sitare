@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sitare_astrologer_partner/constants/ui_constants.dart';
 import 'package:sitare_astrologer_partner/functions/firebase_auth_methods.dart';
+import 'package:sitare_astrologer_partner/screens/enter%20details%20screen/enter_details_screen.dart';
 import 'package:sitare_astrologer_partner/screens/login%20screen/login_screen.dart';
 import 'package:sitare_astrologer_partner/screens/login%20screen/widgets/custom_login_textfeild.dart';
 import 'package:sitare_astrologer_partner/widgets/alertbox.dart';
@@ -75,7 +76,7 @@ class SignUpScreen extends StatelessWidget {
                           //Navigate the screen
                           Navigator.of(context)
                               .pushReplacement(MaterialPageRoute(
-                            builder: (context) => LoginScreen(),
+                            builder: (context) => EnterDetailsScreen(),
                           ));
                         } else {
                           // showToast(signUpSuccess, redColor);
