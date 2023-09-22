@@ -1,12 +1,15 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:easy_stepper/easy_stepper.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:multiselect/multiselect.dart';
+import 'package:sitare_astrologer_partner/constants/app_constants.dart';
 import 'package:sitare_astrologer_partner/constants/ui_constants.dart';
 
 import '../enter details screen/widgets/textfeild_widget.dart';
+import 'widgets/custom_textformfeild_widget.dart';
 import 'widgets/details_page_one_widget.dart';
+import 'widgets/details_page_three_widget.dart';
+import 'widgets/details_page_two_part_one_widget.dart';
 
 class DetailsEnterScreen extends StatefulWidget {
   const DetailsEnterScreen({super.key});
@@ -45,59 +48,19 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
   String? genderDropDownValue;
   String? martialDropDownValue;
   String? workingStatus;
-
-  List<String> languagesList = [
-    'English',
-    "Hindi",
-    "Malayalam",
-    "Kannada",
-    "Tamil",
-  ];
-  List<String> selectedLanguages = [];
-
-  List<String> skillsList = [
-    'Vedic',
-    "Nadi",
-    "Numerology",
-    "Vastu",
-    "Prashana",
-    'KP',
-    "Lal Kitab",
-    "Western",
-    "Tarot",
-    "Palmistry",
-    'Horary',
-    "Face Reading",
-    "Psychic",
-    "Life Coach",
-    "Cartomancy",
-    'Loshu Grid',
-    "Psychologist",
-  ];
-  List<String> selectedSkillsList = [];
-  String selectedOption = 'No';
-
-  var working = [
-    'Yes, I am Working somewhere already as a full-timer',
-    'No, I am not working anywhere else',
-    'No, I am working as a part-timer or freelancer',
-    'I own a business'
-  ];
-  var genders = [
-    'Male',
-    'Female',
-    'Other',
-  ];
-
-  var martialStatus = [
-    'Single',
-    'Married',
-    'Divorced',
-  ];
+  String? qualificationValue;
+  String? businessValue;
+  int? selectedRadio = 1;
+  // Function to handle radio button changes.
+  void setSelectedRadio(int value) {
+    setState(() {
+      selectedRadio = value;
+    });
+  }
 
   int currentStep = 0;
   continueStep() {
-    if (currentStep < 2) {
+    if (currentStep < 3) {
       setState(() {
         currentStep = currentStep + 1;
       });
@@ -121,7 +84,7 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
   }
 
   Widget controlsBuilder(context, details) {
-    return currentStep < 2
+    return currentStep < 3
         ? Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -165,7 +128,7 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
                     backgroundColor: MaterialStatePropertyAll(PRIMARY_COLOR)),
                 onPressed: details.onStepContinue,
                 child: const Text(
-                  'Save',
+                  'Submit',
                   style: TextStyle(color: whiteColor),
                 ),
               ),
@@ -192,6 +155,7 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
             onStepTapped: onStepTapped,
             controlsBuilder: controlsBuilder,
             type: StepperType.horizontal,
+            connectorColor: MaterialStatePropertyAll(blackColor),
             elevation: 0,
             steps: [
               Step(
@@ -211,33 +175,20 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
                   title: const Text('1'),
                   content: Column(
                     children: [
-                      TextFeildWidgets(
-                          controller: _adressTextController,
-                          hintText: 'Address',
-                          fieldName: 'Office Address',
-                          keyboardType: TextInputType.name,
-                          maxLines: 3,
-                          readOnly: false),
-                      TextFeildWidgets(
-                          controller: _descriptionTextController,
-                          hintText: 'Description',
-                          fieldName: 'Personal Description',
-                          keyboardType: TextInputType.text,
-                          maxLines: 3,
-                          readOnly: false),
-                      TextFeildWidgets(
-                          controller: _experienceTextController,
-                          hintText: 'Years',
-                          fieldName: 'Experience(in years)',
-                          keyboardType: TextInputType.number,
-                          maxLines: 1,
-                          readOnly: false),
+                      DetailsPageTwoPartOneWidget(
+                          adressTextController: _adressTextController,
+                          descriptionTextController: _descriptionTextController,
+                          experienceTextController: _experienceTextController,
+                          contributionHoursTextController:
+                              _contributionHoursTextController,
+                          heardAboutSitareTextController:
+                              _heardAboutSitareTextController),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const Text(
                             'Gender',
-                            style: const TextStyle(
+                            style: TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(
@@ -260,10 +211,6 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
                                 .toList(),
                             onChanged: (value) {
                               genderDropDownValue = value;
-                              // setState(() {
-                              //   // dropDownValue = value!;
-                              //   // category = value;
-                              // });
                             },
                           ),
                         ],
@@ -276,7 +223,7 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
                         children: [
                           const Text(
                             'Martial Status',
-                            style: const TextStyle(
+                            style: TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(
@@ -313,7 +260,7 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
                         children: [
                           const Text(
                             'Date of Birth',
-                            style: const TextStyle(
+                            style: TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(
@@ -356,7 +303,7 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
                         children: [
                           const Text(
                             'Languages Known',
-                            style: const TextStyle(
+                            style: TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.bold),
                           ),
                           DropDownMultiSelect(
@@ -387,7 +334,7 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
                         children: [
                           const Text(
                             'Skills',
-                            style: const TextStyle(
+                            style: TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.bold),
                           ),
                           DropDownMultiSelect(
@@ -413,24 +360,14 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
                       const SizedBox(
                         height: 20,
                       ),
-                      TextFeildWidgets(
-                          controller: _contributionHoursTextController,
-                          hintText: 'hours',
-                          fieldName: 'How many hours you can contribute daily?',
-                          keyboardType: TextInputType.number,
-                          maxLines: 1,
-                          readOnly: false),
-                      TextFeildWidgets(
-                          controller: _heardAboutSitareTextController,
-                          hintText: 'Youtube,facebook..',
-                          fieldName: 'Where did you hear about Sitare?',
-                          keyboardType: TextInputType.text,
-                          maxLines: 1,
-                          readOnly: false),
                       Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const Text(
-                              'Are you working on any other online platform?'),
+                            'Are you working on any other online platform?',
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
                           Row(
                             children: [
                               Radio(
@@ -467,6 +404,138 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
                 state:
                     currentStep > 2 ? StepState.complete : StepState.disabled,
                 title: const Text('2'),
+                
+                content: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CustomTextFormField(
+                      text: "Why do you think we should onboard you?",
+                      hintText: "Why we should onboard you?",
+                    ),
+                    const Text(
+                      "Select your highest qualification",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    DropdownButtonFormField<String>(
+                      dropdownColor: Colors.white,
+                      value: businessValue,
+                      onChanged: (newValue) {
+                        setState(() {
+                          businessValue = newValue;
+                        });
+                      },
+                      items: qualification
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      decoration: const InputDecoration(
+                        hintText: 'Select your qualification',
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                    const SizedBox(height: 25),
+                    const DetailsPageThreeWidget(),
+                    const Text(
+                      "Main source of business(other than astrology)?",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    DropdownButtonFormField<String>(
+                      dropdownColor: Colors.white,
+                      value: qualificationValue,
+                      onChanged: (newValue) {
+                        setState(() {
+                          qualificationValue = newValue;
+                        });
+                      },
+                      items: business
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      decoration: const InputDecoration(
+                        hintText: 'Select your business',
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                    const SizedBox(height: 25),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "Did anybody refer you to Sitare?",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Radio(
+                              value: 1,
+                              groupValue: selectedRadio,
+                              onChanged: (value) {
+                                setSelectedRadio(value ?? 0);
+                              },
+                            ),
+                            const Text("Yes"),
+                            Radio(
+                              value: 2,
+                              groupValue: selectedRadio,
+                              onChanged: (value) {
+                                setSelectedRadio(value ?? 0);
+                              },
+                            ),
+                            const Text("No"),
+                          ],
+                        ),
+                      ],
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "Long bio",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        TextFormField(
+                          maxLines: 3,
+                          decoration: const InputDecoration(
+                            hintText: "Please let us know more about you",
+                            border: OutlineInputBorder(gapPadding: 30),
+                          ),
+                        ),
+                        const SizedBox(height: 25),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+              Step(
+                isActive: currentStep >= 3,
+                state:
+                    currentStep > 3 ? StepState.complete : StepState.disabled,
+                title: const Text('3'),
                 content: Column(
                   children: [
                     TextFeildWidgets(
@@ -490,7 +559,7 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
                       children: [
                         const Text(
                           'Are you currently working a fulltune job?',
-                          style:  TextStyle(
+                          style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(
@@ -505,18 +574,17 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
                           ),
                           decoration: const InputDecoration(
                               border: OutlineInputBorder()),
-                          
                           items: working
                               .map(
                                 (String items) => DropdownMenuItem(
                                   value: items,
                                   child: AutoSizeText(
-                            items,
-                            maxLines: 2,
-                            maxFontSize: 12,
-                            minFontSize: 8,
-                            style: TextStyle(fontSize: 12),
-                          ),
+                                    items,
+                                    maxLines: 2,
+                                    maxFontSize: 12,
+                                    minFontSize: 8,
+                                    style: const TextStyle(fontSize: 12),
+                                  ),
                                 ),
                               )
                               .toList(),
