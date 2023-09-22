@@ -6,6 +6,7 @@ import 'package:multiselect/multiselect.dart';
 import 'package:sitare_astrologer_partner/constants/ui_constants.dart';
 
 import '../enter details screen/widgets/textfeild_widget.dart';
+import 'widgets/details_page_one_widget.dart';
 
 class DetailsEnterScreen extends StatefulWidget {
   const DetailsEnterScreen({super.key});
@@ -32,6 +33,9 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
   final TextEditingController _descriptionTextController =
       TextEditingController();
   TextEditingController dateInput = TextEditingController();
+  final TextEditingController _contributionHoursTextController = TextEditingController();
+  final TextEditingController _heardAboutSitareTextController = TextEditingController();
+
 
   String? genderDropDownValue;
   String? martialDropDownValue;
@@ -160,31 +164,10 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
                 state:
                     currentStep > 0 ? StepState.complete : StepState.disabled,
                 title: const Text('0'),
-                content: Column(
-                  children: [
-                    TextFeildWidgets(
-                        controller: _nameTextController,
-                        hintText: 'Full Name',
-                        fieldName: 'Name',
-                        keyboardType: TextInputType.name,
-                        maxLines: 1,
-                        readOnly: false),
-                    TextFeildWidgets(
-                        controller: _emailTextController,
-                        hintText: 'Email',
-                        fieldName: 'Email Address',
-                        keyboardType: TextInputType.emailAddress,
-                        maxLines: 1,
-                        readOnly: false),
-                    TextFeildWidgets(
-                        controller: _phoneNumberTextController,
-                        hintText: 'Phone Number',
-                        fieldName: 'Phone Number',
-                        keyboardType: TextInputType.phone,
-                        maxLines: 1,
-                        readOnly: false),
-                  ],
-                ),
+                content: DetailsPageOneWidget(
+                    nameTextController: _nameTextController,
+                    emailTextController: _emailTextController,
+                    phoneNumberTextController: _phoneNumberTextController),
               ),
               Step(
                   isActive: currentStep >= 1,
@@ -342,13 +325,12 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
                                 fontSize: 18, fontWeight: FontWeight.bold),
                           ),
                           DropDownMultiSelect(
-                             hint: const AutoSizeText(
+                            hint: const AutoSizeText(
                               'Select Languages',
                               maxLines: 1,
                               maxFontSize: 18,
                             ),
                             decoration: const InputDecoration(
-                            
                               border: OutlineInputBorder(),
                             ),
                             options: languagesList,
@@ -356,14 +338,34 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
                             onChanged: (List<String> value) {
                               //   value = selectedCheckBoxValue;
                               print("${selectedLanguages}");
-                              setState(() {
-                                
-                              });
+                              setState(() {});
                             },
                             // whenEmpty: 'Select Languages',
                           ),
                         ],
-                      )
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      TextFeildWidgets(
+                          controller: _contributionHoursTextController,
+                          hintText: 'hours',
+                          fieldName: 'How many hours you can contribute daily?',
+                          keyboardType: TextInputType.number,
+                          maxLines: 1,
+                          readOnly: false),
+                      const SizedBox(
+                        
+                        height: 20,
+                      ),
+                       TextFeildWidgets(
+                          controller: _heardAboutSitareTextController,
+                          hintText: 'Youtubw,facebook..',
+                          fieldName: 'Where did you hear about Sitare?',
+                          keyboardType: TextInputType.text,
+                          maxLines: 1,
+                          readOnly: false),
+                     
                     ],
                   )),
               Step(
