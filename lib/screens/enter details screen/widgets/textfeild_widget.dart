@@ -24,7 +24,7 @@ class TextFeildWidgets extends StatelessWidget {
       children: [
         Text(
           fieldName,
-          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
         TextFormField(
           

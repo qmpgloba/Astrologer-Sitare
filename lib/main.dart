@@ -18,8 +18,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        scaffoldBackgroundColor: PRIMARY_COLOR,
+        primaryColor: blackColor,
+        // primarySwatch: ,
+        colorScheme: ColorScheme.fromSeed(seedColor: blackColor),
+        // scaffoldBackgroundColor: PRIMARY_COLOR,
         useMaterial3: true,
       ),
       home: const DetailsEnterScreen(),

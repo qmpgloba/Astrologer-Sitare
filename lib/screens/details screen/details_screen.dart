@@ -33,12 +33,19 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
   final TextEditingController _descriptionTextController =
       TextEditingController();
   TextEditingController dateInput = TextEditingController();
-  final TextEditingController _contributionHoursTextController = TextEditingController();
-  final TextEditingController _heardAboutSitareTextController = TextEditingController();
-
+  final TextEditingController _contributionHoursTextController =
+      TextEditingController();
+  final TextEditingController _heardAboutSitareTextController =
+      TextEditingController();
+  final TextEditingController _travelledCountriesTextController =
+      TextEditingController();
+  final TextEditingController _challengesFacedTextController =
+      TextEditingController();
 
   String? genderDropDownValue;
   String? martialDropDownValue;
+  String? workingStatus;
+
   List<String> languagesList = [
     'English',
     "Hindi",
@@ -48,6 +55,34 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
   ];
   List<String> selectedLanguages = [];
 
+  List<String> skillsList = [
+    'Vedic',
+    "Nadi",
+    "Numerology",
+    "Vastu",
+    "Prashana",
+    'KP',
+    "Lal Kitab",
+    "Western",
+    "Tarot",
+    "Palmistry",
+    'Horary',
+    "Face Reading",
+    "Psychic",
+    "Life Coach",
+    "Cartomancy",
+    'Loshu Grid',
+    "Psychologist",
+  ];
+  List<String> selectedSkillsList = [];
+  String selectedOption = 'No';
+
+  var working = [
+    'Yes, I am Working somewhere already as a full-timer',
+    'No, I am not working anywhere else',
+    'No, I am working as a part-timer or freelancer',
+    'I own a business'
+  ];
   var genders = [
     'Male',
     'Female',
@@ -347,6 +382,37 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
                       const SizedBox(
                         height: 20,
                       ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Skills',
+                            style: const TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                          DropDownMultiSelect(
+                            hint: const AutoSizeText(
+                              'Select Skills',
+                              maxLines: 1,
+                              maxFontSize: 18,
+                            ),
+                            decoration: const InputDecoration(
+                              border: OutlineInputBorder(),
+                            ),
+                            options: skillsList,
+                            selectedValues: selectedSkillsList,
+                            onChanged: (List<String> value) {
+                              //   value = selectedCheckBoxValue;
+                              print("${selectedSkillsList}");
+                              setState(() {});
+                            },
+                            // whenEmpty: 'Select Languages',
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
                       TextFeildWidgets(
                           controller: _contributionHoursTextController,
                           hintText: 'hours',
@@ -354,18 +420,46 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
                           keyboardType: TextInputType.number,
                           maxLines: 1,
                           readOnly: false),
-                      const SizedBox(
-                        
-                        height: 20,
-                      ),
-                       TextFeildWidgets(
+                      TextFeildWidgets(
                           controller: _heardAboutSitareTextController,
-                          hintText: 'Youtubw,facebook..',
+                          hintText: 'Youtube,facebook..',
                           fieldName: 'Where did you hear about Sitare?',
                           keyboardType: TextInputType.text,
                           maxLines: 1,
                           readOnly: false),
-                     
+                      Column(
+                        children: [
+                          const Text(
+                              'Are you working on any other online platform?'),
+                          Row(
+                            children: [
+                              Radio(
+                                value: 'No',
+                                groupValue: selectedOption,
+                                onChanged: (value) {
+                                  setState(() {
+                                    selectedOption = value!;
+                                  });
+                                },
+                              ),
+                              const Text('No'),
+                              const SizedBox(
+                                width: 20,
+                              ),
+                              Radio(
+                                value: 'Yes',
+                                groupValue: selectedOption,
+                                onChanged: (value) {
+                                  setState(() {
+                                    selectedOption = value!;
+                                  });
+                                },
+                              ),
+                              const Text('Yes'),
+                            ],
+                          ),
+                        ],
+                      )
                     ],
                   )),
               Step(
@@ -373,7 +467,67 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
                 state:
                     currentStep > 2 ? StepState.complete : StepState.disabled,
                 title: const Text('2'),
-                content: const Text('data'),
+                content: Column(
+                  children: [
+                    TextFeildWidgets(
+                        controller: _travelledCountriesTextController,
+                        hintText: '0',
+                        fieldName:
+                            'Number of the foreign countries you lived/travelled to?',
+                        keyboardType: TextInputType.number,
+                        maxLines: 1,
+                        readOnly: false),
+                    TextFeildWidgets(
+                        controller: _challengesFacedTextController,
+                        hintText: 'Write a challenge you faced in breif',
+                        fieldName:
+                            'What was the biggest challenge you faced and how did you overcome it?',
+                        keyboardType: TextInputType.text,
+                        maxLines: 3,
+                        readOnly: false),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Are you currently working a fulltune job?',
+                          style:  TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        DropdownButtonFormField(
+                          hint: const AutoSizeText(
+                            'Please let us know from the below options',
+                            maxLines: 1,
+                            maxFontSize: 16,
+                            style: TextStyle(fontSize: 14),
+                          ),
+                          decoration: const InputDecoration(
+                              border: OutlineInputBorder()),
+                          
+                          items: working
+                              .map(
+                                (String items) => DropdownMenuItem(
+                                  value: items,
+                                  child: AutoSizeText(
+                            items,
+                            maxLines: 2,
+                            maxFontSize: 12,
+                            minFontSize: 8,
+                            style: TextStyle(fontSize: 12),
+                          ),
+                                ),
+                              )
+                              .toList(),
+                          onChanged: (value) {
+                            workingStatus = value;
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ]),
       ),
