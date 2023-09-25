@@ -53,8 +53,8 @@ class _EnterDetailsScreenState extends State<EnterDetailsScreen> {
     return Scaffold(
       backgroundColor: whiteColor,
       appBar: AppBar(
-        backgroundColor: PRIMARY_COLOR,
-        title: const Text('Astrologer Information'),
+        backgroundColor: blackColor,
+        title: const Text('Astrologer Information',style: TextStyle(color: whiteColor),),
         centerTitle: true,
       ),
       body: Padding(
@@ -150,7 +150,7 @@ class _EnterDetailsScreenState extends State<EnterDetailsScreen> {
                   child: Container(
                     width: double.maxFinite,
                     decoration: BoxDecoration(
-                        color: PRIMARY_COLOR,
+                        color: blackColor,
                         borderRadius: BorderRadius.circular(3)),
                     child: const Padding(
                       padding:

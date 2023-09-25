@@ -10,7 +10,7 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: whiteColor,
       appBar: AppBar(
-        backgroundColor: PRIMARY_COLOR,
+        backgroundColor: blackColor,
         actions: [
           IconButton(onPressed: () {
             Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ProfileScreen(),));

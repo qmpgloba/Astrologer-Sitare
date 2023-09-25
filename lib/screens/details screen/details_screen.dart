@@ -10,6 +10,7 @@ import 'package:sitare_astrologer_partner/constants/ui_constants.dart';
 import 'package:sitare_astrologer_partner/functions/add_astrologer_function.dart';
 import 'package:sitare_astrologer_partner/model/astrologer_model.dart';
 import 'package:sitare_astrologer_partner/screens/home%20screen/home_screen.dart';
+import 'package:sitare_astrologer_partner/widgets/alertbox.dart';
 import '../enter details screen/widgets/textfeild_widget.dart';
 import 'widgets/details_page_one_widget.dart';
 import 'widgets/details_page_three_widget.dart';
@@ -133,7 +134,7 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
               ),
               ElevatedButton(
                 style: const ButtonStyle(
-                    backgroundColor: MaterialStatePropertyAll(PRIMARY_COLOR)),
+                    backgroundColor: MaterialStatePropertyAll(blackColor)),
                 onPressed: details.onStepContinue,
                 child: const Text(
                   'Continue',
@@ -156,9 +157,16 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
               ),
               ElevatedButton(
                 style: const ButtonStyle(
-                    backgroundColor: MaterialStatePropertyAll(PRIMARY_COLOR)),
+                    backgroundColor: MaterialStatePropertyAll(blackColor)),
                 onPressed: () async {
-                  if (_formKey.currentState!.validate()) {
+                  if (_formKey.currentState!.validate() ||
+                      genderDropDownValue != null ||
+                      martialDropDownValue != null ||
+                      selectedLanguages.isNotEmpty ||
+                      selectedSkillsList.isNotEmpty ||
+                      businessValue != null ||
+                      qualificationValue != null ||
+                      workingStatus != null) {
                     AstrologerModel astrologer = AstrologerModel(
                         fullName: _nameTextController.text.trim(),
                         emailAddress: _emailTextController.text.trim(),
@@ -196,12 +204,14 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
                         biggestChallenge:
                             _challengesFacedTextController.text.trim(),
                         currentWorkingStatus: workingStatus!);
-                         await createAstrologer(astrologer);
-                      Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(
-                            builder: (context) => const HomeScreen(),
-                          ),
-                          (route) => false);
+                    await createAstrologer(astrologer);
+                    Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(
+                          builder: (context) => const HomeScreen(),
+                        ),
+                        (route) => false);
+                  }else{
+                    showAlertBox(context, 'Please fill all the feilds', whiteColor, 'close');
                   }
                 },
                 child: const Text(
@@ -215,11 +225,12 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.sizeOf(context);
     return Scaffold(
       backgroundColor: whiteColor,
       appBar: AppBar(
-        backgroundColor: PRIMARY_COLOR,
-        title: const Text('Details'),
+        backgroundColor: blackColor,
+        title: const Text('Details',style: TextStyle(color: whiteColor),),
         centerTitle: true,
       ),
       body: Form(
@@ -235,20 +246,22 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
             elevation: 0,
             steps: [
               Step(
+                label: currentStep == 0? const  AutoSizeText('Personal Details',maxFontSize: 12,maxLines: 2,minFontSize: 10,style: TextStyle(color: blackColor),): const Text(''),
                 isActive: currentStep >= 0,
                 state:
                     currentStep > 0 ? StepState.complete : StepState.disabled,
-                title: const Text('0'),
+                title: const SizedBox(),
                 content: DetailsPageOneWidget(
                     nameTextController: _nameTextController,
                     emailTextController: _emailTextController,
                     phoneNumberTextController: _phoneNumberTextController),
               ),
               Step(
+                label: currentStep == 1? const  AutoSizeText('Skill Details',maxFontSize: 12,maxLines: 2,minFontSize: 10,style: TextStyle(color: blackColor),): const Text(''),
                   isActive: currentStep >= 1,
                   state:
                       currentStep > 1 ? StepState.complete : StepState.disabled,
-                  title: const Text('1'),
+                  title: const SizedBox(),
                   content: Column(
                     children: [
                       Stack(
@@ -500,10 +513,11 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
                     ],
                   )),
               Step(
+                label: currentStep == 2? const  AutoSizeText('Other Details',maxFontSize: 12,maxLines: 2,minFontSize: 10,style: TextStyle(color: blackColor),): const Text(''),
                 isActive: currentStep >= 2,
                 state:
                     currentStep > 2 ? StepState.complete : StepState.disabled,
-                title: const Text('2'),
+                title: const SizedBox(),
                 content: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -629,10 +643,11 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
                 ),
               ),
               Step(
+                label: currentStep == 3? const  AutoSizeText('Assignment',maxFontSize: 12,maxLines: 2,minFontSize: 10,style: TextStyle(color: blackColor),): const Text(''),
                 isActive: currentStep >= 3,
                 state:
                     currentStep > 3 ? StepState.complete : StepState.disabled,
-                title: const Text('3'),
+                title: const SizedBox(),
                 content: Column(
                   children: [
                     TextFeildWidgets(

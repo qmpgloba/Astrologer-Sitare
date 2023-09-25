@@ -70,8 +70,8 @@ currentFileName= getFileNameFromUrl(userData!['portfolio']);
     return Scaffold(
       backgroundColor: whiteColor,
       appBar: AppBar(
-        backgroundColor: PRIMARY_COLOR,
-        title: const Text('Edit Information'),
+        backgroundColor: blackColor,
+        title: const Text('Edit Information',style: TextStyle(color: whiteColor),),
         centerTitle: true,
       ),
       body: Padding(
@@ -159,7 +159,7 @@ currentFileName= getFileNameFromUrl(userData!['portfolio']);
                   child: Container(
                     width: double.maxFinite,
                     decoration: BoxDecoration(
-                        color: PRIMARY_COLOR,
+                        color: blackColor,
                         borderRadius: BorderRadius.circular(3)),
                     child: const Padding(
                       padding:
