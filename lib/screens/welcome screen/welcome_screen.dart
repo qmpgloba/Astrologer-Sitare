@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sitare_astrologer_partner/constants/ui_constants.dart';
 import 'package:sitare_astrologer_partner/screens/login%20screen/login_screen.dart';
-import 'package:sitare_astrologer_partner/screens/signup%20screen/signup_screen.dart';
+
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -47,30 +47,7 @@ class WelcomeScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 20,),
-                GestureDetector(
-                  onTap: ()  {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => SignUpScreen(),));
-                  },
-                  child: Container(
-                    width: double.maxFinite,
-                    decoration: BoxDecoration(
-                        color: redColor,
-                        borderRadius: BorderRadius.circular(30)),
-                    child: const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 5, vertical: 12),
-                      child: Center(
-                        child: Text(
-                          'Sign Up',
-                          maxLines: 1,
-                          style: TextStyle(
-                              fontSize: 18,
-                              color: whiteColor,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+                
                     ],
                   ),
             ),

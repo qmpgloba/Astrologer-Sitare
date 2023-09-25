@@ -1,8 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:sitare_astrologer_partner/constants/ui_constants.dart';
+import 'package:sitare_astrologer_partner/screens/login%20screen/login_screen.dart';
 
-import 'screens/details screen/details_screen.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
         // scaffoldBackgroundColor: PRIMARY_COLOR,
         useMaterial3: true,
       ),
-      home: const DetailsEnterScreen(),
+      home:  LoginScreen(),
     );
   }
 }
