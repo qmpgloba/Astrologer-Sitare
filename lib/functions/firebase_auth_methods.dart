@@ -1,7 +1,6 @@
 
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:image_picker/image_picker.dart';
 
 final _auth = FirebaseAuth.instance;
 
@@ -28,7 +27,6 @@ Future<String?> loginWithEmail({
 }) async{
   try {
     await _auth.signInWithEmailAndPassword(email: email, password: password);
-    print('object');
     return null;
   }on FirebaseAuthException catch (e) {
     return e.message.toString();

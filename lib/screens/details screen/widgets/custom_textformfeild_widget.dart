@@ -16,21 +16,21 @@ class CustomTextFormField extends StatelessWidget {
       children: [
         Text(
           text ?? "",
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,
           ),
         ),
-        SizedBox(height: 8),
+        const SizedBox(height: 8),
 
         TextFormField(
           controller: controller,
           decoration: InputDecoration(
             hintText: hintText,
-            border: OutlineInputBorder(),
+            border: const OutlineInputBorder(),
           ),
         ),
-        SizedBox(height: 25),
+        const SizedBox(height: 25),
       ],
     );
   }

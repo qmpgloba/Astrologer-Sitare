@@ -9,8 +9,8 @@ import 'package:sitare_astrologer_partner/constants/app_constants.dart';
 import 'package:sitare_astrologer_partner/constants/ui_constants.dart';
 import 'package:sitare_astrologer_partner/functions/add_astrologer_function.dart';
 import 'package:sitare_astrologer_partner/model/astrologer_model.dart';
+import 'package:sitare_astrologer_partner/screens/home%20screen/home_screen.dart';
 import '../enter details screen/widgets/textfeild_widget.dart';
-import 'widgets/custom_textformfeild_widget.dart';
 import 'widgets/details_page_one_widget.dart';
 import 'widgets/details_page_three_widget.dart';
 import 'widgets/details_page_two_part_one_widget.dart';
@@ -197,12 +197,11 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
                             _challengesFacedTextController.text.trim(),
                         currentWorkingStatus: workingStatus!);
                          await createAstrologer(astrologer);
-                         print("done");
-                      // Navigator.of(context).pushAndRemoveUntil(
-                      //     MaterialPageRoute(
-                      //       builder: (context) => ProfileScreen(),
-                      //     ),
-                      //     (route) => false);
+                      Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(
+                            builder: (context) => const HomeScreen(),
+                          ),
+                          (route) => false);
                   }
                 },
                 child: const Text(
@@ -216,7 +215,6 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.sizeOf(context);
     return Scaffold(
       backgroundColor: whiteColor,
       appBar: AppBar(
@@ -233,7 +231,7 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
             onStepTapped: onStepTapped,
             controlsBuilder: controlsBuilder,
             type: StepperType.horizontal,
-            connectorColor: MaterialStatePropertyAll(blackColor),
+            connectorColor: const MaterialStatePropertyAll(blackColor),
             elevation: 0,
             steps: [
               Step(
@@ -276,7 +274,7 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
                               ))
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       DetailsPageTwoPartOneWidget(
@@ -423,7 +421,6 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
                             selectedValues: selectedLanguages,
                             onChanged: (List<String> value) {
                               //   value = selectedCheckBoxValue;
-                              print("${selectedLanguages}");
                               setState(() {});
                             },
                             // whenEmpty: 'Select Languages',
@@ -454,7 +451,6 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
                             selectedValues: selectedSkillsList,
                             onChanged: (List<String> value) {
                               //   value = selectedCheckBoxValue;
-                              print("${selectedSkillsList}");
                               setState(() {});
                             },
                             // whenEmpty: 'Select Languages',

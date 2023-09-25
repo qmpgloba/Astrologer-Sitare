@@ -78,6 +78,7 @@ Future<void> updateAstrologerInformation(AstrologerModel astrologer,String docID
   'experience(in years)': astrologer.experienceYears,
  
 });
+    // ignore: empty_catches
     } catch (e) {}
   }
 

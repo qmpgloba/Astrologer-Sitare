@@ -2,14 +2,13 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:sitare_astrologer_partner/constants/ui_constants.dart';
 import 'package:sitare_astrologer_partner/functions/add_astrologer_function.dart';
-import 'package:sitare_astrologer_partner/model/astrologer_model.dart';
 import 'package:sitare_astrologer_partner/screens/profile%20screen/profile_screen.dart';
 
 import '../enter details screen/widgets/textfeild_widget.dart';
 
 
 class EditProfileScreen extends StatefulWidget {
-  EditProfileScreen({super.key});
+  const EditProfileScreen({super.key});
 
   @override
   State<EditProfileScreen> createState() => _EnterDetailsScreenState();
@@ -34,7 +33,7 @@ class _EnterDetailsScreenState extends State<EditProfileScreen> {
   late final TextEditingController _descriptionTextController;
       @override
   void initState() {
-    // TODO: implement initState
+   
     super.initState();
     _nameTextController = TextEditingController(text: userData!['name']);
     _emailTextController = TextEditingController(text: userData!['email']);
@@ -67,7 +66,6 @@ currentFileName= getFileNameFromUrl(userData!['portfolio']);
 
   @override
   Widget build(BuildContext context) {
-    print(userData!['name']);
     Size size = MediaQuery.sizeOf(context);
     return Scaffold(
       backgroundColor: whiteColor,

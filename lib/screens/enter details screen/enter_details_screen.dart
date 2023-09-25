@@ -1,13 +1,10 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:sitare_astrologer_partner/constants/ui_constants.dart';
-import 'package:sitare_astrologer_partner/functions/add_astrologer_function.dart';
-import 'package:sitare_astrologer_partner/model/astrologer_model.dart';
-import 'package:sitare_astrologer_partner/screens/profile%20screen/profile_screen.dart';
 import 'widgets/textfeild_widget.dart';
 
 class EnterDetailsScreen extends StatefulWidget {
-  EnterDetailsScreen({super.key});
+  const EnterDetailsScreen({super.key});
 
   @override
   State<EnterDetailsScreen> createState() => _EnterDetailsScreenState();

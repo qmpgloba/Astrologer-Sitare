@@ -30,10 +30,10 @@ class SignUpScreen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Sign Up',
+                  const Text('Sign Up',
                       style:
                           TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   CustomTextField(
@@ -42,7 +42,7 @@ class SignUpScreen extends StatelessWidget {
                     hintname: 'Email',
                     feildName: 'Email',
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   CustomTextField(
@@ -52,7 +52,7 @@ class SignUpScreen extends StatelessWidget {
                     feildName: 'Password',
                     obscureText: true,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   CustomTextField(
@@ -63,7 +63,7 @@ class SignUpScreen extends StatelessWidget {
                     password: passwordTextController,
                     obscureText: true,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   GestureDetector(
@@ -74,9 +74,10 @@ class SignUpScreen extends StatelessWidget {
                             password: passwordTextController.text.trim());
                         if (result == null) {
                           //Navigate the screen
+                          // ignore: use_build_context_synchronously
                           Navigator.of(context)
                               .pushReplacement(MaterialPageRoute(
-                            builder: (context) => EnterDetailsScreen(),
+                            builder: (context) => const EnterDetailsScreen(),
                           ));
                         } else {
                           // showToast(signUpSuccess, redColor);
@@ -107,7 +108,7 @@ class SignUpScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   Row(

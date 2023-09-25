@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sitare_astrologer_partner/constants/ui_constants.dart';
 import 'package:sitare_astrologer_partner/functions/firebase_auth_methods.dart';
-import 'package:sitare_astrologer_partner/screens/enter%20details%20screen/enter_details_screen.dart';
 import 'package:sitare_astrologer_partner/screens/profile%20screen/profile_screen.dart';
 import 'package:sitare_astrologer_partner/screens/signup%20screen/signup_screen.dart';
 import 'package:sitare_astrologer_partner/widgets/alertbox.dart';
@@ -63,6 +62,7 @@ class LoginScreen extends StatelessWidget {
                             password: passwordTextController.text);
                         if (result == null) {
                           //Navigate the screen
+                          // ignore: use_build_context_synchronously
                           Navigator.of(context).pushAndRemoveUntil(
                               MaterialPageRoute(
                                 builder: (context) => const ProfileScreen(),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:sitare_astrologer_partner/constants/ui_constants.dart';
 
 
+// ignore: must_be_immutable
 class CustomTextField extends StatelessWidget {
    CustomTextField({
     Key? key,
@@ -27,7 +28,7 @@ class CustomTextField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(feildName,style: TextStyle(fontSize: 18),),
+        Text(feildName,style: const TextStyle(fontSize: 18),),
         TextFormField(
           controller: controller,
           obscureText: obscureText,
@@ -35,7 +36,7 @@ class CustomTextField extends StatelessWidget {
             color: blackColor,
           ),
           decoration: InputDecoration(
-            border: OutlineInputBorder(),
+            border: const OutlineInputBorder(),
             hintText: hintname,
             hintStyle: const TextStyle(
               color: FONT_COLOR,
