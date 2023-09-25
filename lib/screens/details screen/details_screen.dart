@@ -8,6 +8,7 @@ import 'package:multiselect/multiselect.dart';
 import 'package:sitare_astrologer_partner/constants/app_constants.dart';
 import 'package:sitare_astrologer_partner/constants/ui_constants.dart';
 import 'package:sitare_astrologer_partner/functions/add_astrologer_function.dart';
+import 'package:sitare_astrologer_partner/model/astrologer_model.dart';
 import '../enter details screen/widgets/textfeild_widget.dart';
 import 'widgets/custom_textformfeild_widget.dart';
 import 'widgets/details_page_one_widget.dart';
@@ -68,11 +69,11 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
   String? workingStatus;
   String? qualificationValue;
   String? businessValue;
-  int? selectedRadio = 1;
+  int? referSitare = 1;
   // Function to handle radio button changes.
   void setSelectedRadio(int value) {
     setState(() {
-      selectedRadio = value;
+      referSitare = value;
     });
   }
 
@@ -156,9 +157,52 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
               ElevatedButton(
                 style: const ButtonStyle(
                     backgroundColor: MaterialStatePropertyAll(PRIMARY_COLOR)),
-                onPressed: () async{
-                  if(_formKey.currentState!.validate()){
-                    
+                onPressed: () async {
+                  if (_formKey.currentState!.validate()) {
+                    AstrologerModel astrologer = AstrologerModel(
+                        fullName: _nameTextController.text.trim(),
+                        emailAddress: _emailTextController.text.trim(),
+                        phoneNumber: _phoneNumberTextController.text.trim(),
+                        profilePic: imageUrl != null ? imageUrl! : profileImage,
+                        officeAddress: _adressTextController.text.trim(),
+                        description: _descriptionTextController.text.trim(),
+                        experienceYears:
+                            int.parse(_experienceTextController.text.trim()),
+                        contributeHours: int.parse(
+                            _contributionHoursTextController.text.trim()),
+                        heardAboutSitare: _heardAboutSitareTextController.text,
+                        gender: genderDropDownValue!,
+                        martialStatus: martialDropDownValue!,
+                        dateOfBirth: dateInput.text.trim(),
+                        languages: selectedLanguages,
+                        skills: selectedSkillsList,
+                        workingOnlinePLatform: workingAnyOnlinePlatform,
+                        instagramLink:
+                            instagramProfileLinkController.text.trim(),
+                        linkedInLink: linkedInProfileLinkController.text.trim(),
+                        websiteLink: websiteProfileLinkController.text.trim(),
+                        facebookLink: facebookProfileLinkController.text.trim(),
+                        youtubeLink: youtubeProfileLinkController.text.trim(),
+                        business: businessValue!,
+                        anyoneReferSitare: anyoneRefer,
+                        onBorad: onboardTextController.text.trim(),
+                        qualification: qualificationValue!,
+                        earningExpectation:
+                            earningExpectationController.text.trim(),
+                        learnAboutAstrology:
+                            learnAstrologyContoller.text.trim(),
+                        foreignCountries:
+                            int.parse(_travelledCountriesTextController.text),
+                        biggestChallenge:
+                            _challengesFacedTextController.text.trim(),
+                        currentWorkingStatus: workingStatus!);
+                         await createAstrologer(astrologer);
+                         print("done");
+                      // Navigator.of(context).pushAndRemoveUntil(
+                      //     MaterialPageRoute(
+                      //       builder: (context) => ProfileScreen(),
+                      //     ),
+                      //     (route) => false);
                   }
                 },
                 child: const Text(
@@ -432,10 +476,10 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
                             children: [
                               Radio(
                                 value: 'No',
-                                groupValue: selectedOption,
+                                groupValue: workingAnyOnlinePlatform,
                                 onChanged: (value) {
                                   setState(() {
-                                    selectedOption = value!;
+                                    workingAnyOnlinePlatform = value!;
                                   });
                                 },
                               ),
@@ -445,10 +489,10 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
                               ),
                               Radio(
                                 value: 'Yes',
-                                groupValue: selectedOption,
+                                groupValue: workingAnyOnlinePlatform,
                                 onChanged: (value) {
                                   setState(() {
-                                    selectedOption = value!;
+                                    workingAnyOnlinePlatform = value!;
                                   });
                                 },
                               ),
@@ -549,39 +593,42 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
                     ),
                     const SizedBox(height: 25),
                     Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text(
-                          "Did anybody refer you to Sitare?",
+                          'Did anybody refer you to Sitare?',
                           style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
+                              fontSize: 16, fontWeight: FontWeight.bold),
                         ),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
+                          children: [
                             Radio(
-                              value: 1,
-                              groupValue: selectedRadio,
+                              value: 'No',
+                              groupValue: anyoneRefer,
                               onChanged: (value) {
-                                setSelectedRadio(value ?? 0);
+                                setState(() {
+                                  anyoneRefer = value!;
+                                });
                               },
                             ),
-                            const Text("Yes"),
+                            const Text('No'),
+                            const SizedBox(
+                              width: 20,
+                            ),
                             Radio(
-                              value: 2,
-                              groupValue: selectedRadio,
+                              value: 'Yes',
+                              groupValue: anyoneRefer,
                               onChanged: (value) {
-                                setSelectedRadio(value ?? 0);
+                                setState(() {
+                                  anyoneRefer = value!;
+                                });
                               },
                             ),
-                            const Text("No"),
+                            const Text('Yes'),
                           ],
                         ),
                       ],
-                    ),
+                    )
                   ],
                 ),
               ),
@@ -612,7 +659,7 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text(
-                          'Are you currently working a fulltune job?',
+                          'Are you currently working a fulltime job?',
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold),
                         ),

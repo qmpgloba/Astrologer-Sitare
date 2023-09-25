@@ -28,14 +28,15 @@
     "Psychologist",
   ];
   List<String> selectedSkillsList = [];
-  String selectedOption = 'No';
+  String workingAnyOnlinePlatform = 'No';
+  String anyoneRefer = 'No';
 
   var working = [
     'Yes, I am Working somewhere already as a full-timer',
     'No, I am not working anywhere else',
     'No, I am working as a part-timer or freelancer',
     'I own a business'
-  ];
+  ];  
   var genders = [
     'Male',
     'Female',
@@ -62,3 +63,4 @@ final List<String> business = [
   "Studying in college",
   "None of the above",
 ];
+const profileImage = 'https://w7.pngwing.com/pngs/304/275/png-transparent-user-profile-computer-icons-profile-miscellaneous-logo-monochrome-thumbnail.png';
