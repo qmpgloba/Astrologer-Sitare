@@ -1,10 +1,13 @@
+import 'dart:io';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:multiselect/multiselect.dart';
 import 'package:sitare_astrologer_partner/constants/app_constants.dart';
 import 'package:sitare_astrologer_partner/constants/ui_constants.dart';
-
+import 'package:sitare_astrologer_partner/functions/add_astrologer_function.dart';
 import '../enter details screen/widgets/textfeild_widget.dart';
 import 'widgets/custom_textformfeild_widget.dart';
 import 'widgets/details_page_one_widget.dart';
@@ -44,7 +47,22 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
       TextEditingController();
   final TextEditingController _challengesFacedTextController =
       TextEditingController();
-
+  final TextEditingController instagramProfileLinkController =
+      TextEditingController();
+  final TextEditingController linkedInProfileLinkController =
+      TextEditingController();
+  final TextEditingController websiteProfileLinkController =
+      TextEditingController();
+  final TextEditingController earningExpectationController =
+      TextEditingController();
+  final TextEditingController learnAstrologyContoller = TextEditingController();
+  final TextEditingController facebookProfileLinkController =
+      TextEditingController();
+  final TextEditingController youtubeProfileLinkController =
+      TextEditingController();
+  final TextEditingController onboardTextController = TextEditingController();
+  String? imagePath;
+  String? imageUrl;
   String? genderDropDownValue;
   String? martialDropDownValue;
   String? workingStatus;
@@ -80,6 +98,18 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
       setState(() {
         currentStep = value;
       });
+    }
+  }
+
+  Future<void> imagePick() async {
+    final imagePicked =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (imagePicked != null) {
+      setState(() {
+        imagePath = imagePicked.path;
+      });
+
+      imageUrl = await addProfileImge(imagePicked);
     }
   }
 
@@ -126,7 +156,11 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
               ElevatedButton(
                 style: const ButtonStyle(
                     backgroundColor: MaterialStatePropertyAll(PRIMARY_COLOR)),
-                onPressed: details.onStepContinue,
+                onPressed: () async{
+                  if(_formKey.currentState!.validate()){
+                    
+                  }
+                },
                 child: const Text(
                   'Submit',
                   style: TextStyle(color: whiteColor),
@@ -175,6 +209,32 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
                   title: const Text('1'),
                   content: Column(
                     children: [
+                      Stack(
+                        children: [
+                          CircleAvatar(
+                            radius: 55,
+                            backgroundImage: imagePath == null
+                                ? const AssetImage('assets/images/download.png')
+                                    as ImageProvider
+                                : FileImage(File(imagePath!)),
+                          ),
+                          Positioned(
+                              bottom: 0,
+                              right: 0,
+                              child: InkWell(
+                                onTap: () {
+                                  imagePick();
+                                },
+                                child: const Icon(
+                                  Icons.add_a_photo,
+                                  size: 30,
+                                ),
+                              ))
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
                       DetailsPageTwoPartOneWidget(
                           adressTextController: _adressTextController,
                           descriptionTextController: _descriptionTextController,
@@ -404,15 +464,17 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
                 state:
                     currentStep > 2 ? StepState.complete : StepState.disabled,
                 title: const Text('2'),
-                
                 content: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CustomTextFormField(
-                      text: "Why do you think we should onboard you?",
-                      hintText: "Why we should onboard you?",
-                    ),
+                    TextFeildWidgets(
+                        controller: onboardTextController,
+                        hintText: "Why we should onboard you?",
+                        fieldName: "Why do you think we should onboard you?",
+                        keyboardType: TextInputType.text,
+                        maxLines: 1,
+                        readOnly: false),
                     const Text(
                       "Select your highest qualification",
                       style: TextStyle(
@@ -442,7 +504,21 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
                       ),
                     ),
                     const SizedBox(height: 25),
-                    const DetailsPageThreeWidget(),
+                    DetailsPageThreeWidget(
+                      instagramProfileLinkController:
+                          instagramProfileLinkController,
+                      earningExpectationController:
+                          earningExpectationController,
+                      facebookProfileLinkController:
+                          facebookProfileLinkController,
+                      learnAstrologyContoller: learnAstrologyContoller,
+                      linkedInProfileLinkController:
+                          linkedInProfileLinkController,
+                      websiteProfileLinkController:
+                          websiteProfileLinkController,
+                      youtubeProfileLinkController:
+                          youtubeProfileLinkController,
+                    ),
                     const Text(
                       "Main source of business(other than astrology)?",
                       style: TextStyle(
@@ -506,28 +582,6 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
                         ),
                       ],
                     ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          "Long bio",
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        TextFormField(
-                          maxLines: 3,
-                          decoration: const InputDecoration(
-                            hintText: "Please let us know more about you",
-                            border: OutlineInputBorder(gapPadding: 30),
-                          ),
-                        ),
-                        const SizedBox(height: 25),
-                      ],
-                    )
                   ],
                 ),
               ),

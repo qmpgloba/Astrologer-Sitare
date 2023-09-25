@@ -42,7 +42,7 @@ class _EnterDetailsScreenState extends State<EditProfileScreen> {
     _phoneNumberTextController = TextEditingController(text: userData!['phone number']);
     _experienceTextController = TextEditingController(text: userData!['experience(in years)'].toString());
     _descriptionTextController = TextEditingController(text: userData!['personal description']);
-portfolioURL = userData!['portfolio'];
+
 
 currentFileName= getFileNameFromUrl(userData!['portfolio']);
   }
@@ -147,24 +147,16 @@ currentFileName= getFileNameFromUrl(userData!['portfolio']);
                 ),
                 GestureDetector(
                   onTap: () async {
-                    if (_formKey.currentState!.validate()) {
-                      portfolioURL = await uploadFile(_selectedFile)?? portfolioURL;
-                      AstrologerModel astrologer = AstrologerModel(
-                        fullName: _nameTextController.text,
-                        emailAddress: _emailTextController.text,
-                        phoneNumber: _phoneNumberTextController.text,
-                        officeAddress: _adressTextController.text,
-                        description: _descriptionTextController.text,
-                        years: int.parse(_experienceTextController.text),
-                        portfolio: portfolioURL,
-                      );
-                      await updateAstrologerInformation(astrologer,documentID!);
-                      Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(
-                            builder: (context) => const ProfileScreen(),
-                          ),
-                          (route) => false);
-                    }
+                    // if (_formKey.currentState!.validate()) {
+                    //   portfolioURL = await uploadFile(_selectedFile)?? portfolioURL;
+                    //   // AstrologerModel astrologer = AstrologerModel(fullName: _nameTextController.text, emailAddress: _emailTextController.text, phoneNumber: _phoneNumberTextController.text, profilePic: profilePic, officeAddress: officeAddress, description: description, experienceYears: experienceYears, contributeHours: contributeHours, heardAboutSitare: heardAboutSitare, gender: gender, martialStatus: martialStatus, dateOfBirth: dateOfBirth, languages: languages, skills: skills, workingOnlinePLatform: workingOnlinePLatform, instagramLink: instagramLink, linkedInLink: linkedInLink, websiteLink: websiteLink, facebookLink: facebookLink, youtubeLink: youtubeLink, business: business, anyoneReferSitare: anyoneReferSitare, onBorad: onBorad, qualification: qualification, earningExpectation: earningExpectation, learnAboutAstrology: learnAboutAstrology, foreignCountries: foreignCountries, biggestChallenge: biggestChallenge, currentWorkingStatus: currentWorkingStatus)
+                    //   await updateAstrologerInformation(astrologer,documentID!);
+                    //   Navigator.of(context).pushAndRemoveUntil(
+                    //       MaterialPageRoute(
+                    //         builder: (context) => const ProfileScreen(),
+                    //       ),
+                    //       (route) => false);
+                    // }
                   },
                   child: Container(
                     width: double.maxFinite,

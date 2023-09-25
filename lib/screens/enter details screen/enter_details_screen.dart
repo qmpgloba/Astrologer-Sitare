@@ -131,24 +131,24 @@ class _EnterDetailsScreenState extends State<EnterDetailsScreen> {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    if (_formKey.currentState!.validate()) {
-                      portfolioURL = await uploadFile(_selectedFile);
-                      AstrologerModel astrologer = AstrologerModel(
-                        fullName: _nameTextController.text,
-                        emailAddress: _emailTextController.text,
-                        phoneNumber: _phoneNumberTextController.text,
-                        officeAddress: _adressTextController.text,
-                        description: _descriptionTextController.text,
-                        years: int.parse(_experienceTextController.text),
-                        portfolio: portfolioURL,
-                      );
-                      await createAstrologer(astrologer);
-                      Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(
-                            builder: (context) => ProfileScreen(),
-                          ),
-                          (route) => false);
-                    }
+                    // if (_formKey.currentState!.validate()) {
+                    //   portfolioURL = await uploadFile(_selectedFile);
+                    //   AstrologerModel astrologer = AstrologerModel(
+                    //     fullName: _nameTextController.text,
+                    //     emailAddress: _emailTextController.text,
+                    //     phoneNumber: _phoneNumberTextController.text,
+                    //     officeAddress: _adressTextController.text,
+                    //     description: _descriptionTextController.text,
+                    //     years: int.parse(_experienceTextController.text),
+                        
+                    //   );
+                    //   await createAstrologer(astrologer);
+                    //   Navigator.of(context).pushAndRemoveUntil(
+                    //       MaterialPageRoute(
+                    //         builder: (context) => ProfileScreen(),
+                    //       ),
+                    //       (route) => false);
+                    // }
                   },
                   child: Container(
                     width: double.maxFinite,
