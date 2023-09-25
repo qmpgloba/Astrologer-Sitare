@@ -11,7 +11,7 @@ import 'package:sitare_astrologer_partner/functions/add_astrologer_function.dart
 import 'package:sitare_astrologer_partner/model/astrologer_model.dart';
 import 'package:sitare_astrologer_partner/screens/home%20screen/home_screen.dart';
 import 'package:sitare_astrologer_partner/widgets/alertbox.dart';
-import '../enter details screen/widgets/textfeild_widget.dart';
+import 'widgets/textfeild_widget.dart';
 import 'widgets/details_page_one_widget.dart';
 import 'widgets/details_page_three_widget.dart';
 import 'widgets/details_page_two_part_one_widget.dart';
@@ -225,7 +225,6 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.sizeOf(context);
     return Scaffold(
       backgroundColor: whiteColor,
       appBar: AppBar(

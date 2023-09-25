@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sitare_astrologer_partner/screens/enter%20details%20screen/widgets/textfeild_widget.dart';
+import 'package:sitare_astrologer_partner/screens/details%20screen/widgets/textfeild_widget.dart';
 
 class DetailsPageTwoPartOneWidget extends StatelessWidget {
   const DetailsPageTwoPartOneWidget({

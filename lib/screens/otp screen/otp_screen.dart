@@ -9,6 +9,7 @@ import 'package:sitare_astrologer_partner/screens/details%20screen/details_scree
 import 'package:sitare_astrologer_partner/screens/home%20screen/home_screen.dart';
 import 'package:sitare_astrologer_partner/widgets/alertbox.dart';
 
+// ignore: must_be_immutable
 class OTPScreen extends StatelessWidget {
   OTPScreen({super.key, required this.mobileNumber});
   final String mobileNumber;
@@ -44,20 +45,23 @@ class OTPScreen extends StatelessWidget {
                     await verifyOTP(pin);
                     bool exist = await checkPhoneNumberExistence(mobileNumber);
                     if (exist) {
+                      // ignore: use_build_context_synchronously
                       Navigator.of(context).pushAndRemoveUntil(
                           MaterialPageRoute(
-                            builder: (context) => HomeScreen(),
+                            builder: (context) => const HomeScreen(),
                           ),
                           (route) => false);
                     } else {
+                      // ignore: use_build_context_synchronously
                       Navigator.of(context).pushAndRemoveUntil(
                           MaterialPageRoute(
-                            builder: (context) => DetailsEnterScreen(),
+                            builder: (context) => const DetailsEnterScreen(),
                           ),
                           (route) => false);
                     }
                     // ignore: unused_catch_clause
                   } on FirebaseAuthException catch (e) {
+                    // ignore: use_build_context_synchronously
                     showAlertBox(context, 'Invalid OTP', whiteColor, 'Close');
                   }
                 },

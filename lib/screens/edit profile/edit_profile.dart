@@ -4,7 +4,7 @@ import 'package:sitare_astrologer_partner/constants/ui_constants.dart';
 import 'package:sitare_astrologer_partner/functions/add_astrologer_function.dart';
 import 'package:sitare_astrologer_partner/screens/profile%20screen/profile_screen.dart';
 
-import '../enter details screen/widgets/textfeild_widget.dart';
+import '../details screen/widgets/textfeild_widget.dart';
 
 
 class EditProfileScreen extends StatefulWidget {
