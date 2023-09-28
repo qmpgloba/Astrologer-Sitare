@@ -18,7 +18,7 @@ class ProfileScreen extends StatelessWidget {
         backgroundColor: whiteColor,
         appBar: AppBar(
           elevation: 0.5,
-          title: const Text('Profile'),
+          title: const Text('Profile',style: TextStyle(color: whiteColor)),
           actions: [
             IconButton(
                 onPressed: () async {
@@ -45,7 +45,6 @@ class ProfileScreen extends StatelessWidget {
               } else if (snapshot.hasData && snapshot.data != null) {
                  userData = snapshot.data!.data() as Map<String, dynamic>;
                  documentID = snapshot.data!.id;
-                 print(documentID);
                 return SafeArea(
                     child: Center(
                   child: Padding(
@@ -55,11 +54,11 @@ class ProfileScreen extends StatelessWidget {
                         AutoSizeText(
                           userData!['name'],
                           minFontSize: 18,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold),
                           maxLines: 1,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 18,
                         ),
                         Stack(
@@ -109,7 +108,7 @@ class ProfileScreen extends StatelessWidget {
                         ),
                         GestureDetector(
                           onTap: ()  {
-                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => EditProfileScreen(),));
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => const EditProfileScreen(),));
                           },
                           child: Container(
                             width: double.maxFinite,
@@ -191,11 +190,11 @@ class AstrologerProfileDetailsWidget extends StatelessWidget {
           SizedBox(
             child: Text(
               feildName,
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
           ),
           SizedBox(
-              width: size.width * .5,
+              width: size.width * .4,
               child: AutoSizeText(
                 astrologerDetail,
                 style: const TextStyle(

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:sitare_astrologer_partner/model/astrologer_model.dart';
 
 createAstrologer(AstrologerModel astrologer) async {
@@ -42,6 +43,27 @@ Future<String?> uploadFile(PlatformFile? selectedFile) async {
 }
 
 
+
+Future<String> addProfileImge(XFile imagePicked) async{
+   Reference referenceRoot = FirebaseStorage.instance.ref();
+     Reference referenceDirImages = referenceRoot.child('images');
+
+     String uniqueFileName = DateTime.now().millisecondsSinceEpoch.toString();
+
+     Reference referenceImageToUpload = referenceDirImages.child(uniqueFileName);
+
+      
+      try {
+       await referenceImageToUpload.putFile(File(imagePicked.path));
+      String  imageUrl =await referenceImageToUpload.getDownloadURL();
+      return imageUrl;
+      } catch (e) {
+        return "";
+        
+      }
+    }
+
+
 Future<void> updateAstrologerInformation(AstrologerModel astrologer,String docID) async {
   final CollectionReference astrologersCollection = FirebaseFirestore.instance.collection('Astrologerdetails');
   String documentID = docID;
@@ -53,9 +75,10 @@ Future<void> updateAstrologerInformation(AstrologerModel astrologer,String docID
   'phone number': astrologer.phoneNumber,
   'office address': astrologer.officeAddress,
   'personal description': astrologer.description,
-  'experience(in years)': astrologer.years,
-  'portfolio': astrologer.portfolio,
+  'experience(in years)': astrologer.experienceYears,
+ 
 });
+    // ignore: empty_catches
     } catch (e) {}
   }
 

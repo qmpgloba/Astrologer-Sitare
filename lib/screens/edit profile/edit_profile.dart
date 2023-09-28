@@ -2,14 +2,13 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:sitare_astrologer_partner/constants/ui_constants.dart';
 import 'package:sitare_astrologer_partner/functions/add_astrologer_function.dart';
-import 'package:sitare_astrologer_partner/model/astrologer_model.dart';
 import 'package:sitare_astrologer_partner/screens/profile%20screen/profile_screen.dart';
 
-import '../enter details screen/widgets/textfeild_widget.dart';
+import '../details screen/widgets/textfeild_widget.dart';
 
 
 class EditProfileScreen extends StatefulWidget {
-  EditProfileScreen({super.key});
+  const EditProfileScreen({super.key});
 
   @override
   State<EditProfileScreen> createState() => _EnterDetailsScreenState();
@@ -34,7 +33,7 @@ class _EnterDetailsScreenState extends State<EditProfileScreen> {
   late final TextEditingController _descriptionTextController;
       @override
   void initState() {
-    // TODO: implement initState
+   
     super.initState();
     _nameTextController = TextEditingController(text: userData!['name']);
     _emailTextController = TextEditingController(text: userData!['email']);
@@ -42,7 +41,7 @@ class _EnterDetailsScreenState extends State<EditProfileScreen> {
     _phoneNumberTextController = TextEditingController(text: userData!['phone number']);
     _experienceTextController = TextEditingController(text: userData!['experience(in years)'].toString());
     _descriptionTextController = TextEditingController(text: userData!['personal description']);
-portfolioURL = userData!['portfolio'];
+
 
 currentFileName= getFileNameFromUrl(userData!['portfolio']);
   }
@@ -67,13 +66,12 @@ currentFileName= getFileNameFromUrl(userData!['portfolio']);
 
   @override
   Widget build(BuildContext context) {
-    print(userData!['name']);
     Size size = MediaQuery.sizeOf(context);
     return Scaffold(
       backgroundColor: whiteColor,
       appBar: AppBar(
-        backgroundColor: PRIMARY_COLOR,
-        title: const Text('Edit Information'),
+        backgroundColor: blackColor,
+        title: const Text('Edit Information',style: TextStyle(color: whiteColor),),
         centerTitle: true,
       ),
       body: Padding(
@@ -147,29 +145,21 @@ currentFileName= getFileNameFromUrl(userData!['portfolio']);
                 ),
                 GestureDetector(
                   onTap: () async {
-                    if (_formKey.currentState!.validate()) {
-                      portfolioURL = await uploadFile(_selectedFile)?? portfolioURL;
-                      AstrologerModel astrologer = AstrologerModel(
-                        fullName: _nameTextController.text,
-                        emailAddress: _emailTextController.text,
-                        phoneNumber: _phoneNumberTextController.text,
-                        officeAddress: _adressTextController.text,
-                        description: _descriptionTextController.text,
-                        years: int.parse(_experienceTextController.text),
-                        portfolio: portfolioURL,
-                      );
-                      await updateAstrologerInformation(astrologer,documentID!);
-                      Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(
-                            builder: (context) => const ProfileScreen(),
-                          ),
-                          (route) => false);
-                    }
+                    // if (_formKey.currentState!.validate()) {
+                    //   portfolioURL = await uploadFile(_selectedFile)?? portfolioURL;
+                    //   // AstrologerModel astrologer = AstrologerModel(fullName: _nameTextController.text, emailAddress: _emailTextController.text, phoneNumber: _phoneNumberTextController.text, profilePic: profilePic, officeAddress: officeAddress, description: description, experienceYears: experienceYears, contributeHours: contributeHours, heardAboutSitare: heardAboutSitare, gender: gender, martialStatus: martialStatus, dateOfBirth: dateOfBirth, languages: languages, skills: skills, workingOnlinePLatform: workingOnlinePLatform, instagramLink: instagramLink, linkedInLink: linkedInLink, websiteLink: websiteLink, facebookLink: facebookLink, youtubeLink: youtubeLink, business: business, anyoneReferSitare: anyoneReferSitare, onBorad: onBorad, qualification: qualification, earningExpectation: earningExpectation, learnAboutAstrology: learnAboutAstrology, foreignCountries: foreignCountries, biggestChallenge: biggestChallenge, currentWorkingStatus: currentWorkingStatus)
+                    //   await updateAstrologerInformation(astrologer,documentID!);
+                    //   Navigator.of(context).pushAndRemoveUntil(
+                    //       MaterialPageRoute(
+                    //         builder: (context) => const ProfileScreen(),
+                    //       ),
+                    //       (route) => false);
+                    // }
                   },
                   child: Container(
                     width: double.maxFinite,
                     decoration: BoxDecoration(
-                        color: PRIMARY_COLOR,
+                        color: blackColor,
                         borderRadius: BorderRadius.circular(3)),
                     child: const Padding(
                       padding:
