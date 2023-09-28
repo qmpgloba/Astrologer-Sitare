@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:sitare_astrologer_partner/constants/ui_constants.dart';
 import 'package:sitare_astrologer_partner/screens/login%20screen/login_screen.dart';
 
-
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -20,11 +18,12 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: blackColor,
         // primarySwatch: ,
+        fontFamily: 'Muli',
         colorScheme: ColorScheme.fromSeed(seedColor: blackColor),
         // scaffoldBackgroundColor: PRIMARY_COLOR,
         useMaterial3: true,
       ),
-      home:  LoginScreen(),
+      home: LoginScreen(),
     );
   }
 }
