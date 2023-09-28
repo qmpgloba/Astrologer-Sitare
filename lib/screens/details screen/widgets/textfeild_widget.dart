@@ -24,24 +24,60 @@ class TextFeildWidgets extends StatelessWidget {
       children: [
         Text(
           fieldName,
-          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
         TextFormField(
+          
           keyboardType: keyboardType,
           controller: controller,
           style: const TextStyle(color: Colors.black),
           maxLines: maxLines,
+          maxLength: hintText == 'Phone Number'? 10 : null,
+        
           decoration: InputDecoration(
+            counterText: '',
             border: const OutlineInputBorder(),
             hintText: hintText,
             hintStyle: const TextStyle(color: FONT_COLOR),
           ),
           readOnly: readOnly,
+          validator: (value) {
+            if (hintText == 'Email') {
+              return validateEmail(value);
+            } else if (hintText == 'Phone Number') {
+              return validatePhoneNumber(value);
+            } else {
+              return value!.isEmpty ? 'Please fill the feild' : null;
+            }
+            // return null;
+          },
         ),
         const SizedBox(
           height: 20,
         ),
       ],
     );
+  }
+}
+
+String? validateEmail(String? value) {
+  if (value!.isEmpty) {
+    return 'Please enter your Email';
+  } else if (value.isEmpty ||
+      !RegExp(r'^[\w-]+(?:\.[\w-]+)*@(?:[\w-]+\.)+[a-zA-Z]{2,7}$')
+          .hasMatch(value)) {
+    return 'Enter valid Email';
+  } else {
+    return null;
+  }
+}
+
+String? validatePhoneNumber(String? value) {
+  if (value!.isEmpty) {
+    return 'Please enter your phone number';
+  } else if (value.isEmpty || value.length < 10 || value.length>10) {
+    return 'Enter valid phone number';
+  } else {
+    return null;
   }
 }
