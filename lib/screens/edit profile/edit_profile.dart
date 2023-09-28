@@ -1,40 +1,53 @@
-
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:sitare_astrologer_partner/constants/ui_constants.dart';
 import 'package:sitare_astrologer_partner/functions/add_astrologer_function.dart';
-import 'package:sitare_astrologer_partner/model/astrologer_model.dart';
-import 'widgets/textfeild_widget.dart';
+import 'package:sitare_astrologer_partner/screens/profile%20screen/profile_screen.dart';
 
-class EnterDetailsScreen extends StatefulWidget {
-  EnterDetailsScreen({super.key});
+import '../details screen/widgets/textfeild_widget.dart';
+
+
+class EditProfileScreen extends StatefulWidget {
+  const EditProfileScreen({super.key});
 
   @override
-  State<EnterDetailsScreen> createState() => _EnterDetailsScreenState();
+  State<EditProfileScreen> createState() => _EnterDetailsScreenState();
 }
 
-class _EnterDetailsScreenState extends State<EnterDetailsScreen> {
+class _EnterDetailsScreenState extends State<EditProfileScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+   PlatformFile? _selectedFile;
+  late String portfolioURL;
+   String? currentFileName;
 
-  final TextEditingController _nameTextController = TextEditingController();
+  late final TextEditingController _nameTextController;
 
-  final TextEditingController _emailTextController = TextEditingController();
+  late final TextEditingController _emailTextController;
 
-  final TextEditingController _adressTextController = TextEditingController();
+  late final TextEditingController _adressTextController;
 
-  final TextEditingController _phoneNumberTextController =
-      TextEditingController();
+  late final TextEditingController _phoneNumberTextController;
 
-  final TextEditingController _experienceTextController =
-      TextEditingController();
+  late final TextEditingController _experienceTextController;
 
-  final TextEditingController _descriptionTextController =
-      TextEditingController();
+  late final TextEditingController _descriptionTextController;
+      @override
+  void initState() {
+   
+    super.initState();
+    _nameTextController = TextEditingController(text: userData!['name']);
+    _emailTextController = TextEditingController(text: userData!['email']);
+    _adressTextController = TextEditingController(text: userData!['office address']);
+    _phoneNumberTextController = TextEditingController(text: userData!['phone number']);
+    _experienceTextController = TextEditingController(text: userData!['experience(in years)'].toString());
+    _descriptionTextController = TextEditingController(text: userData!['personal description']);
 
+
+currentFileName= getFileNameFromUrl(userData!['portfolio']);
+  }
 
   // String? fileName;
-  PlatformFile? _selectedFile;
-  String? portfolioURL;
+ 
 
   void _pickFile() async {
     FilePickerResult? result = await FilePicker.platform
@@ -57,8 +70,8 @@ class _EnterDetailsScreenState extends State<EnterDetailsScreen> {
     return Scaffold(
       backgroundColor: whiteColor,
       appBar: AppBar(
-        backgroundColor: PRIMARY_COLOR,
-        title: const Text('Astrologer Information'),
+        backgroundColor: blackColor,
+        title: const Text('Edit Information',style: TextStyle(color: whiteColor),),
         centerTitle: true,
       ),
       body: Padding(
@@ -124,7 +137,7 @@ class _EnterDetailsScreenState extends State<EnterDetailsScreen> {
                       },
                       icon: const Icon(Icons.attach_file),
                       label: _selectedFile == null
-                          ? const Text('Attach file')
+                          ?  Text(currentFileName??'Attach file')
                           : Text(_selectedFile!.name)),
                 ),
                 const SizedBox(
@@ -132,24 +145,21 @@ class _EnterDetailsScreenState extends State<EnterDetailsScreen> {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    if (_formKey.currentState!.validate()) {
-                      portfolioURL = await uploadFile(_selectedFile);
-                      AstrologerModel astrologer = AstrologerModel(
-                        fullName: _nameTextController.text,
-                        emailAddress: _emailTextController.text,
-                        phoneNumber: _phoneNumberTextController.text,
-                        officeAddress: _adressTextController.text,
-                        description: _descriptionTextController.text,
-                        years: int.parse(_experienceTextController.text),
-                        portfolio: portfolioURL,
-                      );
-                      createAstrologer(astrologer);
-                    }
+                    // if (_formKey.currentState!.validate()) {
+                    //   portfolioURL = await uploadFile(_selectedFile)?? portfolioURL;
+                    //   // AstrologerModel astrologer = AstrologerModel(fullName: _nameTextController.text, emailAddress: _emailTextController.text, phoneNumber: _phoneNumberTextController.text, profilePic: profilePic, officeAddress: officeAddress, description: description, experienceYears: experienceYears, contributeHours: contributeHours, heardAboutSitare: heardAboutSitare, gender: gender, martialStatus: martialStatus, dateOfBirth: dateOfBirth, languages: languages, skills: skills, workingOnlinePLatform: workingOnlinePLatform, instagramLink: instagramLink, linkedInLink: linkedInLink, websiteLink: websiteLink, facebookLink: facebookLink, youtubeLink: youtubeLink, business: business, anyoneReferSitare: anyoneReferSitare, onBorad: onBorad, qualification: qualification, earningExpectation: earningExpectation, learnAboutAstrology: learnAboutAstrology, foreignCountries: foreignCountries, biggestChallenge: biggestChallenge, currentWorkingStatus: currentWorkingStatus)
+                    //   await updateAstrologerInformation(astrologer,documentID!);
+                    //   Navigator.of(context).pushAndRemoveUntil(
+                    //       MaterialPageRoute(
+                    //         builder: (context) => const ProfileScreen(),
+                    //       ),
+                    //       (route) => false);
+                    // }
                   },
                   child: Container(
                     width: double.maxFinite,
                     decoration: BoxDecoration(
-                        color: PRIMARY_COLOR,
+                        color: blackColor,
                         borderRadius: BorderRadius.circular(3)),
                     child: const Padding(
                       padding:
