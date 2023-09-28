@@ -24,14 +24,18 @@ class TextFeildWidgets extends StatelessWidget {
       children: [
         Text(
           fieldName,
-          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
         TextFormField(
+          
           keyboardType: keyboardType,
           controller: controller,
           style: const TextStyle(color: Colors.black),
           maxLines: maxLines,
+          maxLength: hintText == 'Phone Number'? 10 : null,
+        
           decoration: InputDecoration(
+            counterText: '',
             border: const OutlineInputBorder(),
             hintText: hintText,
             hintStyle: const TextStyle(color: FONT_COLOR),

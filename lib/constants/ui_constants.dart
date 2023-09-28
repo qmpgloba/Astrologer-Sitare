@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 // ignore: constant_identifier_names
-const PRIMARY_COLOR = Color(0xff5324ed);
+// const PRIMARY_COLOR = Color(0xff5324ed);
 // ignore: constant_identifier_names
 const FONT_COLOR = Color(0xffb9b9b9);
 const greyColor = Colors.grey;
