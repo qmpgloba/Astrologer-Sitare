@@ -2,9 +2,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:sitare_astrologer_partner/constants/ui_constants.dart';
 import 'package:sitare_astrologer_partner/screens/auth%20wrapper/auth_wrapper.dart';
-import 'package:sitare_astrologer_partner/screens/details%20screen/details_screen.dart';
-import 'package:sitare_astrologer_partner/screens/home%20screen/home_screen.dart';
-import 'package:sitare_astrologer_partner/screens/login%20screen/login_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,7 +23,7 @@ class MyApp extends StatelessWidget {
         // scaffoldBackgroundColor: PRIMARY_COLOR,
         useMaterial3: true,
       ),
-      home: DetailsEnterScreen(),
+      home: const AuthWrapper(),
     );
   }
 }

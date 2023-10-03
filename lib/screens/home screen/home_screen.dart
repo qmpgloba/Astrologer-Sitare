@@ -13,10 +13,10 @@ class HomeScreen extends StatelessWidget {
       backgroundColor: whiteColor,
       appBar: AppBar(
         backgroundColor: blackColor,
-        iconTheme: IconThemeData(
+        iconTheme: const IconThemeData(
           color: whiteColor
         ),
-        title: Text('Home Screen',style: TextStyle(color: whiteColor),),
+        title: const Text('Home Screen',style: TextStyle(color: whiteColor),),
         centerTitle: true,
         leading: IconButton(onPressed: () async{
            await FirebaseAuth.instance.signOut().then((value) {
@@ -27,7 +27,7 @@ class HomeScreen extends StatelessWidget {
                               ),
                               (route) => false);
                         });
-        }, icon: Icon(Icons.logout)),
+        }, icon: const Icon(Icons.logout)),
         actions: [
           IconButton(onPressed: () {
             Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ProfileScreen(),));

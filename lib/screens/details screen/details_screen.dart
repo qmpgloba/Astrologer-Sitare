@@ -707,7 +707,7 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
                         const Text(
                           'Are you currently working a fulltime job?',
                           style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold),
+                              fontSize: 16, fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(
                           width: 10,
@@ -744,7 +744,7 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
                             workingStatus = value;
                           },
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                       ],
