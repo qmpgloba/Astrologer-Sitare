@@ -49,7 +49,7 @@ class DetailsPageThreeWidget extends StatelessWidget {
             controller: earningExpectationController,
             hintText: "Minimum monthly earning expectation",
             fieldName: "Minimum Earning Expectation from Sitare",
-            keyboardType: TextInputType.text,
+            keyboardType: TextInputType.number,
             maxLines: 1,
             readOnly: false),
         TextFeildWidgets(

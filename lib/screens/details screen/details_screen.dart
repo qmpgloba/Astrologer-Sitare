@@ -210,8 +210,9 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
                           builder: (context) => const HomeScreen(),
                         ),
                         (route) => false);
-                  }else{
-                    showAlertBox(context, 'Please fill all the feilds', whiteColor, 'close');
+                  } else {
+                    showAlertBox(context, 'Please fill all the feilds',
+                        whiteColor, 'close');
                   }
                 },
                 child: const Text(
@@ -229,7 +230,10 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
       backgroundColor: whiteColor,
       appBar: AppBar(
         backgroundColor: blackColor,
-        title: const Text('Details',style: TextStyle(color: whiteColor),),
+        title: const Text(
+          'Details',
+          style: TextStyle(color: whiteColor),
+        ),
         centerTitle: true,
       ),
       body: Form(
@@ -245,7 +249,15 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
             elevation: 0,
             steps: [
               Step(
-                label: currentStep == 0? const  AutoSizeText('Personal Details',maxFontSize: 12,maxLines: 2,minFontSize: 10,style: TextStyle(color: blackColor),): const Text(''),
+                label: currentStep == 0
+                    ? const AutoSizeText(
+                        'Personal Details',
+                        maxFontSize: 12,
+                        maxLines: 2,
+                        minFontSize: 10,
+                        style: TextStyle(color: blackColor),
+                      )
+                    : const Text(''),
                 isActive: currentStep >= 0,
                 state:
                     currentStep > 0 ? StepState.complete : StepState.disabled,
@@ -256,7 +268,15 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
                     phoneNumberTextController: _phoneNumberTextController),
               ),
               Step(
-                label: currentStep == 1? const  AutoSizeText('Skill Details',maxFontSize: 12,maxLines: 2,minFontSize: 10,style: TextStyle(color: blackColor),): const Text(''),
+                  label: currentStep == 1
+                      ? const AutoSizeText(
+                          'Skill Details',
+                          maxFontSize: 12,
+                          maxLines: 2,
+                          minFontSize: 10,
+                          style: TextStyle(color: blackColor),
+                        )
+                      : const Text(''),
                   isActive: currentStep >= 1,
                   state:
                       currentStep > 1 ? StepState.complete : StepState.disabled,
@@ -512,7 +532,15 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
                     ],
                   )),
               Step(
-                label: currentStep == 2? const  AutoSizeText('Other Details',maxFontSize: 12,maxLines: 2,minFontSize: 10,style: TextStyle(color: blackColor),): const Text(''),
+                label: currentStep == 2
+                    ? const AutoSizeText(
+                        'Other Details',
+                        maxFontSize: 12,
+                        maxLines: 2,
+                        minFontSize: 10,
+                        style: TextStyle(color: blackColor),
+                      )
+                    : const Text(''),
                 isActive: currentStep >= 2,
                 state:
                     currentStep > 2 ? StepState.complete : StepState.disabled,
@@ -642,7 +670,15 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
                 ),
               ),
               Step(
-                label: currentStep == 3? const  AutoSizeText('Assignment',maxFontSize: 12,maxLines: 2,minFontSize: 10,style: TextStyle(color: blackColor),): const Text(''),
+                label: currentStep == 3
+                    ? const AutoSizeText(
+                        'Assignment',
+                        maxFontSize: 12,
+                        maxLines: 2,
+                        minFontSize: 10,
+                        style: TextStyle(color: blackColor),
+                      )
+                    : const Text(''),
                 isActive: currentStep >= 3,
                 state:
                     currentStep > 3 ? StepState.complete : StepState.disabled,
@@ -677,11 +713,12 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
                           width: 10,
                         ),
                         DropdownButtonFormField(
+                          isExpanded: true,
                           hint: const AutoSizeText(
                             'Please let us know from the below options',
                             maxLines: 1,
                             maxFontSize: 16,
-                            style: TextStyle(fontSize: 14),
+                            // style: TextStyle(fontSize: 1),
                           ),
                           decoration: const InputDecoration(
                               border: OutlineInputBorder()),
@@ -689,19 +726,26 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
                               .map(
                                 (String items) => DropdownMenuItem(
                                   value: items,
-                                  child: AutoSizeText(
+                                  child: Text(
                                     items,
-                                    maxLines: 2,
-                                    maxFontSize: 12,
-                                    minFontSize: 8,
-                                    style: const TextStyle(fontSize: 12),
+                                    softWrap: true,
                                   ),
+                                  // child: AutoSizeText(
+                                  //   items,
+                                  //   maxLines: 2,
+                                  //   maxFontSize: 14,
+                                  //   minFontSize: 10,
+                                  //   style: const TextStyle(fontSize: 12),
+                                  // ),
                                 ),
                               )
                               .toList(),
                           onChanged: (value) {
                             workingStatus = value;
                           },
+                        ),
+                        SizedBox(
+                          height: 10,
                         ),
                       ],
                     ),
