@@ -6,6 +6,7 @@ import 'package:sitare_astrologer_partner/constants/ui_constants.dart';
 import 'package:sitare_astrologer_partner/functions/user%20profile/get_user_profile.dart';
 import 'package:sitare_astrologer_partner/screens/edit%20profile/edit_profile.dart';
 import 'package:sitare_astrologer_partner/screens/login%20screen/login_screen.dart';
+import 'package:sitare_astrologer_partner/screens/profile%20screen/widgets/astrologer_profile_widget.dart';
 Map<String, dynamic>? userData;
 String? documentID;
 class ProfileScreen extends StatelessWidget {
@@ -166,46 +167,5 @@ class ProfileScreen extends StatelessWidget {
                 return const Text('Please add deatials');
               }
             }));
-  }
-}
-
-class AstrologerProfileDetailsWidget extends StatelessWidget {
-  const AstrologerProfileDetailsWidget({
-    super.key,
-    required this.feildName,
-    required this.astrologerDetail,
-    required this.size,
-  });
-  final String feildName;
-  final String astrologerDetail;
-  final Size size;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 10),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          SizedBox(
-            child: Text(
-              feildName,
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            ),
-          ),
-          SizedBox(
-              width: size.width * .4,
-              child: AutoSizeText(
-                astrologerDetail,
-                style: const TextStyle(
-                  fontSize: 15,
-                ),
-                textAlign: TextAlign.end,
-                maxLines: 3,
-                maxFontSize: 16,
-              ))
-        ],
-      ),
-    );
   }
 }
