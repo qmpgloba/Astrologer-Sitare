@@ -1,26 +1,97 @@
 {
   "project_info": {
-    "project_number": "75462424835",
-    "project_id": "sitare-astrologer",
-    "storage_bucket": "sitare-astrologer.appspot.com"
+    "project_number": "1090327514590",
+    "project_id": "sitare-afebd",
+    "storage_bucket": "sitare-afebd.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:75462424835:android:7e81cedf27ed8bce015136",
+        "mobilesdk_app_id": "1:1090327514590:android:0197bb0b83f08fbc3d214f",
         "android_client_info": {
           "package_name": "com.example.sitare_astrologer_partner"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "1090327514590-d69vh3me0r15gqgsbu6tltfihtrs7pin.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.sitare_astrologer_partner",
+            "certificate_hash": "d31ba64e7dac199cd6ba6e685ccc3cf99cfcade7"
+          }
+        },
+        {
+          "client_id": "1090327514590-go8tr0qs4t60vf80gh4ld7lgu8at024s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.sitare_astrologer_partner",
+            "certificate_hash": "59d7df10444fed69e7c7c3754a7324c51f50dd6a"
+          }
+        },
+        {
+          "client_id": "1090327514590-rllh1cbohc216ngsugffn8p492t6ds0n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyCB-Mk4fhwtGIZrxCVdtaAriG8Yw-z4L94"
+          "current_key": "AIzaSyCBjBLFzYkOjPFylT4Tc4XX_teTPJweU0A"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1090327514590-kil87jd4sf1ff3p3e5hj6f7jl3be4997.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1090327514590:android:3dcf510d13a18af23d214f",
+        "android_client_info": {
+          "package_name": "com.sitare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1090327514590-gcmlb1sbdl1tb5ce09g59m1gbgpdus2t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sitare",
+            "certificate_hash": "59d7df10444fed69e7c7c3754a7324c51f50dd6a"
+          }
+        },
+        {
+          "client_id": "1090327514590-pn6okelns6kekuislh8jn8ttchuretng.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sitare",
+            "certificate_hash": "d31ba64e7dac199cd6ba6e685ccc3cf99cfcade7"
+          }
+        },
+        {
+          "client_id": "1090327514590-rllh1cbohc216ngsugffn8p492t6ds0n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCBjBLFzYkOjPFylT4Tc4XX_teTPJweU0A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1090327514590-kil87jd4sf1ff3p3e5hj6f7jl3be4997.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
