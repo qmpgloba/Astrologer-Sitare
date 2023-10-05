@@ -170,8 +170,9 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
                     AstrologerModel astrologer = AstrologerModel(
                         fullName: _nameTextController.text.trim(),
                         emailAddress: _emailTextController.text.trim(),
-                        phoneNumber: _phoneNumberTextController.text.trim(),
-                        profilePic: imageUrl??=profileImage,
+                        phoneNumber:
+                            "+91" + _phoneNumberTextController.text.trim(),
+                        profilePic: imageUrl ??= profileImage,
                         officeAddress: _adressTextController.text.trim(),
                         description: _descriptionTextController.text.trim(),
                         experienceYears:
