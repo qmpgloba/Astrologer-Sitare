@@ -7,19 +7,22 @@ import 'package:sitare_astrologer_partner/functions/user%20profile/get_user_prof
 import 'package:sitare_astrologer_partner/screens/edit%20profile/edit_profile.dart';
 import 'package:sitare_astrologer_partner/screens/login%20screen/login_screen.dart';
 import 'package:sitare_astrologer_partner/screens/profile%20screen/widgets/astrologer_profile_widget.dart';
+
 Map<String, dynamic>? userData;
 String? documentID;
+
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
+    print(FirebaseAuth.instance.currentUser!.phoneNumber!);
     return Scaffold(
         backgroundColor: whiteColor,
         appBar: AppBar(
           elevation: 0.5,
-          title: const Text('Profile',style: TextStyle(color: whiteColor)),
+          title: const Text('Profile', style: TextStyle(color: whiteColor)),
           actions: [
             IconButton(
                 onPressed: () async {
@@ -36,16 +39,16 @@ class ProfileScreen extends StatelessWidget {
           ],
         ),
         body: FutureBuilder<DocumentSnapshot?>(
-            future:
-                getUserDataByEmail(FirebaseAuth.instance.currentUser!.email!),
+            future: getUserDataByNumber(
+                FirebaseAuth.instance.currentUser!.phoneNumber!),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(child: CircularProgressIndicator());
               } else if (snapshot.hasError) {
                 return Text('Error: ${snapshot.error}');
               } else if (snapshot.hasData && snapshot.data != null) {
-                 userData = snapshot.data!.data() as Map<String, dynamic>;
-                 documentID = snapshot.data!.id;
+                userData = snapshot.data!.data() as Map<String, dynamic>;
+                documentID = snapshot.data!.id;
                 return SafeArea(
                     child: Center(
                   child: Padding(
@@ -94,22 +97,25 @@ class ProfileScreen extends StatelessWidget {
                         AstrologerProfileDetailsWidget(
                             size: size,
                             feildName: 'Personal description',
-                            astrologerDetail: userData!['personal description']),
+                            astrologerDetail:
+                                userData!['personal description']),
                         AstrologerProfileDetailsWidget(
                             size: size,
                             feildName: 'Address',
-                            astrologerDetail:
-                                userData!['office address']),
+                            astrologerDetail: userData!['office address']),
                         AstrologerProfileDetailsWidget(
                             size: size,
                             feildName: 'Experience',
-                            astrologerDetail: "${userData!['experience(in years)']} Years"),
+                            astrologerDetail:
+                                "${userData!['experience(in years)']} Years"),
                         const SizedBox(
                           height: 20,
                         ),
                         GestureDetector(
-                          onTap: ()  {
-                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => const EditProfileScreen(),));
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const EditProfileScreen(),
+                            ));
                           },
                           child: Container(
                             width: double.maxFinite,
