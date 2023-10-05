@@ -46,6 +46,7 @@ createAstrologer(AstrologerModel astrologer) async {
 
 
 Future<String> addProfileImge(XFile imagePicked) async{
+  print('keri');
    Reference referenceRoot = FirebaseStorage.instance.ref();
      Reference referenceDirImages = referenceRoot.child('images');
 
@@ -56,7 +57,9 @@ Future<String> addProfileImge(XFile imagePicked) async{
       
       try {
        await referenceImageToUpload.putFile(File(imagePicked.path));
+       print('object');
       String  imageUrl =await referenceImageToUpload.getDownloadURL();
+      print(imageUrl);
       return imageUrl;
       } catch (e) {
         return profileImage;
