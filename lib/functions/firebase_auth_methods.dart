@@ -59,38 +59,38 @@ Future<String?> phoneAuthentication(String number) async {
     // showSnackBar(context, themeColor, e.message.toString());
   }
 }
- Future<String?> verifyOTP(String otp) async {
-    try {
-      // Create a PhoneAuthCredential using the verification ID and OTP code.
-      PhoneAuthCredential credential = PhoneAuthProvider.credential(
-        verificationId: verifyId,
-        smsCode: otp,
-      );
+//  Future<String?> verifyOTP(String otp) async {
+//     try {
+//       // Create a PhoneAuthCredential using the verification ID and OTP code.
+//       PhoneAuthCredential credential = PhoneAuthProvider.credential(
+//         verificationId: verifyId,
+//         smsCode: otp,
+//       );
 
-      // Sign in with the PhoneAuthCredential.
-      await _auth.signInWithCredential(credential);
+//       // Sign in with the PhoneAuthCredential.
+//       await _auth.signInWithCredential(credential);
 
-      // Get the user's authentication token.
-      User? user = _auth.currentUser;
-      if (user != null) {
-        String? token = await user.getIdToken();
-        // Use the token as needed.
-        return null; // Return null to indicate success.
-      } else {
-        return 'User not found'; // Handle the case where the user is not found.
-      }
-    } on FirebaseAuthException catch (e) {
-      // Handle FirebaseAuthException, e.g., show an error message.
-      return e.message.toString();
-    }
-  }
+//       // Get the user's authentication token.
+//       User? user = _auth.currentUser;
+//       if (user != null) {
+//         String? token = await user.getIdToken();
+//         // Use the token as needed.
+//         return null; // Return null to indicate success.
+//       } else {
+//         return 'User not found'; // Handle the case where the user is not found.
+//       }
+//     } on FirebaseAuthException catch (e) {
+//       // Handle FirebaseAuthException, e.g., show an error message.
+//       return e.message.toString();
+//     }
+//   }
 
-// Future<bool> verifyOTP(String otp) async {
-//   var credentials = await _auth.signInWithCredential(
-//       PhoneAuthProvider.credential(verificationId: verifyId, smsCode: otp));
+Future<bool> verifyOTP(String otp) async {
+  var credentials = await _auth.signInWithCredential(
+      PhoneAuthProvider.credential(verificationId: verifyId, smsCode: otp));
 
-//   return credentials.user != null ? true : false;
-// }
+  return credentials.user != null ? true : false;
+}
 
 Future<bool> checkPhoneNumberExistence(String mobileNumber) async {
   final phoneNumber = mobileNumber;
