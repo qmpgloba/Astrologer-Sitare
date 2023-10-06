@@ -248,9 +248,7 @@ class _EditProfileScreenState extends State<EditProfileScreen>
                                 CircleAvatar(
                                   radius: 55,
                                   backgroundImage: imagePath == null
-                                      ? const AssetImage(
-                                              'assets/images/download.png')
-                                          as ImageProvider
+                                      ? NetworkImage(imageUrl!) as ImageProvider
                                       : FileImage(File(imagePath!)),
                                 ),
                                 Positioned(
@@ -669,6 +667,7 @@ class _EditProfileScreenState extends State<EditProfileScreen>
                                   width: 10,
                                 ),
                                 DropdownButtonFormField(
+                                  value: workingStatus,
                                   isExpanded: true,
                                   hint: const AutoSizeText(
                                     'Please let us know from the below options',
@@ -790,7 +789,10 @@ class _EditProfileScreenState extends State<EditProfileScreen>
     );
     businessValue = userData!['main source of business'];
     qualificationValue = userData!['highest qualification'];
-    print(qualificationValue);
+    workingStatus = userData!['current working status'];
+    anyoneRefer = userData!['did anyone refer sitare'];
+    imageUrl = userData!['profile image'];
+    print(imageUrl);
   }
 
   updateProfile(AstrologerModel astrologer, String email) async {
