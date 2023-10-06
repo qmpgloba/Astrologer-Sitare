@@ -88,20 +88,19 @@ class AstrologerModel {
       "skills": skills,
       "working on any other online platform": workingOnlinePLatform,
       "onboard you": onBorad,
-      "highest qualification":qualification,
+      "highest qualification": qualification,
       "instagram profile link": instagramLink,
       "linkedin profile link": linkedInLink,
       "website profile link": websiteLink,
       "minimum earning expectation": earningExpectation,
       "form where did you learn astrology": learnAboutAstrology,
       "facebook profile link": facebookLink,
-      "youtube profile link":  youtubeLink,
+      "youtube profile link": youtubeLink,
       "main source of business": business,
       "did anyone refer sitare": anyoneReferSitare,
       "Number of foreign countries": foreignCountries,
       "biggest challenge": biggestChallenge,
       "current working status": currentWorkingStatus
-
     };
   }
 }
