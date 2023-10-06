@@ -567,10 +567,10 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
                     const SizedBox(height: 8),
                     DropdownButtonFormField<String>(
                       dropdownColor: Colors.white,
-                      value: businessValue,
+                      value: qualificationValue,
                       onChanged: (newValue) {
                         setState(() {
-                          businessValue = newValue;
+                          qualificationValue = newValue;
                         });
                       },
                       items: qualification
@@ -611,10 +611,10 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
                     const SizedBox(height: 8),
                     DropdownButtonFormField<String>(
                       dropdownColor: Colors.white,
-                      value: qualificationValue,
+                      value: businessValue,
                       onChanged: (newValue) {
                         setState(() {
-                          qualificationValue = newValue;
+                          businessValue = newValue;
                         });
                       },
                       items: business
