@@ -70,7 +70,7 @@ class LoginScreen extends StatelessWidget {
                               Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) => OTPScreen(
                                     mobileNumber:
-                                        "+91" + mobileNumberController.text),
+                                        "+91${mobileNumberController.text}"),
                               ));
                             } else {
                               // ignore: use_build_context_synchronously

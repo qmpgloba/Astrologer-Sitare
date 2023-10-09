@@ -14,10 +14,8 @@ createAstrologer(AstrologerModel astrologer) async {
     await db.collection('Astrologerdetails').add(
           astrologer.toJson(),
         );
-  // ignore: empty_catches
-  } catch (e) {
-  }
-
+    // ignore: empty_catches
+  } catch (e) {}
 }
 
 // Future<String?> uploadFile(PlatformFile? selectedFile) async {
@@ -40,51 +38,43 @@ createAstrologer(AstrologerModel astrologer) async {
 //   } catch (e) {}
 //   return null;
 
-  
 // }
 
+Future<String> addProfileImge(XFile imagePicked) async {
+  Reference referenceRoot = FirebaseStorage.instance.ref();
+  Reference referenceDirImages = referenceRoot.child('images');
 
+  String uniqueFileName = DateTime.now().millisecondsSinceEpoch.toString();
 
-Future<String> addProfileImge(XFile imagePicked) async{
-  print('keri');
-   Reference referenceRoot = FirebaseStorage.instance.ref();
-     Reference referenceDirImages = referenceRoot.child('images');
+  Reference referenceImageToUpload = referenceDirImages.child(uniqueFileName);
 
-     String uniqueFileName = DateTime.now().millisecondsSinceEpoch.toString();
-
-     Reference referenceImageToUpload = referenceDirImages.child(uniqueFileName);
-
-      
-      try {
-       await referenceImageToUpload.putFile(File(imagePicked.path));
-       print('object');
-      String  imageUrl =await referenceImageToUpload.getDownloadURL();
-      print(imageUrl);
-      return imageUrl;
-      } catch (e) {
-        return profileImage;
-        
-      }
-    }
-
-
-Future<void> updateAstrologerInformation(AstrologerModel astrologer,String docID) async {
-  final CollectionReference astrologersCollection = FirebaseFirestore.instance.collection('Astrologerdetails');
-  String documentID = docID;
-   
-    try {
-     astrologersCollection.doc(documentID).update({
-  'name': astrologer.fullName,
-  'email': astrologer.emailAddress,
-  'phone number': astrologer.phoneNumber,
-  'office address': astrologer.officeAddress,
-  'personal description': astrologer.description,
-  'experience(in years)': astrologer.experienceYears,
- 
-});
-    // ignore: empty_catches
-    } catch (e) {}
+  try {
+    await referenceImageToUpload.putFile(File(imagePicked.path));
+    String imageUrl = await referenceImageToUpload.getDownloadURL();
+    return imageUrl;
+  } catch (e) {
+    return profileImage;
   }
+}
+
+Future<void> updateAstrologerInformation(
+    AstrologerModel astrologer, String docID) async {
+  final CollectionReference astrologersCollection =
+      FirebaseFirestore.instance.collection('Astrologerdetails');
+  String documentID = docID;
+
+  try {
+    astrologersCollection.doc(documentID).update({
+      'name': astrologer.fullName,
+      'email': astrologer.emailAddress,
+      'phone number': astrologer.phoneNumber,
+      'office address': astrologer.officeAddress,
+      'personal description': astrologer.description,
+      'experience(in years)': astrologer.experienceYears,
+    });
+    // ignore: empty_catches
+  } catch (e) {}
+}
 
 String? getFileNameFromUrl(String url) {
   Uri uri = Uri.parse(url);

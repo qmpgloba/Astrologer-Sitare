@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:sitare_astrologer_partner/constants/ui_constants.dart';
 import 'package:sitare_astrologer_partner/functions/user%20profile/get_user_profile.dart';
 import 'package:sitare_astrologer_partner/screens/edit%20profile/edit_profile.dart';
+import 'package:sitare_astrologer_partner/screens/home%20screen/home_screen.dart';
 import 'package:sitare_astrologer_partner/screens/login%20screen/login_screen.dart';
 import 'package:sitare_astrologer_partner/screens/profile%20screen/widgets/astrologer_profile_widget.dart';
 
@@ -17,11 +18,19 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
-    print(FirebaseAuth.instance.currentUser!.phoneNumber!);
     return Scaffold(
         backgroundColor: whiteColor,
         appBar: AppBar(
           elevation: 0.5,
+          leading: IconButton(
+              onPressed: () async {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const HomeScreen(),
+                  ),
+                );
+              },
+              icon: const Icon(Icons.arrow_back)),
           title: const Text('Profile', style: TextStyle(color: whiteColor)),
           actions: [
             IconButton(
@@ -67,9 +76,11 @@ class ProfileScreen extends StatelessWidget {
                         ),
                         Stack(
                           children: [
-                            const CircleAvatar(
+                            CircleAvatar(
                               radius: 35,
-                              backgroundColor: redColor,
+                              //backgroundColor: redColor,
+                              backgroundImage:
+                                  NetworkImage(userData!["profile image"]),
                             ),
                             Positioned(
                                 // height: 25,

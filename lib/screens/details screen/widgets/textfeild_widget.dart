@@ -2,21 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:sitare_astrologer_partner/constants/ui_constants.dart';
 
 class TextFeildWidgets extends StatelessWidget {
-  const TextFeildWidgets({
-    super.key,
-    required this.controller,
-    required this.hintText,
-    required this.fieldName,
-    required this.keyboardType,
-    required this.maxLines,
-    required this.readOnly,
-  });
+  const TextFeildWidgets(
+      {super.key,
+      required this.controller,
+      required this.hintText,
+      required this.fieldName,
+      required this.keyboardType,
+      required this.maxLines,
+      required this.readOnly,
+      this.validator});
   final TextEditingController controller;
   final String hintText;
   final String fieldName;
   final TextInputType keyboardType;
   final int maxLines;
   final bool readOnly;
+  final String? Function(String?)? validator;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -27,13 +28,11 @@ class TextFeildWidgets extends StatelessWidget {
           style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
         TextFormField(
-          
           keyboardType: keyboardType,
           controller: controller,
           style: const TextStyle(color: Colors.black),
           maxLines: maxLines,
-          maxLength: hintText == 'Phone Number'? 10 : null,
-        
+          maxLength: hintText == 'Phone Number' ? 10 : null,
           decoration: InputDecoration(
             counterText: '',
             border: const OutlineInputBorder(),
@@ -75,7 +74,7 @@ String? validateEmail(String? value) {
 String? validatePhoneNumber(String? value) {
   if (value!.isEmpty) {
     return 'Please enter your phone number';
-  } else if (value.isEmpty || value.length < 10 || value.length>10) {
+  } else if (value.isEmpty || value.length < 10 || value.length > 10) {
     return 'Enter valid phone number';
   } else {
     return null;
