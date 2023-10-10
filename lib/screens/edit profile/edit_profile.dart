@@ -123,6 +123,10 @@ class _EditProfileScreenState extends State<EditProfileScreen>
         appBar: AppBar(
           title: const Text('Edit Profile'),
           bottom: TabBar(
+            isScrollable: true,
+            unselectedLabelColor: Colors.grey,
+            labelColor: Colors.black,
+            indicatorColor: Colors.black,
             controller: _tabController,
             tabs: const [
               Tab(
@@ -130,15 +134,15 @@ class _EditProfileScreenState extends State<EditProfileScreen>
                 text: 'Personal',
               ),
               Tab(
-                icon: Icon(Icons.tab),
+                icon: Icon(Icons.lightbulb_rounded),
                 text: 'Skills',
               ),
               Tab(
-                icon: Icon(Icons.more),
+                icon: Icon(Icons.more_horiz_outlined),
                 text: 'Others',
               ),
               Tab(
-                icon: Icon(Icons.book),
+                icon: Icon(Icons.assignment_sharp),
                 text: 'Assignment',
               ),
             ],
@@ -377,13 +381,6 @@ class _EditProfileScreenState extends State<EditProfileScreen>
                                         fontWeight: FontWeight.bold),
                                   ),
                                   DropDownMultiSelect(
-                                    validator: (selectedOptions) {
-                                      if (selectedOptions == null ||
-                                          selectedOptions.isEmpty) {
-                                        return "Select at least one skill";
-                                      }
-                                      return ""; // Return null when there are no validation errors
-                                    },
                                     hint: const AutoSizeText(
                                       'Select Skills',
                                       maxLines: 1,
@@ -820,7 +817,9 @@ class _EditProfileScreenState extends State<EditProfileScreen>
 
   updateTab2() async {
     print(languagesDropdown.length);
-    if (_formKey.currentState!.validate()) {
+    if (_formKey.currentState!.validate() &&
+        languagesDropdown.isNotEmpty &&
+        skillsDropdown.isNotEmpty) {
       AstrologerModel astrologer = AstrologerModel(
           fullName: userData!['name'],
           emailAddress: userData!['email'],
@@ -828,8 +827,9 @@ class _EditProfileScreenState extends State<EditProfileScreen>
           profilePic: imageUrl ??= profileImage,
           officeAddress: _addressTextController.text.trim(),
           description: _addressTextController.text.trim(),
-          experienceYears: int.parse(_addressTextController.text.trim()),
-          contributeHours: int.parse(_addressTextController.text.trim()),
+          experienceYears: int.parse(_experienceTextController.text.trim()),
+          contributeHours:
+              int.parse(_contributionHoursTextController.text.trim()),
           heardAboutSitare: _heardAboutSitareTextController.text.trim(),
           gender: genderDropDownValue!,
           martialStatus: martialDropDownValue!,
