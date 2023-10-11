@@ -827,7 +827,7 @@ class _EditProfileScreenState extends State<EditProfileScreen>
           profilePic: imageUrl ??= profileImage,
           officeAddress: _addressTextController.text.trim(),
           description: _addressTextController.text.trim(),
-          experienceYears: int.parse(_experienceTextController.text.trim()),
+          experienceYears: _experienceTextController.text.trim(),
           contributeHours:
               int.parse(_contributionHoursTextController.text.trim()),
           heardAboutSitare: _heardAboutSitareTextController.text.trim(),

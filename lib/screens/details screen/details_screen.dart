@@ -175,8 +175,7 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
                         profilePic: imageUrl ??= profileImage,
                         officeAddress: _adressTextController.text.trim(),
                         description: _descriptionTextController.text.trim(),
-                        experienceYears:
-                            int.parse(_experienceTextController.text.trim()),
+                        experienceYears: _experienceTextController.text.trim(),
                         contributeHours: int.parse(
                             _contributionHoursTextController.text.trim()),
                         heardAboutSitare: _heardAboutSitareTextController.text,

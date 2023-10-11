@@ -5,7 +5,7 @@ class AstrologerModel {
   final String profilePic;
   final String officeAddress;
   final String description;
-  final int experienceYears;
+  final String experienceYears;
   final int contributeHours;
   final String heardAboutSitare;
   final String gender;
