@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:multiselect/multiselect.dart';
+import 'package:sitare_astrologer_partner/functions/firebase_auth_methods.dart';
 import 'package:sitare_astrologer_partner/functions/user%20profile/get_user_profile.dart';
 import 'package:sitare_astrologer_partner/screens/edit%20profile/widgets/others_tab_widget.dart';
 import 'package:sitare_astrologer_partner/screens/edit%20profile/widgets/skills_tab_widget.dart';
@@ -780,6 +781,7 @@ class _EditProfileScreenState extends State<EditProfileScreen>
     print(languagesDropdown.length);
     if (_formKey.currentState!.validate()) {
       AstrologerModel astrologer = AstrologerModel(
+          uid: currentUser!.uid,
           fullName: _nameTextController.text.trim(),
           emailAddress: userData!['email'],
           phoneNumber: userData!['phone number'],
@@ -831,6 +833,7 @@ class _EditProfileScreenState extends State<EditProfileScreen>
         languagesDropdown.isNotEmpty &&
         skillsDropdown.isNotEmpty) {
       AstrologerModel astrologer = AstrologerModel(
+        uid: currentUser!.uid,
         fullName: userData!['name'],
         emailAddress: userData!['email'],
         phoneNumber: userData!['phone number'],
@@ -880,6 +883,7 @@ class _EditProfileScreenState extends State<EditProfileScreen>
     print(languagesDropdown.length);
     if (_formKey.currentState!.validate()) {
       AstrologerModel astrologer = AstrologerModel(
+        uid: currentUser!.uid,
         fullName: userData!['name'],
         emailAddress: userData!['email'],
         phoneNumber: userData!['phone number'],
@@ -928,7 +932,9 @@ class _EditProfileScreenState extends State<EditProfileScreen>
   updateTab4() async {
     print(languagesDropdown.length);
     if (_formKey.currentState!.validate()) {
+      print(currentUser!.uid);
       AstrologerModel astrologer = AstrologerModel(
+          uid: currentUser!.uid,
           fullName: userData!['name'],
           emailAddress: userData!['email'],
           phoneNumber: userData!['phone number'],
@@ -974,6 +980,7 @@ class _EditProfileScreenState extends State<EditProfileScreen>
   }
 
   void showProfileUpdatedDialog(BuildContext context) {
+    print(fcmKeyToken);
     showDialog(
       context: context,
       builder: (BuildContext context) {

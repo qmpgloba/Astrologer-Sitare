@@ -29,8 +29,10 @@ class AstrologerModel {
   final String biggestChallenge;
   final String currentWorkingStatus;
   final String fcmToken;
+  final String uid;
   AstrologerModel(
-      {required this.fullName,
+      {required this.uid,
+      required this.fullName,
       required this.emailAddress,
       required this.phoneNumber,
       required this.profilePic,
@@ -73,6 +75,7 @@ class AstrologerModel {
 
   toJson() {
     return {
+      "uid": uid,
       "name": fullName,
       "email": emailAddress,
       "phone number": phoneNumber,

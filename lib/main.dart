@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:sitare_astrologer_partner/constants/ui_constants.dart';
+import 'package:sitare_astrologer_partner/functions/firebase_auth_methods.dart';
 import 'package:sitare_astrologer_partner/screens/auth%20wrapper/auth_wrapper.dart';
 
 const AndroidNotificationChannel channel = AndroidNotificationChannel(
@@ -15,7 +17,12 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
+  RemoteNotification? notification = message.notification;
+  AndroidNotification? android = message.notification?.android;
   print("Handling a background message: ${message.messageId}");
+  if (notification != null && android != null) {
+    saveNotificationToFirestore(notification);
+  }
 }
 
 void main() async {
@@ -55,10 +62,7 @@ _initFCM() async {
     provisional: false,
     sound: true,
   );
-  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-    print('Got a message whilst in the foreground! wwrwrwwr');
-    if (message.notification != null) {}
-  });
+
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   print("On background NCNCNC");
   await flutterLocalNotificationsPlugin
@@ -67,8 +71,43 @@ _initFCM() async {
       ?.createNotificationChannel(channel);
   await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
       alert: true, badge: true, sound: true);
-  FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
     RemoteNotification? notification = message.notification;
     AndroidNotification? android = message.notification?.android;
+    print(
+        'Got a message whilst in the foreground!!!!!!${message.notification?.title?.isNotEmpty}');
+    if (notification != null && android != null) {
+      // Handle data payload messages
+      saveNotificationToFirestore(notification);
+      // Create a custom notification
+      flutterLocalNotificationsPlugin.show(
+        notification.hashCode, // Unique ID for the notification
+        notification.title,
+        notification.body,
+        NotificationDetails(
+          android: AndroidNotificationDetails(channel.id, channel.name,
+              channelDescription: channel.description,
+              color: Colors.white,
+              playSound: true,
+              icon: "@mipmap/ic_launcher"),
+        ),
+      );
+    }
+  });
+}
+
+void saveNotificationToFirestore(RemoteNotification notification) {
+  final firestore = FirebaseFirestore.instance;
+  final notificationData = {
+    'title': notification.title,
+    'body': notification.body,
+    'timestamp': FieldValue.serverTimestamp(),
+    'uid': currentUser!.uid,
+  };
+  print(currentUser!.uid);
+  firestore.collection('Notification').add(notificationData).then((_) {
+    print('Notification added to Firestore');
+  }).catchError((error) {
+    print('Error adding notification to Firestore: $error');
   });
 }

@@ -9,6 +9,7 @@ import 'package:multiselect/multiselect.dart';
 import 'package:sitare_astrologer_partner/constants/app_constants.dart';
 import 'package:sitare_astrologer_partner/constants/ui_constants.dart';
 import 'package:sitare_astrologer_partner/functions/add_astrologer_function.dart';
+import 'package:sitare_astrologer_partner/functions/firebase_auth_methods.dart';
 import 'package:sitare_astrologer_partner/model/astrologer_model.dart';
 import 'package:sitare_astrologer_partner/screens/home%20screen/home_screen.dart';
 import 'package:sitare_astrologer_partner/widgets/alertbox.dart';
@@ -180,7 +181,9 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
                       businessValue != null ||
                       qualificationValue != null ||
                       workingStatus != null) {
+                    print(currentUser!.uid);
                     AstrologerModel astrologer = AstrologerModel(
+                        uid: currentUser!.uid,
                         fullName: _nameTextController.text.trim(),
                         emailAddress: _emailTextController.text.trim(),
                         phoneNumber:
