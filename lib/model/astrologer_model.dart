@@ -28,7 +28,7 @@ class AstrologerModel {
   final int foreignCountries;
   final String biggestChallenge;
   final String currentWorkingStatus;
-
+  final String fcmToken;
   AstrologerModel(
       {required this.fullName,
       required this.emailAddress,
@@ -58,7 +58,8 @@ class AstrologerModel {
       required this.learnAboutAstrology,
       required this.foreignCountries,
       required this.biggestChallenge,
-      required this.currentWorkingStatus});
+      required this.currentWorkingStatus,
+      required this.fcmToken});
 
   // AstrologerModel(
   //     {required this.fullName,
@@ -100,7 +101,8 @@ class AstrologerModel {
       "did anyone refer sitare": anyoneReferSitare,
       "Number of foreign countries": foreignCountries,
       "biggest challenge": biggestChallenge,
-      "current working status": currentWorkingStatus
+      "current working status": currentWorkingStatus,
+      "fcmToken": fcmToken
     };
   }
 }

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -73,12 +74,19 @@ class _EditProfileScreenState extends State<EditProfileScreen>
   String workingAnyOnlinePlatform = 'No';
   List<String> languagesDropdown = [];
   List<String> skillsDropdown = [];
+  String? fcmKeyToken;
   @override
   void initState() {
     super.initState();
     // Initialize the TabController with 4 tabs
     _tabController = TabController(length: 4, vsync: this);
     controllersIntialization();
+    fcmKey();
+  }
+
+  void fcmKey() async {
+    fcmKeyToken = await FirebaseMessaging.instance.getToken();
+    print(fcmKeyToken);
   }
 
   @override
@@ -801,7 +809,9 @@ class _EditProfileScreenState extends State<EditProfileScreen>
           learnAboutAstrology: userData!['form where did you learn astrology'],
           foreignCountries: userData!['Number of foreign countries'],
           biggestChallenge: userData!['biggest challenge'],
-          currentWorkingStatus: userData!['current working status']);
+          currentWorkingStatus: userData!['current working status'],
+          fcmToken: fcmKeyToken ?? "");
+
       bool done =
           await updateProfile(astrologer, _phoneNumberTextController.text);
       // ignore: use_build_context_synchronously
@@ -821,36 +831,38 @@ class _EditProfileScreenState extends State<EditProfileScreen>
         languagesDropdown.isNotEmpty &&
         skillsDropdown.isNotEmpty) {
       AstrologerModel astrologer = AstrologerModel(
-          fullName: userData!['name'],
-          emailAddress: userData!['email'],
-          phoneNumber: userData!['phone number'],
-          profilePic: imageUrl ??= profileImage,
-          officeAddress: _addressTextController.text.trim(),
-          description: _addressTextController.text.trim(),
-          experienceYears: _experienceTextController.text.trim(),
-          contributeHours:
-              int.parse(_contributionHoursTextController.text.trim()),
-          heardAboutSitare: _heardAboutSitareTextController.text.trim(),
-          gender: genderDropDownValue!,
-          martialStatus: martialDropDownValue!,
-          dateOfBirth: dateInput.text,
-          languages: languagesDropdown,
-          skills: skillsDropdown,
-          workingOnlinePLatform: workingAnyOnlinePlatform,
-          instagramLink: userData!['instagram profile link'],
-          linkedInLink: userData!['linkedin profile link'],
-          websiteLink: userData!['website profile link'],
-          facebookLink: userData!['facebook profile link'],
-          youtubeLink: userData!['youtube profile link'],
-          business: userData!['main source of business'],
-          anyoneReferSitare: userData!['did anyone refer sitare'],
-          onBorad: userData!['onboard you'],
-          qualification: userData!['highest qualification'],
-          earningExpectation: userData!['minimum earning expectation'],
-          learnAboutAstrology: userData!['form where did you learn astrology'],
-          foreignCountries: userData!['Number of foreign countries'],
-          biggestChallenge: userData!['biggest challenge'],
-          currentWorkingStatus: userData!['current working status']);
+        fullName: userData!['name'],
+        emailAddress: userData!['email'],
+        phoneNumber: userData!['phone number'],
+        profilePic: imageUrl ??= profileImage,
+        officeAddress: _addressTextController.text.trim(),
+        description: _addressTextController.text.trim(),
+        experienceYears: _experienceTextController.text.trim(),
+        contributeHours:
+            int.parse(_contributionHoursTextController.text.trim()),
+        heardAboutSitare: _heardAboutSitareTextController.text.trim(),
+        gender: genderDropDownValue!,
+        martialStatus: martialDropDownValue!,
+        dateOfBirth: dateInput.text,
+        languages: languagesDropdown,
+        skills: skillsDropdown,
+        workingOnlinePLatform: workingAnyOnlinePlatform,
+        instagramLink: userData!['instagram profile link'],
+        linkedInLink: userData!['linkedin profile link'],
+        websiteLink: userData!['website profile link'],
+        facebookLink: userData!['facebook profile link'],
+        youtubeLink: userData!['youtube profile link'],
+        business: userData!['main source of business'],
+        anyoneReferSitare: userData!['did anyone refer sitare'],
+        onBorad: userData!['onboard you'],
+        qualification: userData!['highest qualification'],
+        earningExpectation: userData!['minimum earning expectation'],
+        learnAboutAstrology: userData!['form where did you learn astrology'],
+        foreignCountries: userData!['Number of foreign countries'],
+        biggestChallenge: userData!['biggest challenge'],
+        currentWorkingStatus: userData!['current working status'],
+        fcmToken: fcmKeyToken ?? "",
+      );
       bool done =
           await updateProfile(astrologer, _phoneNumberTextController.text);
       // ignore: use_build_context_synchronously
@@ -868,36 +880,38 @@ class _EditProfileScreenState extends State<EditProfileScreen>
     print(languagesDropdown.length);
     if (_formKey.currentState!.validate()) {
       AstrologerModel astrologer = AstrologerModel(
-          fullName: userData!['name'],
-          emailAddress: userData!['email'],
-          phoneNumber: userData!['phone number'],
-          profilePic: userData!['profile image'] ??= profileImage,
-          officeAddress: userData!['office address'],
-          description: userData!['personal description'],
-          experienceYears: userData!['experience(in years)'],
-          contributeHours: userData!["hours of contribution"],
-          heardAboutSitare: userData!['Where did you hear about sitare'],
-          gender: userData!['gender']!,
-          martialStatus: userData!['martial status']!,
-          dateOfBirth: userData!['date of birth'],
-          languages: userData!['languages'],
-          skills: userData!['skills'],
-          workingOnlinePLatform:
-              userData!['working on any other online platform'],
-          instagramLink: instagramProfileLinkController.text.trim(),
-          linkedInLink: linkedInProfileLinkController.text.trim(),
-          websiteLink: websiteProfileLinkController.text.trim(),
-          facebookLink: facebookProfileLinkController.text.trim(),
-          youtubeLink: youtubeProfileLinkController.text.trim(),
-          business: businessValue!,
-          anyoneReferSitare: referSitare.toString(),
-          onBorad: onboardTextController.text.trim(),
-          qualification: qualificationValue!,
-          earningExpectation: earningExpectationController.text.trim(),
-          learnAboutAstrology: learnAstrologyContoller.text.trim(),
-          foreignCountries: userData!['Number of foreign countries'],
-          biggestChallenge: userData!['biggest challenge'],
-          currentWorkingStatus: userData!['current working status']);
+        fullName: userData!['name'],
+        emailAddress: userData!['email'],
+        phoneNumber: userData!['phone number'],
+        profilePic: userData!['profile image'] ??= profileImage,
+        officeAddress: userData!['office address'],
+        description: userData!['personal description'],
+        experienceYears: userData!['experience(in years)'],
+        contributeHours: userData!["hours of contribution"],
+        heardAboutSitare: userData!['Where did you hear about sitare'],
+        gender: userData!['gender']!,
+        martialStatus: userData!['martial status']!,
+        dateOfBirth: userData!['date of birth'],
+        languages: userData!['languages'],
+        skills: userData!['skills'],
+        workingOnlinePLatform:
+            userData!['working on any other online platform'],
+        instagramLink: instagramProfileLinkController.text.trim(),
+        linkedInLink: linkedInProfileLinkController.text.trim(),
+        websiteLink: websiteProfileLinkController.text.trim(),
+        facebookLink: facebookProfileLinkController.text.trim(),
+        youtubeLink: youtubeProfileLinkController.text.trim(),
+        business: businessValue!,
+        anyoneReferSitare: referSitare.toString(),
+        onBorad: onboardTextController.text.trim(),
+        qualification: qualificationValue!,
+        earningExpectation: earningExpectationController.text.trim(),
+        learnAboutAstrology: learnAstrologyContoller.text.trim(),
+        foreignCountries: userData!['Number of foreign countries'],
+        biggestChallenge: userData!['biggest challenge'],
+        currentWorkingStatus: userData!['current working status'],
+        fcmToken: fcmKeyToken ?? "",
+      );
       bool done =
           await updateProfile(astrologer, _phoneNumberTextController.text);
       // ignore: use_build_context_synchronously
@@ -944,7 +958,8 @@ class _EditProfileScreenState extends State<EditProfileScreen>
           learnAboutAstrology: userData!['form where did you learn astrology'],
           foreignCountries: int.parse(_travelledCountriesTextController.text),
           biggestChallenge: _challengesFacedTextController.text.trim(),
-          currentWorkingStatus: workingStatus!);
+          currentWorkingStatus: workingStatus!,
+          fcmToken: fcmKeyToken ?? "");
       bool done =
           await updateProfile(astrologer, _phoneNumberTextController.text);
       // ignore: use_build_context_synchronously

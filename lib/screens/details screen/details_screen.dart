@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -71,6 +72,18 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
   String? qualificationValue;
   String? businessValue;
   int? referSitare = 1;
+  String? fcmKeyToken;
+  @override
+  void initState() {
+    super.initState();
+    fcmKey();
+  }
+
+  void fcmKey() async {
+    fcmKeyToken = await FirebaseMessaging.instance.getToken();
+    print(fcmKeyToken);
+  }
+
   // Function to handle radio button changes.
   void setSelectedRadio(int value) {
     setState(() {
@@ -203,7 +216,8 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
                             int.parse(_travelledCountriesTextController.text),
                         biggestChallenge:
                             _challengesFacedTextController.text.trim(),
-                        currentWorkingStatus: workingStatus!);
+                        currentWorkingStatus: workingStatus!,
+                        fcmToken: fcmKeyToken ?? "ERROR");
                     await createAstrologer(astrologer);
                     Navigator.of(context).pushAndRemoveUntil(
                         MaterialPageRoute(
