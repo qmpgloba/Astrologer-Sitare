@@ -82,7 +82,6 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
 
   void fcmKey() async {
     fcmKeyToken = await FirebaseMessaging.instance.getToken();
-    print(fcmKeyToken);
   }
 
   // Function to handle radio button changes.
@@ -181,7 +180,6 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
                       businessValue != null ||
                       qualificationValue != null ||
                       workingStatus != null) {
-                    print(currentUser!.uid);
                     AstrologerModel astrologer = AstrologerModel(
                         uid: currentUser!.uid,
                         fullName: _nameTextController.text.trim(),

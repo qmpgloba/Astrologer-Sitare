@@ -1,10 +1,14 @@
+// ignore_for_file: unnecessary_brace_in_string_interps
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 import 'package:sitare_astrologer_partner/functions/firebase_auth_methods.dart';
 
+// ignore: use_key_in_widget_constructors
 class NotificationScreen extends StatefulWidget {
   @override
+  // ignore: library_private_types_in_public_api
   _NotificationScreenState createState() => _NotificationScreenState();
 }
 
@@ -17,7 +21,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
           future: fetchNotifications(), // Create this function to fetch data
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             } else if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
             } else {
@@ -41,10 +45,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
           .get();
 
       return querySnapshot.docs
-          .map((doc) => doc.data() as Map<String, dynamic>)
+          .map((doc) => doc.data())
           .toList();
     } catch (e) {
-      print('Error fetching notifications: $e');
       return null;
     }
   }
@@ -62,15 +65,16 @@ class _NotificationScreenState extends State<NotificationScreen> {
         await document.reference.delete();
       }
 
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('Notifications have been cleared.'),
         ),
       );
 
       setState(() {});
+    // ignore: empty_catches
     } catch (e) {
-      print('Error deleting notifications: $e');
     }
   }
 
@@ -87,14 +91,14 @@ class _NotificationScreenState extends State<NotificationScreen> {
               onTap: () {
                 Navigator.pop(context);
               },
-              child: Icon(Icons.arrow_back_ios)),
-          SizedBox(
+              child: const Icon(Icons.arrow_back_ios)),
+          const SizedBox(
             height: 15,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
+              const Text(
                 "Notifications",
                 style: TextStyle(fontSize: 28, fontWeight: FontWeight.w700),
               ),
@@ -124,10 +128,10 @@ class _NotificationScreenState extends State<NotificationScreen> {
               ? Padding(
                   padding: EdgeInsets.only(top: size.width * 0.75),
                   child:
-                      Text("Looks like you haven't recieved any notification"),
+                      const Text("Looks like you haven't recieved any notification"),
                 )
               : ListView.separated(
-                  separatorBuilder: (context, index) => Divider(),
+                  separatorBuilder: (context, index) => const Divider(),
                   shrinkWrap: true,
                   itemCount: notifications.length,
                   itemBuilder: (context, index) {
@@ -138,7 +142,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
                         DateFormat('dd MMMM').format(timestamp.toDate());
                     final formattedTime =
                         DateFormat('hh:mm a').format(timestamp.toDate());
-                    final date = formattedDate + " ${formattedTime}";
+                    // ignore: unused_local_variable
+                    final date = "$formattedDate ${formattedTime}";
 
                     return ListTile(
                       leading: InkWell(
@@ -146,7 +151,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                         child: Container(
                           width: size.width * 0.15,
                           height: size.width * 0.15,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             shape: BoxShape.circle,
                             color: Color(0xFFd3f5d6),
                           ),

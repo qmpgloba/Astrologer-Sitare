@@ -19,7 +19,6 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
   RemoteNotification? notification = message.notification;
   AndroidNotification? android = message.notification?.android;
-  print("Handling a background message: ${message.messageId}");
   if (notification != null && android != null) {
     saveNotificationToFirestore(notification);
   }
@@ -53,6 +52,7 @@ class MyApp extends StatelessWidget {
 
 _initFCM() async {
   FirebaseMessaging messaging = FirebaseMessaging.instance;
+  // ignore: unused_local_variable
   NotificationSettings settings = await messaging.requestPermission(
     alert: true,
     announcement: false,
@@ -64,7 +64,6 @@ _initFCM() async {
   );
 
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-  print("On background NCNCNC");
   await flutterLocalNotificationsPlugin
       .resolvePlatformSpecificImplementation<
           AndroidFlutterLocalNotificationsPlugin>()
@@ -74,8 +73,6 @@ _initFCM() async {
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
     RemoteNotification? notification = message.notification;
     AndroidNotification? android = message.notification?.android;
-    print(
-        'Got a message whilst in the foreground!!!!!!${message.notification?.title?.isNotEmpty}');
     if (notification != null && android != null) {
       // Handle data payload messages
       saveNotificationToFirestore(notification);
@@ -104,10 +101,7 @@ void saveNotificationToFirestore(RemoteNotification notification) {
     'timestamp': FieldValue.serverTimestamp(),
     'uid': currentUser!.uid,
   };
-  print(currentUser!.uid);
   firestore.collection('Notification').add(notificationData).then((_) {
-    print('Notification added to Firestore');
   }).catchError((error) {
-    print('Error adding notification to Firestore: $error');
   });
 }

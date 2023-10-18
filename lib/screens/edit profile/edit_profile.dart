@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously, duplicate_ignore
+
 import 'dart:io';
 
 import 'package:auto_size_text/auto_size_text.dart';
@@ -87,7 +89,6 @@ class _EditProfileScreenState extends State<EditProfileScreen>
 
   void fcmKey() async {
     fcmKeyToken = await FirebaseMessaging.instance.getToken();
-    print(fcmKeyToken);
   }
 
   @override
@@ -582,7 +583,6 @@ class _EditProfileScreenState extends State<EditProfileScreen>
                               ),
                               UpdateButtonWidget(
                                 onTap: () async {
-                                  print(facebookProfileLinkController.text);
                                   updateTab3();
                                 },
                               ),
@@ -757,11 +757,10 @@ class _EditProfileScreenState extends State<EditProfileScreen>
 
   updateProfile(AstrologerModel astrologer, String phoneNumber) async {
     final db = FirebaseFirestore.instance;
-    print("+91${phoneNumber}");
     try {
       QuerySnapshot querySnapshot = await db
           .collection('Astrologerdetails')
-          .where('phone number', isEqualTo: "+91${phoneNumber}")
+          .where('phone number', isEqualTo: "+91$phoneNumber")
           .get();
 
       if (querySnapshot.docs.isNotEmpty) {
@@ -769,7 +768,6 @@ class _EditProfileScreenState extends State<EditProfileScreen>
         await documentSnapshot.reference.update(astrologer.toJson());
         return true;
       } else {
-        print("checking");
         return false;
       }
     } catch (e) {
@@ -778,7 +776,6 @@ class _EditProfileScreenState extends State<EditProfileScreen>
   }
 
   updateTab1() async {
-    print(languagesDropdown.length);
     if (_formKey.currentState!.validate()) {
       AstrologerModel astrologer = AstrologerModel(
           uid: currentUser!.uid,
@@ -818,8 +815,10 @@ class _EditProfileScreenState extends State<EditProfileScreen>
           await updateProfile(astrologer, _phoneNumberTextController.text);
       // ignore: use_build_context_synchronously
       if (done) {
+        // ignore: use_build_context_synchronously
         showProfileUpdatedDialog(context);
       } else {
+        // ignore: use_build_context_synchronously
         showProfileErrorDialog(context);
       }
     } else {
@@ -828,7 +827,6 @@ class _EditProfileScreenState extends State<EditProfileScreen>
   }
 
   updateTab2() async {
-    print(languagesDropdown.length);
     if (_formKey.currentState!.validate() &&
         languagesDropdown.isNotEmpty &&
         skillsDropdown.isNotEmpty) {
@@ -870,6 +868,7 @@ class _EditProfileScreenState extends State<EditProfileScreen>
           await updateProfile(astrologer, _phoneNumberTextController.text);
       // ignore: use_build_context_synchronously
       if (done) {
+        // ignore: use_build_context_synchronously
         showProfileUpdatedDialog(context);
       } else {
         showProfileErrorDialog(context);
@@ -880,7 +879,6 @@ class _EditProfileScreenState extends State<EditProfileScreen>
   }
 
   updateTab3() async {
-    print(languagesDropdown.length);
     if (_formKey.currentState!.validate()) {
       AstrologerModel astrologer = AstrologerModel(
         uid: currentUser!.uid,
@@ -930,9 +928,7 @@ class _EditProfileScreenState extends State<EditProfileScreen>
   }
 
   updateTab4() async {
-    print(languagesDropdown.length);
     if (_formKey.currentState!.validate()) {
-      print(currentUser!.uid);
       AstrologerModel astrologer = AstrologerModel(
           uid: currentUser!.uid,
           fullName: userData!['name'],
@@ -980,7 +976,6 @@ class _EditProfileScreenState extends State<EditProfileScreen>
   }
 
   void showProfileUpdatedDialog(BuildContext context) {
-    print(fcmKeyToken);
     showDialog(
       context: context,
       builder: (BuildContext context) {
