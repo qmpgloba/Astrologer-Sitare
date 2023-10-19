@@ -80,7 +80,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   Widget _buildMessageItem(DocumentSnapshot document, Size size) {
     Map<String, dynamic> data = document.data() as Map<String, dynamic>;
-    var alignment = (data['astrologerId'] == _firebaseAuth.currentUser!.uid)
+    var alignment = (data['senderId'] == _firebaseAuth.currentUser!.uid)
         ? Alignment.centerRight
         : Alignment.centerLeft;
 
@@ -90,7 +90,7 @@ class _ChatScreenState extends State<ChatScreen> {
         padding: const EdgeInsets.all(10),
         child: Container(
           decoration: BoxDecoration(
-            color:(data['astrologerId'] == _firebaseAuth.currentUser!.uid)? Colors.blue:greyColor,
+            color:(data['senderId'] == _firebaseAuth.currentUser!.uid)? Colors.blue:greyColor,
             borderRadius: BorderRadius.circular(20),
           ),
           child: Padding(

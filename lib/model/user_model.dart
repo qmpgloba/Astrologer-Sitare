@@ -53,7 +53,7 @@ class UserModel {
       timeofBirth: data['timeofBirth'],
       maritalStatus: data['maritalStatus'],
       problem: data['problem'],
-      partnerDetails: data['PartnerDetails'],
+      partnerDetails: List<String?>.from(data['PartnerDetails'] ?? []),
     );
   }
 }

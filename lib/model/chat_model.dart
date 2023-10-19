@@ -1,24 +1,24 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class MessageModel {
-  final String userId;
-  // final String senderPhoneNumber;
-  final String astrologerId;
+  final String senderId;
+  final String chatId;
+  final String receiverId;
   final String message;
   final Timestamp timestamp;
 
   MessageModel(
-      {required this.userId,
-      // required this.senderPhoneNumber,
-      required this.astrologerId,
+      {required this.senderId,
+      required this.chatId,
+      required this.receiverId,
       required this.message,
       required this.timestamp});
 
   toJson() {
     return {
-      'userId': userId,
-      // 'sender phone number': senderPhoneNumber,
-      'astrologerId': astrologerId,
+      'senderId': senderId,
+      'chat_id': chatId,
+      'receiverId': receiverId,
       'message': message,
       'timestamp': timestamp,
     };
