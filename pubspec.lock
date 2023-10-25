@@ -365,6 +365,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  google_mlkit_smart_reply:
+    dependency: "direct main"
+    description:
+      name: google_mlkit_smart_reply
+      sha256: "97165ea8667aa94de20d782862ecd791daf0e884c48b8cb1cedd9ebafda5d52c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.8.0"
   http:
     dependency: transitive
     description:
