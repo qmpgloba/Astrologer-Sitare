@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sitare_astrologer_partner/model/user_model.dart';
 import 'package:sitare_astrologer_partner/screens/chat%20screen/chat_screen.dart';
@@ -15,7 +13,7 @@ class ChatList extends StatefulWidget {
 class _ChatListState extends State<ChatList> {
 
   //  List<UserModel> users = [];
-   ChatService _chatService = ChatService();
+   final ChatService _chatService = ChatService();
 
   // @override
   // void initState() {
@@ -44,18 +42,11 @@ class _ChatListState extends State<ChatList> {
 
    
     return Scaffold(
-      appBar: AppBar(title: Text('Chat list'),),
-      // body: SafeArea(child: ListView.builder(
-      //   itemCount: users.length,
-      //   itemBuilder: (context, index) {
-      //    return users.isEmpty ? Center(child: Text('data')): ListTile(
-      //       title: Text(users[index].name),
-      //       // subtitle: Text(users[index].),
-      //     );
-      // },)),
+      appBar: AppBar(title: const Text('Chat list'),),
+    
       body: SafeArea(child: FutureBuilder(future: _chatService.fetchOtherParticipants(), builder: (context, snapshot) {
       if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else {
@@ -76,7 +67,7 @@ class _ChatListState extends State<ChatList> {
                 },
               );
             } else {
-              return Center(child: Text('No data available'));
+              return const Center(child: Text('No data available'));
             }
       }})),
     );

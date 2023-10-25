@@ -128,7 +128,6 @@ class ChatService extends ChangeNotifier {
     List<UserModel> users = [];
     CollectionReference usersCollection = FirebaseFirestore.instance.collection('users');
     for (String userId in userIds) {
-      print(userId);
        QuerySnapshot userQuerySnapshot = await usersCollection.where('uid', isEqualTo: userId).get();
       if (userQuerySnapshot.docs.isNotEmpty) {
         Map<String, dynamic> userData = userQuerySnapshot.docs.first.data() as Map<String, dynamic>;
@@ -136,7 +135,6 @@ class ChatService extends ChangeNotifier {
         users.add(user);
       }
     }
-    print(users.length);
     return users;
   }
 

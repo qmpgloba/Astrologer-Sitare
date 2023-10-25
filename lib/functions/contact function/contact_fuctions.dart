@@ -1,5 +1,4 @@
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:sitare_astrologer_partner/model/user_model.dart';
 import 'package:sitare_astrologer_partner/screens/chat%20screen/service/chat_service.dart';

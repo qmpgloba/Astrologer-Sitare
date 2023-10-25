@@ -60,7 +60,7 @@ class HomeScreen extends StatelessWidget {
           children: [
             const Text('Registered Succesfully'),
             ElevatedButton(onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChatList(),));
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ChatList(),));
             }, child: const Text('chat'))
           ],
         ),
