@@ -25,6 +25,8 @@ class _ChatScreenState extends State<ChatScreen> {
   String? lastMessageFromOtherUser;
   final ValueNotifier<int> rebuildNumber = ValueNotifier<int>(0);
   List<String> suggestions = [];
+  ScrollController _scrollController = ScrollController();
+
   @override
   void dispose() {
     smartReply.close();
@@ -145,8 +147,11 @@ class _ChatScreenState extends State<ChatScreen> {
         }
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: Text('Loading...'));
-        }
+        }WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+      });
         return ListView(
+          controller: _scrollController,
           children: snapshot.data!.docs
               .map((document) => _buildMessageItem(document, size))
               .toList(),
