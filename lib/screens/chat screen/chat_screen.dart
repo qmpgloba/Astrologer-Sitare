@@ -25,7 +25,7 @@ class _ChatScreenState extends State<ChatScreen> {
   String? lastMessageFromOtherUser;
   final ValueNotifier<int> rebuildNumber = ValueNotifier<int>(0);
   List<String> suggestions = [];
-  ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController = ScrollController();
 
   @override
   void dispose() {
@@ -209,7 +209,6 @@ class _SuggestionTileState extends State<SuggestionTile> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        print(widget.suggestions[widget.index]);
         _chatService.sendMessage(
             widget.user.uid, (widget.suggestions[widget.index]));
       },
