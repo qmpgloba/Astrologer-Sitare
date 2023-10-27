@@ -147,7 +147,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
                     return ListTile(
                       leading: InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          print(notification['user_uid']);
+                        },
                         child: Container(
                           width: size.width * 0.15,
                           height: size.width * 0.15,

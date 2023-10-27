@@ -20,7 +20,7 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   RemoteNotification? notification = message.notification;
   AndroidNotification? android = message.notification?.android;
   if (notification != null && android != null) {
-    saveNotificationToFirestore(notification);
+    saveNotificationToFirestore(notification,message.data);
   }
 }
 
@@ -75,7 +75,7 @@ _initFCM() async {
     AndroidNotification? android = message.notification?.android;
     if (notification != null && android != null) {
       // Handle data payload messages
-      saveNotificationToFirestore(notification);
+      saveNotificationToFirestore(notification,message.data);
       // Create a custom notification
       flutterLocalNotificationsPlugin.show(
         notification.hashCode, // Unique ID for the notification
@@ -93,15 +93,20 @@ _initFCM() async {
   });
 }
 
-void saveNotificationToFirestore(RemoteNotification notification) {
+void saveNotificationToFirestore(RemoteNotification notification,Map<String,dynamic> data) {
   final firestore = FirebaseFirestore.instance;
+
   final notificationData = {
     'title': notification.title,
     'body': notification.body,
     'timestamp': FieldValue.serverTimestamp(),
     'uid': currentUser!.uid,
+    'user_uid': data['uid'],
   };
-  firestore.collection('Notification').add(notificationData).then((_) {
-  }).catchError((error) {
-  });
+
+  firestore
+      .collection('Notification')
+      .add(notificationData)
+      .then((_) {})
+      .catchError((error) {});
 }
