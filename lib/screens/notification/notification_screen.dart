@@ -3,7 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
+import 'package:sitare_astrologer_partner/functions/contact%20function/make_call_function.dart';
 import 'package:sitare_astrologer_partner/functions/firebase_auth_methods.dart';
+import 'package:sitare_astrologer_partner/functions/user%20profile/get_user_profile.dart';
 
 // ignore: use_key_in_widget_constructors
 class NotificationScreen extends StatefulWidget {
@@ -44,9 +46,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
           // .orderBy("timestamp", descending: true)
           .get();
 
-      return querySnapshot.docs
-          .map((doc) => doc.data())
-          .toList();
+      return querySnapshot.docs.map((doc) => doc.data()).toList();
     } catch (e) {
       return null;
     }
@@ -73,9 +73,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
       );
 
       setState(() {});
-    // ignore: empty_catches
-    } catch (e) {
-    }
+      // ignore: empty_catches
+    } catch (e) {}
   }
 
   Widget buildNotificationList(List<Map<String, dynamic>>? notifications) {
@@ -127,8 +126,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
           (notifications == null || notifications.isEmpty)
               ? Padding(
                   padding: EdgeInsets.only(top: size.width * 0.75),
-                  child:
-                      const Text("Looks like you haven't recieved any notification"),
+                  child: const Text(
+                      "Looks like you haven't recieved any notification"),
                 )
               : ListView.separated(
                   separatorBuilder: (context, index) => const Divider(),
@@ -147,8 +146,18 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
                     return ListTile(
                       leading: InkWell(
-                        onTap: () {
-                          print(notification['user_uid']);
+                        onTap: () async {
+                          String? userMobileNumber =
+                              await fetchUserMobileNumber(
+                                  notification['user_uid']);
+                          if (userMobileNumber != null) {
+                            // Use the user's mobile number as needed
+                            print('User mobile number: $userMobileNumber');
+                            makeCknowlarityCall(userMobileNumber, currentUser!.phoneNumber!);
+                          } else {
+                            print('User not found');
+                            // Handle the case when the user is not found
+                          }
                         },
                         child: Container(
                           width: size.width * 0.15,

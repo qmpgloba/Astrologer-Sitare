@@ -14,3 +14,25 @@ Future<DocumentSnapshot<Map<String, dynamic>>?> getUserDataByNumber(
     return null;
   }
 }
+
+Future<String?> fetchUserMobileNumber(String userUid) async {
+  try {
+    QuerySnapshot userSnapshot = await FirebaseFirestore.instance.collection('users').where('uid',isEqualTo: userUid).get();
+    if (userSnapshot.docs.isNotEmpty) {
+      var userData = userSnapshot.docs.first;
+      return userData['phone number'] as String?;
+    } else {
+      return null; // Return null if the user does not exist
+    }
+  } catch (e) {
+    print('Error fetching user details: $e');
+    return null; // Return null in case of any errors
+  }
+}
+
+
+
+
+
+
+
