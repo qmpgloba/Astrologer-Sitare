@@ -3,9 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
-import 'package:sitare_astrologer_partner/functions/contact%20function/make_call_function.dart';
 import 'package:sitare_astrologer_partner/functions/firebase_auth_methods.dart';
-import 'package:sitare_astrologer_partner/functions/user%20profile/get_user_profile.dart';
+import 'package:sitare_astrologer_partner/screens/notification/widgets/alert_dialog_for_call.dart';
 
 // ignore: use_key_in_widget_constructors
 class NotificationScreen extends StatefulWidget {
@@ -147,17 +146,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                     return ListTile(
                       leading: InkWell(
                         onTap: () async {
-                          String? userMobileNumber =
-                              await fetchUserMobileNumber(
-                                  notification['user_uid']);
-                          if (userMobileNumber != null) {
-                            // Use the user's mobile number as needed
-                            print('User mobile number: $userMobileNumber');
-                            makeCknowlarityCall(userMobileNumber, currentUser!.phoneNumber!);
-                          } else {
-                            print('User not found');
-                            // Handle the case when the user is not found
-                          }
+                          alertDialogForCall(context, notification);
                         },
                         child: Container(
                           width: size.width * 0.15,
@@ -186,4 +175,5 @@ class _NotificationScreenState extends State<NotificationScreen> {
       ),
     );
   }
+
 }

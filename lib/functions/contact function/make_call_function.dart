@@ -23,6 +23,7 @@ void makeCknowlarityCall(String customerNumber,String astrologerNumber) async {
   };
 
   try {
+    print('vnn');
     final response = await http.post(
       Uri.parse(apiUrl),
       headers: headers,

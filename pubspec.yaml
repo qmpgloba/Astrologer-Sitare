@@ -54,6 +54,7 @@ dependencies:
   dio: ^5.3.3
   google_mlkit_smart_reply: ^0.8.0
   http: ^1.1.0
+  fluttertoast: ^8.2.2
 
 dev_dependencies:
   flutter_test:

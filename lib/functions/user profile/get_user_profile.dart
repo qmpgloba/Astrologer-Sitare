@@ -20,6 +20,7 @@ Future<String?> fetchUserMobileNumber(String userUid) async {
     QuerySnapshot userSnapshot = await FirebaseFirestore.instance.collection('users').where('uid',isEqualTo: userUid).get();
     if (userSnapshot.docs.isNotEmpty) {
       var userData = userSnapshot.docs.first;
+     
       return userData['phone number'] as String?;
     } else {
       return null; // Return null if the user does not exist
