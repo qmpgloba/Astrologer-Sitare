@@ -25,7 +25,6 @@ Future<String?> fetchUserMobileNumber(String userUid) async {
       return null; // Return null if the user does not exist
     }
   } catch (e) {
-    print('Error fetching user details: $e');
     return null; // Return null in case of any errors
   }
 }

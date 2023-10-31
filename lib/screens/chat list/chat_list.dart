@@ -42,7 +42,8 @@ class _ChatListState extends State<ChatList> {
 
    
     return Scaffold(
-      appBar: AppBar(title: const Text('Chat list'),),
+      appBar: AppBar(title: const Text('Chat list'),centerTitle: true,
+      elevation: 5,),
     
       body: SafeArea(child: FutureBuilder(future: _chatService.fetchOtherParticipants(), builder: (context, snapshot) {
       if (snapshot.connectionState == ConnectionState.waiting) {
@@ -52,14 +53,16 @@ class _ChatListState extends State<ChatList> {
           } else {
             if (snapshot.hasData) {
               List<UserModel> users = snapshot.data!;
-              return ListView.builder(
+              return ListView.separated(
                 itemCount: users.length,
+                separatorBuilder: (context, index) => const Divider(),
                 itemBuilder: (context, index) {
                   return GestureDetector(
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChatScreen(user: users[index]),));
                     },
                     child: ListTile(
+                      leading: CircleAvatar(backgroundImage: NetworkImage(users[index].userProfileImage),),
                       title: Text(users[index].name),
                       // subtitle: Text(users[index].email),
                     ),

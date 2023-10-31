@@ -75,9 +75,9 @@ class _ChatScreenState extends State<ChatScreen> {
         backgroundColor: greyColor,
         title: Text(widget.user.name),
         actions: [
-          // CircleAvatar(
-          //   backgroundImage: NetworkImage(widget.astrologer.profilePic),
-          // ),
+          CircleAvatar(
+            backgroundImage: NetworkImage(widget.user.userProfileImage),
+          ),
           SizedBox(
             width: size.width / 16,
           )
