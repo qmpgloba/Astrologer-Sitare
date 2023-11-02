@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:sitare_astrologer_partner/constants/ui_constants.dart';
 import 'package:sitare_astrologer_partner/screens/calculator%20webview/calculator_webview.dart';
 import 'package:sitare_astrologer_partner/screens/chat%20list/chat_list.dart';
+import 'package:sitare_astrologer_partner/screens/home%20screen/widgets/homescreen_cateogory_widget.dart';
 import 'package:sitare_astrologer_partner/screens/notification/notification_screen.dart';
 import 'package:sitare_astrologer_partner/screens/profile%20screen/profile_screen.dart';
 import 'package:sitare_astrologer_partner/screens/welcome%20screen/welcome_screen.dart';
@@ -36,24 +37,13 @@ class HomeScreen extends StatelessWidget {
             },
             icon: const Icon(Icons.logout)),
         actions: [
-          Row(
-            children: [
-              IconButton(
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const ProfileScreen(),
-                    ));
-                  },
-                  icon: const Icon(Icons.person)),
-              IconButton(
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => NotificationScreen(),
-                    ));
-                  },
-                  icon: const Icon(Icons.notifications))
-            ],
-          )
+          IconButton(
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const ProfileScreen(),
+                ));
+              },
+              icon: const Icon(Icons.person))
         ],
       ),
       body: SafeArea(
@@ -62,14 +52,38 @@ class HomeScreen extends StatelessWidget {
           padding: EdgeInsets.all(size.width / 16),
           child: Column(
             children: [
-              const Text('Registered Succesfully'),
-              ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const ChatList(),
-                    ));
-                  },
-                  child: const Text('chat')),
+              // const Text('Registered Succesfully'),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => NotificationScreen(),
+                        ));
+                      },
+                      child: HomeScreenCategoryWidget(
+                          size: size,
+                          text: 'Notifications',
+                          icon: Icons.notifications)),
+                  GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const ChatList(),
+                        ));
+                      },
+                      child: HomeScreenCategoryWidget(
+                          size: size, text: 'Chats', icon: Icons.chat))
+
+                  // ElevatedButton(
+                  //     onPressed: () {
+                  //       Navigator.of(context).push(MaterialPageRoute(
+                  //         builder: (context) => const ChatList(),
+                  //       ));
+                  //     },
+                  //     child: const Text('chat')),
+                ],
+              ),
               const SizedBox(
                 height: 10,
               ),
@@ -99,7 +113,6 @@ class HomeScreen extends StatelessWidget {
                   title: const Text('Multi-Method Numerology Calculator'),
                 )),
               ),
-          
             ],
           ),
         ),
