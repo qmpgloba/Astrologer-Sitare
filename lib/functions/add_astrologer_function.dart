@@ -56,24 +56,44 @@ Future<String> addProfileImge(XFile imagePicked) async {
   }
 }
 
-Future<void> updateAstrologerInformation(
-    AstrologerModel astrologer, String docID) async {
-  final CollectionReference astrologersCollection =
-      FirebaseFirestore.instance.collection('Astrologerdetails');
-  String documentID = docID;
+// Future<void> updateAstrologerInformation(
+//     AstrologerModel astrologer, String docID) async {
+//   final CollectionReference astrologersCollection =
+//       FirebaseFirestore.instance.collection('Astrologerdetails');
+//   String documentID = docID;
+
+//   try {
+//     astrologersCollection.doc(documentID).update({
+//       'name': astrologer.fullName,
+//       'email': astrologer.emailAddress,
+//       'phone number': astrologer.phoneNumber,
+//       'office address': astrologer.officeAddress,
+//       'personal description': astrologer.description,
+//       'experience(in years)': astrologer.experienceYears,
+//     });
+//     // ignore: empty_catches
+//   } catch (e) {}
+// }
+
+Future<void> updateAstrologer(AstrologerModel astrologer, String uid) async {
+  final db = FirebaseFirestore.instance;
 
   try {
-    astrologersCollection.doc(documentID).update({
-      'name': astrologer.fullName,
-      'email': astrologer.emailAddress,
-      'phone number': astrologer.phoneNumber,
-      'office address': astrologer.officeAddress,
-      'personal description': astrologer.description,
-      'experience(in years)': astrologer.experienceYears,
-    });
-    // ignore: empty_catches
-  } catch (e) {}
+    QuerySnapshot querySnapshot =
+        await db.collection('Astrologerdetails').where('uid', isEqualTo: uid).get();
+
+    if (querySnapshot.docs.isNotEmpty) {
+      DocumentSnapshot documentSnapshot = querySnapshot.docs.first;
+      await documentSnapshot.reference.update(astrologer.toJson());
+      // return true;
+    } else {
+      // return false;
+    }
+  } catch (e) {
+    // return false;
+  }
 }
+
 
 String? getFileNameFromUrl(String url) {
   Uri uri = Uri.parse(url);
