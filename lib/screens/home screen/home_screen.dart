@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sitare_astrologer_partner/constants/ui_constants.dart';
+import 'package:sitare_astrologer_partner/screens/calculator%20webview/calculator_webview.dart';
 import 'package:sitare_astrologer_partner/screens/chat%20list/chat_list.dart';
 import 'package:sitare_astrologer_partner/screens/notification/notification_screen.dart';
 import 'package:sitare_astrologer_partner/screens/profile%20screen/profile_screen.dart';
@@ -11,6 +12,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.sizeOf(context);
     return Scaffold(
       backgroundColor: whiteColor,
       appBar: AppBar(
@@ -54,15 +56,52 @@ class HomeScreen extends StatelessWidget {
           )
         ],
       ),
-      body:  SafeArea(
+      body: SafeArea(
           child: Center(
-        child: Column(
-          children: [
-            const Text('Registered Succesfully'),
-            ElevatedButton(onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ChatList(),));
-            }, child: const Text('chat'))
-          ],
+        child: Padding(
+          padding: EdgeInsets.all(size.width / 16),
+          child: Column(
+            children: [
+              const Text('Registered Succesfully'),
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const ChatList(),
+                    ));
+                  },
+                  child: const Text('chat')),
+              const SizedBox(
+                height: 10,
+              ),
+              Container(
+                width: size.width,
+                height: size.width * .18,
+                decoration: BoxDecoration(
+                  color: Colors.white, // Container color
+                  borderRadius: BorderRadius.circular(8.0), // Rounded corners
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5), // Shadow color
+                      spreadRadius: 1, // Spread radius
+                      blurRadius: 5, // Blur radius
+                      offset:
+                          const Offset(0, 2), // Offset in the x, y direction
+                    ),
+                  ],
+                ),
+                child: Center(
+                    child: ListTile(
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const WebView(),
+                    ));
+                  },
+                  title: const Text('Multi-Method Numerology Calculator'),
+                )),
+              ),
+          
+            ],
+          ),
         ),
       )),
     );
