@@ -4,6 +4,7 @@ import 'package:sitare_astrologer_partner/constants/ui_constants.dart';
 import 'package:sitare_astrologer_partner/screens/calculator%20webview/calculator_webview.dart';
 import 'package:sitare_astrologer_partner/screens/chat%20list/chat_list.dart';
 import 'package:sitare_astrologer_partner/screens/home%20screen/widgets/homescreen_cateogory_widget.dart';
+import 'package:sitare_astrologer_partner/screens/next%20availability%20screen/next_availability_screen.dart';
 import 'package:sitare_astrologer_partner/screens/notification/notification_screen.dart';
 import 'package:sitare_astrologer_partner/screens/profile%20screen/profile_screen.dart';
 import 'package:sitare_astrologer_partner/screens/welcome%20screen/welcome_screen.dart';
@@ -78,7 +79,7 @@ class HomeScreen extends StatelessWidget {
                   // ElevatedButton(
                   //     onPressed: () {
                   //       Navigator.of(context).push(MaterialPageRoute(
-                  //         builder: (context) => const ChatList(),
+                  //         builder: (context) => const NextAvailabilityScreen(),
                   //       ));
                   //     },
                   //     child: const Text('chat')),
@@ -113,6 +114,13 @@ class HomeScreen extends StatelessWidget {
                   title: const Text('Multi-Method Numerology Calculator'),
                 )),
               ),
+               ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) =>  NextAvailabilityScreen(),
+                        ));
+                      },
+                      child: const Text('chat')),
             ],
           ),
         ),
