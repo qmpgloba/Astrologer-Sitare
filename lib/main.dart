@@ -56,7 +56,8 @@ class MyApp extends StatelessWidget {
 _initFCM() async {
   FirebaseMessaging messaging = FirebaseMessaging.instance;
   String? fcmKeyToken = await FirebaseMessaging.instance.getToken();
-  String currentFcmToken = await fetchFcmToken(currentUser!.uid) as String;
+ if(currentUser!=null){
+   String currentFcmToken = await fetchFcmToken(currentUser!.uid) as String;
   if (currentFcmToken != fcmKeyToken) {
    Map<String, dynamic>? userData =
       await  getAstroDetailsByUid(currentUser!.uid);
@@ -94,6 +95,7 @@ _initFCM() async {
         currentWorkingStatus: userData['current working status'],
         fcmToken: fcmKeyToken!);
         await updateAstrologer(astrologer, currentUser!.uid);
+ }
         
   }
   // ignore: unused_local_variable
