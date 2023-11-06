@@ -117,7 +117,7 @@ class HomeScreen extends StatelessWidget {
                ElevatedButton(
                       onPressed: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) =>  NextAvailabilityScreen(),
+                          builder: (context) =>  const NextAvailabilityScreen(),
                         ));
                       },
                       child: const Text('chat')),

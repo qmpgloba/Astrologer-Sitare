@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
+import 'package:sitare_astrologer_partner/constants/ui_constants.dart';
 import 'package:sitare_astrologer_partner/functions/firebase_auth_methods.dart';
 import 'package:sitare_astrologer_partner/screens/notification/widgets/alert_dialog_for_call.dart';
 
@@ -16,21 +17,39 @@ class NotificationScreen extends StatefulWidget {
 class _NotificationScreenState extends State<NotificationScreen> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: FutureBuilder(
-          future: fetchNotifications(), // Create this function to fetch data
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (snapshot.hasError) {
-              return Text('Error: ${snapshot.error}');
-            } else {
-              // Display the list of notifications
-              return buildNotificationList(snapshot.data);
-            }
-          },
-        ),
+    Size size = MediaQuery.sizeOf(context);
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: blackColor,
+        title: const Text('Notifications',style: TextStyle(color: whiteColor),),
+        iconTheme: const IconThemeData(color:whiteColor),
+        centerTitle: true,
+        actions: [
+          InkWell(
+            onTap: () {
+              deleteAllNotifications();
+            },
+            child: Container(
+              width: size.width * 0.10,
+              height: size.width * 0.10,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.blue.withOpacity(0.7),
+              ),
+              child: Center(
+                child: Icon(
+                  Icons.delete,
+                  color: Colors.white,
+                  size: size.width * 0.06,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(width: 20,)
+        ],
+      ),
+      body: SafeArea(
+        child: buildNotificationList()
       ),
     );
   }
@@ -76,59 +95,26 @@ class _NotificationScreenState extends State<NotificationScreen> {
     } catch (e) {}
   }
 
-  Widget buildNotificationList(List<Map<String, dynamic>>? notifications) {
+  Widget buildNotificationList() {
     Size size = MediaQuery.sizeOf(context);
-
-    return Padding(
-      padding: EdgeInsets.all(size.width / 16),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          InkWell(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: const Icon(Icons.arrow_back_ios)),
-          const SizedBox(
-            height: 15,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(
-                "Notifications",
-                style: TextStyle(fontSize: 28, fontWeight: FontWeight.w700),
-              ),
-              InkWell(
-                onTap: () {
-                  deleteAllNotifications();
-                },
-                child: Container(
-                  width: size.width * 0.13,
-                  height: size.width * 0.13,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.blue.withOpacity(0.7),
-                  ),
-                  child: Center(
-                    child: Icon(
-                      Icons.delete,
-                      color: Colors.white,
-                      size: size.width * 0.06,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          (notifications == null || notifications.isEmpty)
+   return  FutureBuilder(
+          future: fetchNotifications(), // Create this function to fetch data
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Text('Error: ${snapshot.error}');
+            } else {
+              List<Map<String, dynamic>>? notifications =  snapshot.data;
+              // Display the list of notifications
+              return (notifications == null || notifications.isEmpty)
               ? Padding(
                   padding: EdgeInsets.only(top: size.width * 0.75),
                   child: const Text(
                       "Looks like you haven't recieved any notification"),
                 )
               : ListView.separated(
+                physics: const BouncingScrollPhysics(),
                   separatorBuilder: (context, index) => const Divider(),
                   shrinkWrap: true,
                   itemCount: notifications.length,
@@ -170,10 +156,37 @@ class _NotificationScreenState extends State<NotificationScreen> {
                       ),
                     );
                   },
-                )
-        ],
-      ),
-    );
-  }
+                );
+            }
+          },
+        );
 
+    // return Padding(
+    //   padding: EdgeInsets.all(size.width / 16),
+    //   child: Column(
+    //     mainAxisAlignment: MainAxisAlignment.start,
+    //     crossAxisAlignment: CrossAxisAlignment.start,
+    //     children: [
+    //       // InkWell(
+    //       //     onTap: () {
+    //       //       Navigator.pop(context);
+    //       //     },
+    //       //     child: const Icon(Icons.arrow_back_ios)),
+    //       // const SizedBox(
+    //       //   height: 15,
+    //       // ),
+    //       // Row(
+    //       //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //       //   children: [
+    //       //     const Text(
+    //       //       "Notifications",
+    //       //       style: TextStyle(fontSize: 28, fontWeight: FontWeight.w700),
+    //       //     ),
+    //       //   ],
+    //       // ),
+          
+    //     ],
+    //   ),
+    // );
+  }
 }

@@ -5,6 +5,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sitare_astrologer_partner/constants/app_constants.dart';
 import 'package:sitare_astrologer_partner/model/astrologer_model.dart';
+import 'package:sitare_astrologer_partner/model/availability_slots_model.dart';
 
 createAstrologer(AstrologerModel astrologer) async {
   final db = FirebaseFirestore.instance;
@@ -79,8 +80,10 @@ Future<void> updateAstrologer(AstrologerModel astrologer, String uid) async {
   final db = FirebaseFirestore.instance;
 
   try {
-    QuerySnapshot querySnapshot =
-        await db.collection('Astrologerdetails').where('uid', isEqualTo: uid).get();
+    QuerySnapshot querySnapshot = await db
+        .collection('Astrologerdetails')
+        .where('uid', isEqualTo: uid)
+        .get();
 
     if (querySnapshot.docs.isNotEmpty) {
       DocumentSnapshot documentSnapshot = querySnapshot.docs.first;
@@ -94,7 +97,6 @@ Future<void> updateAstrologer(AstrologerModel astrologer, String uid) async {
   }
 }
 
-
 String? getFileNameFromUrl(String url) {
   Uri uri = Uri.parse(url);
   List<String> pathSegments = uri.pathSegments;
@@ -102,4 +104,31 @@ String? getFileNameFromUrl(String url) {
     return pathSegments.last;
   }
   return null; // No filename found
+}
+
+Future<void> addAvailableSlotsToFireBase(
+    String uid, AvailabilityModel availableSlots) async {
+  try {
+    final querySnapshot = await FirebaseFirestore.instance
+        .collection('Astrologerdetails')
+        .where('uid', isEqualTo: uid)
+        .get();
+
+    if (querySnapshot.docs.isNotEmpty) {
+      // Phone number exists in Firestore, store the subcollection
+      final userDoc = querySnapshot.docs.first;
+      final userUid = userDoc.id;
+      final subcollectionRef = FirebaseFirestore.instance
+          .collection('Astrologerdetails')
+          .doc(userUid)
+          .collection('available slots');
+      await subcollectionRef.add(availableSlots.toJson());
+    } else {
+      // Phone number does not exist in Firestore
+      throw Exception('uid does not exist');
+    }
+    // ignore: unused_catch_clause
+  } on FirebaseException catch (e) {
+    throw Exception('Error accessing Firestore: $e');
+  }
 }

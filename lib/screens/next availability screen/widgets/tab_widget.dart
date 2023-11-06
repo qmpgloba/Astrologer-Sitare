@@ -20,7 +20,7 @@ class TabWidget extends StatelessWidget {
             ),
           Text(
            DateFormat('dd/MM/yyyy').format(dateTime),
-            style: TextStyle(color: redColor),
+            style: const TextStyle(color: redColor),
           )
         ],
       ),
