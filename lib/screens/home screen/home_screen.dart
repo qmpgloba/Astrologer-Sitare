@@ -75,52 +75,36 @@ class HomeScreen extends StatelessWidget {
                       },
                       child: HomeScreenCategoryWidget(
                           size: size, text: 'Chats', icon: Icons.chat))
-
-                  // ElevatedButton(
-                  //     onPressed: () {
-                  //       Navigator.of(context).push(MaterialPageRoute(
-                  //         builder: (context) => const NextAvailabilityScreen(),
-                  //       ));
-                  //     },
-                  //     child: const Text('chat')),
                 ],
               ),
               const SizedBox(
                 height: 10,
               ),
-              Container(
-                width: size.width,
-                height: size.width * .18,
-                decoration: BoxDecoration(
-                  color: Colors.white, // Container color
-                  borderRadius: BorderRadius.circular(8.0), // Rounded corners
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5), // Shadow color
-                      spreadRadius: 1, // Spread radius
-                      blurRadius: 5, // Blur radius
-                      offset:
-                          const Offset(0, 2), // Offset in the x, y direction
-                    ),
-                  ],
-                ),
-                child: Center(
-                    child: ListTile(
-                  onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const WebView(),
-                    ));
-                  },
-                  title: const Text('Multi-Method Numerology Calculator'),
-                )),
-              ),
-               ElevatedButton(
-                      onPressed: () {
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  GestureDetector(
+                      onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) =>  const NextAvailabilityScreen(),
+                          builder: (context) => const WebView(),
                         ));
                       },
-                      child: const Text('chat')),
+                      child: HomeScreenCategoryWidget(
+                          size: size,
+                          text: 'Multi-Method Calculator',
+                          icon: Icons.calculate)),
+                  GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const NextAvailabilityScreen(),
+                        ));
+                      },
+                      child: HomeScreenCategoryWidget(
+                          size: size,
+                          text: 'Next Availability',
+                          icon: Icons.calendar_month_outlined))
+                ],
+              ),
             ],
           ),
         ),

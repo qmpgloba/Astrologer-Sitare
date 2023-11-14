@@ -146,7 +146,7 @@ void saveNotificationToFirestore(
   final notificationData = {
     'title': notification.title,
     'body': notification.body,
-    'timestamp': FieldValue.serverTimestamp(),
+    'timestamp': DateTime.now(),
     'uid': currentUser!.uid,
     'user_uid': data['uid'],
   };

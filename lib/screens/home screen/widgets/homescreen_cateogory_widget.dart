@@ -48,9 +48,10 @@ class HomeScreenCategoryWidget extends StatelessWidget {
           AutoSizeText(
             text,
             maxFontSize: 16,
-            maxLines: 1,
+            maxLines: 2,
             minFontSize: 8,
             style: const TextStyle(color: blackColor),
+            textAlign: TextAlign.center,
           )
         ],
       ),

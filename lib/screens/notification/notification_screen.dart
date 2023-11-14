@@ -61,7 +61,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
       final querySnapshot = await firestore
           .collection('Notification')
           .where('uid', isEqualTo: userUID)
-          // .orderBy("timestamp", descending: true)
+          .orderBy("timestamp", descending: false)
           .get();
 
       return querySnapshot.docs.map((doc) => doc.data()).toList();
@@ -123,36 +123,40 @@ class _NotificationScreenState extends State<NotificationScreen> {
                     final timestamp = notification['timestamp'] as Timestamp;
 
                     final formattedDate =
-                        DateFormat('dd MMMM').format(timestamp.toDate());
+                        DateFormat('dd-MMM').format(timestamp.toDate());
                     final formattedTime =
                         DateFormat('hh:mm a').format(timestamp.toDate());
                     // ignore: unused_local_variable
-                    final date = "$formattedDate ${formattedTime}";
-
-                    return ListTile(
-                      leading: InkWell(
-                        onTap: () async {
+                    
+                    return GestureDetector(
+                      onTap: () async {
                           alertDialogForCall(context, notification);
                         },
-                        child: Container(
-                          width: size.width * 0.15,
-                          height: size.width * 0.15,
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Color(0xFFd3f5d6),
+                      child: ListTile(
+                        leading:
+                          
+                           Container(
+                            width: size.width * 0.15,
+                            height: size.width * 0.15,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Color(0xFFd3f5d6),
+                            ),
+                            child: Center(
+                              child: Image.asset("assets/images/call.png"),
+                            ),
                           ),
-                          child: Center(
-                            child: Image.asset("assets/images/call.png"),
-                          ),
+                        
+                        title: Text(notification['title']),
+                        subtitle:  Text(notification['body']),
+                        trailing: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(formattedDate),
+                            Text(formattedTime),
+                            
+                          ],
                         ),
-                      ),
-                      title: Text(notification['title']),
-                      subtitle: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(notification['body']),
-                          //Text(date),
-                        ],
                       ),
                     );
                   },
