@@ -105,6 +105,34 @@ class HomeScreen extends StatelessWidget {
                           icon: Icons.calendar_month_outlined))
                 ],
               ),
+              const SizedBox(
+                height: 10,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  GestureDetector(
+                      onTap: () {
+                        // Navigator.of(context).push(MaterialPageRoute(
+                        //   builder: (context) => const WebView(),
+                        // ));
+                      },
+                      child: HomeScreenCategoryWidget(
+                          size: size,
+                          text: 'Bookings',
+                          icon: Icons.pending_actions_sharp)),
+                  GestureDetector(
+                      onTap: () {
+                        // Navigator.of(context).push(MaterialPageRoute(
+                        //   builder: (context) => const NextAvailabilityScreen(),
+                        // ));
+                      },
+                      child: HomeScreenCategoryWidget(
+                          size: size,
+                          text: 'Next Availability',
+                          icon: Icons.calendar_month_outlined))
+                ],
+              ),
             ],
           ),
         ),

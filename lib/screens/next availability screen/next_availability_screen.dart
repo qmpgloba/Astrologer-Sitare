@@ -61,7 +61,6 @@ class _NextAvailabilityScreenState extends State<NextAvailabilityScreen>
         ),
         body: Column(
           children: [
-            // ProfileWidgetNextAvailabilityScreen(size: size, astrologer: widget.astrologer),
             Container(
               height: size.width / 5,
               color: const Color.fromARGB(255, 3, 11, 59),
