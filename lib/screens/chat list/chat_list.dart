@@ -11,9 +11,8 @@ class ChatList extends StatefulWidget {
 }
 
 class _ChatListState extends State<ChatList> {
-
   //  List<UserModel> users = [];
-   final ChatService _chatService = ChatService();
+  final ChatService _chatService = ChatService();
 
   // @override
   // void initState() {
@@ -39,40 +38,53 @@ class _ChatListState extends State<ChatList> {
 
   @override
   Widget build(BuildContext context) {
-
-   
     return Scaffold(
-      appBar: AppBar(title: const Text('Chat list'),centerTitle: true,
-      elevation: 5,),
-    
-      body: SafeArea(child: FutureBuilder(future: _chatService.fetchOtherParticipants(), builder: (context, snapshot) {
-      if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          } else {
-            if (snapshot.hasData) {
-              List<UserModel> users = snapshot.data!;
-              return ListView.separated(
-                itemCount: users.length,
-                separatorBuilder: (context, index) => const Divider(),
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChatScreen(user: users[index]),));
-                    },
-                    child: ListTile(
-                      leading: CircleAvatar(backgroundImage: NetworkImage(users[index].userProfileImage),),
-                      title: Text(users[index].name),
-                      // subtitle: Text(users[index].email),
-                    ),
-                  );
-                },
-              );
+      appBar: AppBar(
+        title: const Text('Chat list'),
+        centerTitle: true,
+        elevation: 5,
+      ),
+      body: SafeArea(
+        child: FutureBuilder(
+          future: _chatService.fetchOtherParticipants(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error}'));
             } else {
-              return const Center(child: Text('No data available'));
+              if (snapshot.hasData) {
+                List<UserModel> users = snapshot.data!;
+                return ListView.separated(
+                  itemCount: users.length,
+                  separatorBuilder: (context, index) => const Divider(),
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => ChatScreen(user: users[index]),
+                        ));
+                      },
+                      child: ListTile(
+                        leading: CircleAvatar(
+                          backgroundImage:
+                              NetworkImage(users[index].userProfileImage),
+                        ),
+                        title: Text(users[index].name),
+                        // subtitle: Text(users[index].email),
+                      ),
+                    );
+                  },
+                );
+              } else {
+                return const Center(
+                  child: Text('No data available'),
+                );
+              }
             }
-      }})),
+          },
+        ),
+      ),
     );
   }
 }
