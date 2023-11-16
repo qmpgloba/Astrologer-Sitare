@@ -38,14 +38,11 @@ Future<dynamic> alertDialogForCall(
                     // print(notification['user_uid']);
                     if (userMobileNumber != null) {
                       // Use the user's mobile number as needed
-                      // print(
-                      //     'User mobile number: $userMobileNumber');
                       makeCknowlarityCall(
                           userMobileNumber, currentUser!.phoneNumber!);
 
                       Navigator.of(context).pop();
                     } else {
-                      // print('User not found');
                       // Handle the case when the user is not found
                     }
                   },
