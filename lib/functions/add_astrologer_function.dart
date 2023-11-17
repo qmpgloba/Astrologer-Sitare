@@ -35,8 +35,6 @@ Future<String> addProfileImge(XFile imagePicked) async {
   }
 }
 
-
-
 Future<void> updateAstrologer(AstrologerModel astrologer, String uid) async {
   final db = FirebaseFirestore.instance;
 
@@ -67,28 +65,88 @@ String? getFileNameFromUrl(String url) {
   return null; // No filename found
 }
 
+// Future<void> addAvailableSlotsToFireBase(
+//     String uid, AvailabilityModel availableSlots) async {
+//   try {
+//     final querySnapshot = await FirebaseFirestore.instance
+//         .collection('Astrologerdetails')
+//         .where('uid', isEqualTo: uid)
+//         .get();
+
+//     if (querySnapshot.docs.isNotEmpty) {
+//       // Phone number exists in Firestore, store the subcollection
+//       final userDoc = querySnapshot.docs.first;
+//       final userUid = userDoc.id;
+//       final subcollectionRef = FirebaseFirestore.instance
+//           .collection('Astrologerdetails')
+//           .doc(userUid)
+//           .collection('available slots');
+//       await subcollectionRef.add(availableSlots.toJson());
+//       print('done');
+//     } else {
+//       // Phone number does not exist in Firestore
+//       throw Exception('uid does not exist');
+//     }
+//     // ignore: unused_catch_clause
+//   } on FirebaseException catch (e) {
+//     throw Exception('Error accessing Firestore: $e');
+//   }
+// }
+
 Future<void> addAvailableSlotsToFireBase(
-    String uid, AvailabilityModel availableSlots) async {
+    String uid,
+    AvailabilityModel availableSlots,
+    ) async {
   try {
     final querySnapshot = await FirebaseFirestore.instance
         .collection('Astrologerdetails')
         .where('uid', isEqualTo: uid)
         .get();
+    
 
     if (querySnapshot.docs.isNotEmpty) {
-      // Phone number exists in Firestore, store the subcollection
       final userDoc = querySnapshot.docs.first;
       final userUid = userDoc.id;
-      final subcollectionRef = FirebaseFirestore.instance
+
+      
+      final DateTime dateOnly = DateTime(
+        availableSlots.date.year,
+        availableSlots.date.month,
+        availableSlots.date.day,
+      );
+
+      final Timestamp startOfDate = Timestamp.fromDate(dateOnly);
+      final Timestamp endOfDate =
+          Timestamp.fromDate(dateOnly.add(const Duration(days: 1)));
+
+      final existingSlots = await FirebaseFirestore.instance
           .collection('Astrologerdetails')
           .doc(userUid)
-          .collection('available slots');
-      await subcollectionRef.add(availableSlots.toJson());
+          .collection('available slots')
+          .where('date', isGreaterThanOrEqualTo: startOfDate)
+          .where('date', isLessThan: endOfDate)
+          .get();
+
+      if (existingSlots.docs.isNotEmpty) {
+       
+        final docId = existingSlots.docs.first.id;
+        await FirebaseFirestore.instance
+            .collection('Astrologerdetails')
+            .doc(userUid)
+            .collection('available slots')
+            .doc(docId)
+            .update(availableSlots.toJson());
+      } else {
+        
+        await FirebaseFirestore.instance
+            .collection('Astrologerdetails')
+            .doc(userUid)
+            .collection('available slots')
+            .add(availableSlots.toJson());
+      }
     } else {
-      // Phone number does not exist in Firestore
       throw Exception('uid does not exist');
     }
-    // ignore: unused_catch_clause
   } on FirebaseException catch (e) {
     throw Exception('Error accessing Firestore: $e');
   }

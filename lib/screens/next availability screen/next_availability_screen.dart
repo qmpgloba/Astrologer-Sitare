@@ -1,11 +1,14 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:sitare_astrologer_partner/constants/ui_constants.dart';
 import 'package:sitare_astrologer_partner/functions/add_astrologer_function.dart';
 import 'package:sitare_astrologer_partner/functions/available_slots_function/available_function.dart';
 import 'package:sitare_astrologer_partner/functions/firebase_auth_methods.dart';
 import 'package:sitare_astrologer_partner/model/availability_slots_model.dart';
+import 'package:sitare_astrologer_partner/screens/home%20screen/home_screen.dart';
 import 'package:sitare_astrologer_partner/screens/next%20availability%20screen/widgets/time_slots_widget.dart';
+import 'package:sitare_astrologer_partner/widgets/flutter_toast.dart';
 
 import 'widgets/tab_widget.dart';
 
@@ -49,6 +52,7 @@ class _NextAvailabilityScreenState extends State<NextAvailabilityScreen>
       dateList.add(now.add(Duration(days: i)));
     }
   }
+  AvailabilityModel? day;
 
   @override
   Widget build(BuildContext context) {
@@ -121,12 +125,40 @@ class _NextAvailabilityScreenState extends State<NextAvailabilityScreen>
                     ),
                     GestureDetector(
                       onTap: () async {
+                         if (selectedSlots.isNotEmpty) {
+                           day = selectedSlots.firstWhere(
+                            (element) {
+                              var currDate =
+                                  DateFormat('dd/MM/yyyy').format(element.date);
+                              var date =
+                                  DateFormat('dd/MM/yyyy').format(dateList[_tabController.index]);
+                              return currDate == date;
+                            },
+                            orElse: () => AvailabilityModel(
+                                date: dateList[_tabController.index],
+                                availableSlots: [],
+                                bookedSlots: []),
+                          );
+                        }
+                        if(day!= null){
+                          selected[_tabController.index].addAll(day!.availableSlots);
+                        }
                         AvailabilityModel slots = AvailabilityModel(
                             date: dateList[_tabController.index],
                             availableSlots: selected[_tabController.index],
                             bookedSlots: []);
+                       
                         await addAvailableSlotsToFireBase(
-                            currentUser!.uid, slots);
+                                currentUser!.uid, slots, )
+                            .then((value) {
+                          showToast('Slot updated succesfully', greenColor);
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const HomeScreen(),
+                              ),
+                              (route) => false);
+                        });
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
