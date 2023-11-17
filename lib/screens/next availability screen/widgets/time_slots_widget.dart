@@ -35,6 +35,7 @@ class _TimeSlotsWidgetState extends State<TimeSlotsWidget> {
           return currDate ==
               date;
         },
+        orElse: () => AvailabilityModel(date: widget.dateTime, availableSlots: [], bookedSlots: []),
       );
       timings = day.availableSlots;
     }

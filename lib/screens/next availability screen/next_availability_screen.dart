@@ -109,7 +109,6 @@ class _NextAvailabilityScreenState extends State<NextAvailabilityScreen>
                         controller: _tabController,
                         physics: const BouncingScrollPhysics(),
                         children: dateList.map((date) {
-
                           return TimeSlotsWidget(
                             dateTime: date,
                             selectedIndex:
