@@ -25,9 +25,11 @@ class _NextAvailabilityScreenState extends State<NextAvailabilityScreen>
     with TickerProviderStateMixin {
   late List<List> selected;
   late List<List> selectedIndex;
+  late List<List> bookedSlots;
   late List<DateTime> dateList;
   late TabController _tabController;
   List<AvailabilityModel> selectedSlots = [];
+
   @override
   void initState() {
     super.initState();
@@ -39,6 +41,7 @@ class _NextAvailabilityScreenState extends State<NextAvailabilityScreen>
   void initializeLists() {
     selected = List.generate(dateList.length, (index) => []);
     selectedIndex = List.generate(dateList.length, (index) => []);
+    bookedSlots = List.generate(dateList.length, (index) => []);
   }
 
   bool checkDates(DateTime date1, DateTime date2) {
@@ -52,6 +55,7 @@ class _NextAvailabilityScreenState extends State<NextAvailabilityScreen>
       dateList.add(now.add(Duration(days: i)));
     }
   }
+
   AvailabilityModel? day;
 
   @override
@@ -125,13 +129,13 @@ class _NextAvailabilityScreenState extends State<NextAvailabilityScreen>
                     ),
                     GestureDetector(
                       onTap: () async {
-                         if (selectedSlots.isNotEmpty) {
-                           day = selectedSlots.firstWhere(
+                        if (selectedSlots.isNotEmpty) {
+                          day = selectedSlots.firstWhere(
                             (element) {
                               var currDate =
                                   DateFormat('dd/MM/yyyy').format(element.date);
-                              var date =
-                                  DateFormat('dd/MM/yyyy').format(dateList[_tabController.index]);
+                              var date = DateFormat('dd/MM/yyyy')
+                                  .format(dateList[_tabController.index]);
                               return currDate == date;
                             },
                             orElse: () => AvailabilityModel(
@@ -140,17 +144,22 @@ class _NextAvailabilityScreenState extends State<NextAvailabilityScreen>
                                 bookedSlots: []),
                           );
                         }
-                        if(day!= null){
-                          selected[_tabController.index].addAll(day!.availableSlots);
+                        if (day != null) {
+                          selected[_tabController.index]
+                              .addAll(day!.availableSlots);
+
+                          bookedSlots[_tabController.index]
+                              .addAll(day!.bookedSlots);
                         }
                         AvailabilityModel slots = AvailabilityModel(
                             date: dateList[_tabController.index],
                             availableSlots: selected[_tabController.index],
-                            bookedSlots: []);
-                       
+                            bookedSlots: bookedSlots[_tabController.index]);
+
                         await addAvailableSlotsToFireBase(
-                                currentUser!.uid, slots, )
-                            .then((value) {
+                          currentUser!.uid,
+                          slots,
+                        ).then((value) {
                           showToast('Slot updated succesfully', greenColor);
                           Navigator.pushAndRemoveUntil(
                               context,
