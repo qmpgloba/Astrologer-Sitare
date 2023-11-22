@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:sitare_astrologer_partner/constants/ui_constants.dart';
 import 'package:sitare_astrologer_partner/functions/firebase_auth_methods.dart';
 import 'package:sitare_astrologer_partner/screens/notification/widgets/alert_dialog_for_call.dart';
+import 'package:sitare_astrologer_partner/screens/notification/widgets/shimmer/shimmer.dart';
 
 // ignore: use_key_in_widget_constructors
 class NotificationScreen extends StatefulWidget {
@@ -21,8 +22,11 @@ class _NotificationScreenState extends State<NotificationScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: blackColor,
-        title: const Text('Notifications',style: TextStyle(color: whiteColor),),
-        iconTheme: const IconThemeData(color:whiteColor),
+        title: const Text(
+          'Notifications',
+          style: TextStyle(color: whiteColor),
+        ),
+        iconTheme: const IconThemeData(color: whiteColor),
         centerTitle: true,
         actions: [
           InkWell(
@@ -45,12 +49,12 @@ class _NotificationScreenState extends State<NotificationScreen> {
               ),
             ),
           ),
-          const SizedBox(width: 20,)
+          const SizedBox(
+            width: 20,
+          )
         ],
       ),
-      body: SafeArea(
-        child: buildNotificationList()
-      ),
+      body: SafeArea(child: buildNotificationList()),
     );
   }
 
@@ -97,24 +101,24 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
   Widget buildNotificationList() {
     Size size = MediaQuery.sizeOf(context);
-   return  FutureBuilder(
-          future: fetchNotifications(), // Create this function to fetch data
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (snapshot.hasError) {
-              return Text('Error: ${snapshot.error}');
-            } else {
-              List<Map<String, dynamic>>? notifications =  snapshot.data;
-              // Display the list of notifications
-              return (notifications == null || notifications.isEmpty)
+    return FutureBuilder(
+      future: fetchNotifications(), // Create this function to fetch data
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: NotificationShimmer());
+        } else if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        } else {
+          List<Map<String, dynamic>>? notifications = snapshot.data;
+          // Display the list of notifications
+          return (notifications == null || notifications.isEmpty)
               ? Padding(
                   padding: EdgeInsets.only(top: size.width * 0.75),
                   child: const Text(
                       "Looks like you haven't recieved any notification"),
                 )
               : ListView.separated(
-                physics: const BouncingScrollPhysics(),
+                  physics: const BouncingScrollPhysics(),
                   separatorBuilder: (context, index) => const Divider(),
                   shrinkWrap: true,
                   itemCount: notifications.length,
@@ -127,43 +131,39 @@ class _NotificationScreenState extends State<NotificationScreen> {
                     final formattedTime =
                         DateFormat('hh:mm a').format(timestamp.toDate());
                     // ignore: unused_local_variable
-                    
+
                     return GestureDetector(
                       onTap: () async {
-                          alertDialogForCall(context, notification);
-                        },
+                        alertDialogForCall(context, notification);
+                      },
                       child: ListTile(
-                        leading:
-                          
-                           Container(
-                            width: size.width * 0.15,
-                            height: size.width * 0.15,
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Color(0xFFd3f5d6),
-                            ),
-                            child: Center(
-                              child: Image.asset("assets/images/call.png"),
-                            ),
+                        leading: Container(
+                          width: size.width * 0.15,
+                          height: size.width * 0.15,
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Color(0xFFd3f5d6),
                           ),
-                        
+                          child: Center(
+                            child: Image.asset("assets/images/call.png"),
+                          ),
+                        ),
                         title: Text(notification['title']),
-                        subtitle:  Text(notification['body']),
+                        subtitle: Text(notification['body']),
                         trailing: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(formattedDate),
                             Text(formattedTime),
-                            
                           ],
                         ),
                       ),
                     );
                   },
                 );
-            }
-          },
-        );
+        }
+      },
+    );
 
     // return Padding(
     //   padding: EdgeInsets.all(size.width / 16),
@@ -188,7 +188,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
     //       //     ),
     //       //   ],
     //       // ),
-          
+
     //     ],
     //   ),
     // );

@@ -9,6 +9,7 @@ import 'package:sitare_astrologer_partner/functions/firebase_auth_methods.dart';
 import 'package:sitare_astrologer_partner/functions/user%20profile/get_user_profile.dart';
 import 'package:sitare_astrologer_partner/model/astrologer_model.dart';
 import 'package:sitare_astrologer_partner/screens/auth%20wrapper/auth_wrapper.dart';
+import 'package:sitare_astrologer_partner/screens/notification/widgets/shimmer/shimmer.dart';
 
 const AndroidNotificationChannel channel = AndroidNotificationChannel(
     'High Important channel' //id,
