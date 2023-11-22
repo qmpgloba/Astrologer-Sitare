@@ -9,6 +9,7 @@ import 'package:sitare_astrologer_partner/functions/firebase_auth_methods.dart';
 import 'package:sitare_astrologer_partner/functions/user%20profile/get_user_profile.dart';
 import 'package:sitare_astrologer_partner/model/astrologer_model.dart';
 import 'package:sitare_astrologer_partner/screens/auth%20wrapper/auth_wrapper.dart';
+import 'package:sitare_astrologer_partner/screens/chat%20list/shimmer/shimmer.dart';
 
 const AndroidNotificationChannel channel = AndroidNotificationChannel(
     'High Important channel' //id,
@@ -47,6 +48,18 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: blackColor),
         // scaffoldBackgroundColor: PRIMARY_COLOR,
         useMaterial3: true,
+        appBarTheme: const AppBarTheme(
+          centerTitle: true,
+          backgroundColor: blackColor,
+          titleTextStyle: TextStyle(
+            color: whiteColor,
+            fontWeight: FontWeight.bold,
+            fontSize: 22,
+          ),
+          iconTheme: IconThemeData(
+            color: whiteColor,
+          ),
+        ),
       ),
       home: const AuthWrapper(),
     );
@@ -56,47 +69,47 @@ class MyApp extends StatelessWidget {
 _initFCM() async {
   FirebaseMessaging messaging = FirebaseMessaging.instance;
   String? fcmKeyToken = await FirebaseMessaging.instance.getToken();
- if(currentUser!=null){
-   String currentFcmToken = await fetchFcmToken(currentUser!.uid) as String;
-  if (currentFcmToken != fcmKeyToken) {
-   Map<String, dynamic>? userData =
-      await  getAstroDetailsByUid(currentUser!.uid);
-      
-    AstrologerModel astrologer = AstrologerModel(
-        uid: currentUser!.uid,
-        fullName: userData!['name'],
-        emailAddress: userData['email'],
-        phoneNumber: userData['phone number'],
-        profilePic: userData['profile image'],
-        officeAddress: userData['office address'],
-        description: userData['personal description'],
-        experienceYears: userData['experience(in years)'],
-        contributeHours: userData['hours of contribution'],
-        heardAboutSitare: userData['Where did you hear about sitare'],
-        gender: userData['gender'],
-        martialStatus: userData['martial status'],
-        dateOfBirth: userData['date of birth'],
-        languages: userData['languages'],
-        skills: userData['skills'],
-        workingOnlinePLatform: userData['working on any other online platform'],
-        instagramLink: userData['instagram profile link'],
-        linkedInLink: userData['linkedin profile link'],
-        websiteLink: userData['website profile link'],
-        facebookLink: userData['facebook profile link'],
-        youtubeLink: userData['youtube profile link'],
-        business: userData['main source of business'],
-        anyoneReferSitare: userData['did anyone refer sitare'],
-        onBorad: userData['onboard you'],
-        qualification: userData['highest qualification'],
-        earningExpectation: userData['minimum earning expectation'],
-        learnAboutAstrology: userData['form where did you learn astrology'],
-        foreignCountries: userData['Number of foreign countries'],
-        biggestChallenge: userData['biggest challenge'],
-        currentWorkingStatus: userData['current working status'],
-        fcmToken: fcmKeyToken!);
-        await updateAstrologer(astrologer, currentUser!.uid);
- }
-        
+  if (currentUser != null) {
+    String currentFcmToken = await fetchFcmToken(currentUser!.uid) as String;
+    if (currentFcmToken != fcmKeyToken) {
+      Map<String, dynamic>? userData =
+          await getAstroDetailsByUid(currentUser!.uid);
+
+      AstrologerModel astrologer = AstrologerModel(
+          uid: currentUser!.uid,
+          fullName: userData!['name'],
+          emailAddress: userData['email'],
+          phoneNumber: userData['phone number'],
+          profilePic: userData['profile image'],
+          officeAddress: userData['office address'],
+          description: userData['personal description'],
+          experienceYears: userData['experience(in years)'],
+          contributeHours: userData['hours of contribution'],
+          heardAboutSitare: userData['Where did you hear about sitare'],
+          gender: userData['gender'],
+          martialStatus: userData['martial status'],
+          dateOfBirth: userData['date of birth'],
+          languages: userData['languages'],
+          skills: userData['skills'],
+          workingOnlinePLatform:
+              userData['working on any other online platform'],
+          instagramLink: userData['instagram profile link'],
+          linkedInLink: userData['linkedin profile link'],
+          websiteLink: userData['website profile link'],
+          facebookLink: userData['facebook profile link'],
+          youtubeLink: userData['youtube profile link'],
+          business: userData['main source of business'],
+          anyoneReferSitare: userData['did anyone refer sitare'],
+          onBorad: userData['onboard you'],
+          qualification: userData['highest qualification'],
+          earningExpectation: userData['minimum earning expectation'],
+          learnAboutAstrology: userData['form where did you learn astrology'],
+          foreignCountries: userData['Number of foreign countries'],
+          biggestChallenge: userData['biggest challenge'],
+          currentWorkingStatus: userData['current working status'],
+          fcmToken: fcmKeyToken!);
+      await updateAstrologer(astrologer, currentUser!.uid);
+    }
   }
   // ignore: unused_local_variable
   NotificationSettings settings = await messaging.requestPermission(
