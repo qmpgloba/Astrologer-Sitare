@@ -11,7 +11,7 @@ import 'package:sitare_astrologer_partner/functions/user%20profile/get_user_prof
 import 'package:sitare_astrologer_partner/model/astrologer_model.dart';
 import 'package:sitare_astrologer_partner/model/availability_slots_model.dart';
 import 'package:sitare_astrologer_partner/screens/auth%20wrapper/auth_wrapper.dart';
-import 'package:timezone/data/latest.dart' as tzdata;
+import 'package:timezone/data/latest_all.dart' as tzdata;
 import 'package:timezone/timezone.dart' as tz;
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -38,6 +38,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   tzdata.initializeTimeZones();
+  tz.setLocalLocation(tz.getLocation('Asia/Kolkata'));
   await _initFCM();
   runApp(const MyApp());
 }
@@ -178,27 +179,26 @@ void saveNotificationToFirestore(
       .catchError((error) {});
 }
 
-
 Future<void> fetchBookedSlotsAndNotify(DateTime selectedDate) async {
   try {
-    // Fetch slots for the selected date
-    List<AvailabilityModel> availableSlots = await getAvailableSlotsForDate(
-        currentUser!.uid, selectedDate);
+    List<AvailabilityModel> availableSlots =
+        await getAvailableSlotsForDate(currentUser!.uid, selectedDate);
 
     if (availableSlots.isNotEmpty) {
-      DateTime now = tz.TZDateTime.now(tz.local); // Get the current time in local timezone
+      DateTime now = tz.TZDateTime.now(tz.local);
       for (var slot in availableSlots) {
         for (var timeString in slot.bookedSlots) {
           List<String> timeComponents = timeString.split(':');
           int hours = int.parse(timeComponents[0]);
           int minutes = int.parse(timeComponents[1]);
 
-          DateTime slotTime =
-              DateTime(selectedDate.year, selectedDate.month, selectedDate.day, hours, minutes);
+          DateTime slotTime = DateTime(selectedDate.year, selectedDate.month,
+              selectedDate.day, hours, minutes);
 
-          // Ensure the notification time is in the future
           if (slotTime.isAfter(now)) {
-            DateTime notificationTime = slotTime.subtract(Duration(minutes: 10));
+            DateTime notificationTime =
+                slotTime.subtract(Duration(minutes: 13));
+
             await scheduleNotification(notificationTime);
           }
         }
@@ -209,47 +209,21 @@ Future<void> fetchBookedSlotsAndNotify(DateTime selectedDate) async {
   }
 }
 
-// Future<void> fetchBookedSlotsAndNotify() async {
-//   try {
-//     List<AvailabilityModel> availableSlots =
-//         await getAvailableSlots(currentUser!.uid);
 
-//     if (availableSlots.isNotEmpty) {
-//       DateTime now = tz.TZDateTime.now(tz.local);
-
-//       print(now); // Get the current time in local timezone
-//       for (var slot in availableSlots) {
-//         for (var timeString in slot.bookedSlots) {
-//           List<String> timeComponents = timeString.split(':');
-//           int hours = int.parse(timeComponents[0]);
-//           int minutes = int.parse(timeComponents[1]);
-
-//           DateTime slotTime =
-//               DateTime(now.year, now.month, now.day, hours, minutes);
-//           print(slotTime);
-//           // Ensure the notification time is in the future
-//           if (slotTime.isAfter(now)) {
-//             DateTime notificationTime =
-//                 slotTime.subtract(Duration(minutes: 18));
-//             print(notificationTime);
-//             await scheduleNotification(notificationTime);
-//           }
-//         }
-//       }
-//     }
-//   } catch (e) {
-//     print('Error fetching available slots: $e');
-//   }
-// }
+List<int> scheduledNotificationIds = [];
 
 Future<void> scheduleNotification(DateTime notificationTime) async {
-  // Schedule notifications for the calculated time
+
+  int notificationId = 19;
+    scheduledNotificationIds.add(notificationId);
+    print(scheduledNotificationIds);
+  print(notificationTime);
+  print(tz.local);
   await flutterLocalNotificationsPlugin.zonedSchedule(
-    0, // Unique notification ID
+    notificationId,
     'Appointment Reminder',
-    'Your appointment is in 10 minutes!', // Notification message
-    tz.TZDateTime.from(
-        notificationTime, tz.local), // Convert to local time zone
+    'Your appointment is in 10 minutes!',
+    tz.TZDateTime.from(notificationTime, tz.local),
     NotificationDetails(
       android: AndroidNotificationDetails(channel.id, channel.name,
           channelDescription: channel.description,
