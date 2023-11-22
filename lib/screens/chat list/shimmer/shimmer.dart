@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:sitare_astrologer_partner/constants/ui_constants.dart';
 
 class ChatListShimmer extends StatefulWidget {
   const ChatListShimmer({super.key});
@@ -14,16 +15,16 @@ class _ChatListShimmerState extends State<ChatListShimmer> {
     return Scaffold(
       body: SafeArea(
           child: Shimmer.fromColors(
-        baseColor: Colors.grey.shade300,
-        highlightColor: Colors.grey.shade200,
+        baseColor: baseColor,
+        highlightColor: highlightColor,
         child: ListView.separated(
           itemBuilder: (context, index) {
             return ListTile(
               leading: CircleAvatar(
-                backgroundColor: Colors.grey.shade100,
+                backgroundColor: backGroundColor,
               ),
               title: Container(
-                color: Colors.grey.shade100,
+                color: backGroundColor,
                 height: 10,
                 width: 10,
               ),
