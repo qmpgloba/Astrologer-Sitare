@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sitare_astrologer_partner/model/user_model.dart';
+import 'package:sitare_astrologer_partner/screens/chat%20list/shimmer/shimmer.dart';
 import 'package:sitare_astrologer_partner/screens/chat%20screen/chat_screen.dart';
 import 'package:sitare_astrologer_partner/screens/chat%20screen/service/chat_service.dart';
 
@@ -49,7 +50,7 @@ class _ChatListState extends State<ChatList> {
           future: _chatService.fetchOtherParticipants(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
+              return const Center(child: ChatListShimmer());
             } else if (snapshot.hasError) {
               return Center(child: Text('Error: ${snapshot.error}'));
             } else {
