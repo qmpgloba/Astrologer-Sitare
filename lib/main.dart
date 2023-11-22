@@ -61,7 +61,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const NotificationShimmer(),
+      home: const AuthWrapper(),
     );
   }
 }
