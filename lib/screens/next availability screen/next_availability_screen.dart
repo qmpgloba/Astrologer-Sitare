@@ -7,6 +7,7 @@ import 'package:sitare_astrologer_partner/functions/available_slots_function/ava
 import 'package:sitare_astrologer_partner/functions/firebase_auth_methods.dart';
 import 'package:sitare_astrologer_partner/model/availability_slots_model.dart';
 import 'package:sitare_astrologer_partner/screens/home%20screen/home_screen.dart';
+import 'package:sitare_astrologer_partner/screens/next%20availability%20screen/widgets/shimmer/shimmer.dart';
 import 'package:sitare_astrologer_partner/screens/next%20availability%20screen/widgets/time_slots_widget.dart';
 import 'package:sitare_astrologer_partner/widgets/flutter_toast.dart';
 
@@ -62,7 +63,7 @@ class _NextAvailabilityScreenState extends State<NextAvailabilityScreen>
         future: getAvailableSlots(currentUser!.uid),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(child: AvailabilityShimmer());
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else {

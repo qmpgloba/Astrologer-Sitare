@@ -18,6 +18,9 @@ class _AvailabilityShimmerState extends State<AvailabilityShimmer> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Next Availability'),
+      ),
       body: SafeArea(
         child: Column(
           children: [
