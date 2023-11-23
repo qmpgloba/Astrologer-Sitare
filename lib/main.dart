@@ -178,11 +178,9 @@ void saveNotificationToFirestore(
       .then((_) {})
       .catchError((error) {});
 }
-
 Future<void> fetchBookedSlotsAndNotify(DateTime selectedDate) async {
   try {
-    List<AvailabilityModel> availableSlots =
-        await getAvailableSlotsForDate(currentUser!.uid, selectedDate);
+    List<AvailabilityModel> availableSlots = await getAvailableSlotsForDate(currentUser!.uid, selectedDate);
 
     if (availableSlots.isNotEmpty) {
       DateTime now = tz.TZDateTime.now(tz.local);
@@ -193,12 +191,10 @@ Future<void> fetchBookedSlotsAndNotify(DateTime selectedDate) async {
           int minutes = int.parse(timeComponents[1]);
 
           DateTime slotTime = DateTime(selectedDate.year, selectedDate.month,
-              selectedDate.day, hours, minutes);
+                                       selectedDate.day, hours, minutes);
 
           if (slotTime.isAfter(now)) {
-            DateTime notificationTime =
-                slotTime.subtract(Duration(minutes: 13));
-
+            DateTime notificationTime = slotTime.subtract(Duration(minutes: 10));
             await scheduleNotification(notificationTime);
           }
         }
@@ -209,30 +205,38 @@ Future<void> fetchBookedSlotsAndNotify(DateTime selectedDate) async {
   }
 }
 
-
 List<int> scheduledNotificationIds = [];
 
 Future<void> scheduleNotification(DateTime notificationTime) async {
-
   int notificationId = 19;
-    scheduledNotificationIds.add(notificationId);
-    print(scheduledNotificationIds);
+  scheduledNotificationIds.add(notificationId);
+  print(scheduledNotificationIds);
   print(notificationTime);
   print(tz.local);
-  await flutterLocalNotificationsPlugin.zonedSchedule(
-    notificationId,
-    'Appointment Reminder',
-    'Your appointment is in 10 minutes!',
-    tz.TZDateTime.from(notificationTime, tz.local),
-    NotificationDetails(
-      android: AndroidNotificationDetails(channel.id, channel.name,
+print(tz.TZDateTime.now(tz.local));
+  // Check if the notification time is in the future
+  if (notificationTime.isAfter(tz.TZDateTime.now(tz.local))) {
+    await flutterLocalNotificationsPlugin.zonedSchedule(
+      notificationId,
+      'Appointment Reminder',
+      'Your appointment is in 10 minutes!',
+      tz.TZDateTime.from(notificationTime, tz.local),
+      NotificationDetails(
+        android: AndroidNotificationDetails(
+          channel.id,
+          channel.name,
           channelDescription: channel.description,
           color: Colors.white,
           playSound: true,
           icon: "@mipmap/ic_launcher"),
-    ),
-    // androidAllowWhileIdle: true,
-    uiLocalNotificationDateInterpretation:
-        UILocalNotificationDateInterpretation.absoluteTime,
-  );
+      ),
+      // androidAllowWhileIdle: true,
+      uiLocalNotificationDateInterpretation:
+          UILocalNotificationDateInterpretation.absoluteTime,
+          
+    );
+  } else {
+    print('Notification time is not in the future: $notificationTime');
+  }
 }
+
