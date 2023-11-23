@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sitare_astrologer_partner/constants/ui_constants.dart';
-import 'package:sitare_astrologer_partner/screens/calculator%20webview/calculator_webview.dart';
 import 'package:sitare_astrologer_partner/screens/chat%20list/chat_list.dart';
 import 'package:sitare_astrologer_partner/screens/home%20screen/widgets/homescreen_cateogory_widget.dart';
 import 'package:sitare_astrologer_partner/screens/next%20availability%20screen/next_availability_screen.dart';
@@ -83,16 +82,16 @@ class HomeScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const WebView(),
-                        ));
-                      },
-                      child: HomeScreenCategoryWidget(
-                          size: size,
-                          text: 'Multi-Method Calculator',
-                          icon: Icons.calculate)),
+                  // GestureDetector(
+                  //     onTap: () {
+                  //       Navigator.of(context).push(MaterialPageRoute(
+                  //         builder: (context) => const WebView(),
+                  //       ));
+                  //     },
+                  //     child: HomeScreenCategoryWidget(
+                  //         size: size,
+                  //         text: 'Multi-Method Calculator',
+                  //         icon: Icons.calculate)),
                   GestureDetector(
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
@@ -108,31 +107,31 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  GestureDetector(
-                      onTap: () {
-                        // Navigator.of(context).push(MaterialPageRoute(
-                        //   builder: (context) => const WebView(),
-                        // ));
-                      },
-                      child: HomeScreenCategoryWidget(
-                          size: size,
-                          text: 'Bookings',
-                          icon: Icons.pending_actions_sharp)),
-                  GestureDetector(
-                      onTap: () {
-                        // Navigator.of(context).push(MaterialPageRoute(
-                        //   builder: (context) => const NextAvailabilityScreen(),
-                        // ));
-                      },
-                      child: HomeScreenCategoryWidget(
-                          size: size,
-                          text: 'Next Availability',
-                          icon: Icons.calendar_month_outlined))
-                ],
-              ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //   children: [
+              //     GestureDetector(
+              //         onTap: () {
+              //           // Navigator.of(context).push(MaterialPageRoute(
+              //           //   builder: (context) => const WebView(),
+              //           // ));
+              //         },
+              //         child: HomeScreenCategoryWidget(
+              //             size: size,
+              //             text: 'Bookings',
+              //             icon: Icons.pending_actions_sharp)),
+              //     GestureDetector(
+              //         onTap: () {
+              //           // Navigator.of(context).push(MaterialPageRoute(
+              //           //   builder: (context) => const NextAvailabilityScreen(),
+              //           // ));
+              //         },
+              //         child: HomeScreenCategoryWidget(
+              //             size: size,
+              //             text: 'Next Availability',
+              //             icon: Icons.calendar_month_outlined))
+              //   ],
+              // ),
             ],
           ),
         ),
