@@ -42,3 +42,45 @@ Future<List<AvailabilityModel>> getAvailableSlots(String astrologerId) async {
   availableSlots.sort((a, b) => a.date.compareTo(b.date));
   return availableSlots;
 }
+
+
+Future<List<AvailabilityModel>> getAvailableSlotsForDate(String astrologerId, DateTime selectedDate) async {
+  List<AvailabilityModel> availableSlots = [];
+
+  try {
+    final userCollection = await FirebaseFirestore.instance
+        .collection('Astrologerdetails')
+        .where('uid', isEqualTo: astrologerId)
+        .get();
+
+    if (userCollection.docs.isNotEmpty) {
+      final userDoc = userCollection.docs.first;
+      final userUid = userDoc.id;
+      final subcollectionRef = await FirebaseFirestore.instance
+          .collection('Astrologerdetails')
+          .doc(userUid)
+          .collection('available slots')
+          .get();
+
+      final formatter = DateFormat('yyyy-MM-dd');
+      for (var slot in subcollectionRef.docs) {
+        Map<String, dynamic> data = slot.data();
+        AvailabilityModel date = AvailabilityModel.fromJson(data);
+        DateTime dateFromFirestore = date.date;
+        String formattedDate = formatter.format(dateFromFirestore);
+        String selectedDateString = formatter.format(selectedDate);
+
+        if (formattedDate == selectedDateString) {
+          availableSlots.add(date);
+        }
+      }
+    } else {
+      throw Exception('uid does not exist');
+    }
+  } catch (e) {
+    print('Error fetching available slots for date: $e');
+    // Handle the error appropriately
+  }
+  availableSlots.sort((a, b) => a.date.compareTo(b.date));
+  return availableSlots;
+}

@@ -26,9 +26,11 @@ class _NextAvailabilityScreenState extends State<NextAvailabilityScreen>
     with TickerProviderStateMixin {
   late List<List> selected;
   late List<List> selectedIndex;
+  late List<List> bookedSlots;
   late List<DateTime> dateList;
   late TabController _tabController;
   List<AvailabilityModel> selectedSlots = [];
+
   @override
   void initState() {
     super.initState();
@@ -40,6 +42,7 @@ class _NextAvailabilityScreenState extends State<NextAvailabilityScreen>
   void initializeLists() {
     selected = List.generate(dateList.length, (index) => []);
     selectedIndex = List.generate(dateList.length, (index) => []);
+    bookedSlots = List.generate(dateList.length, (index) => []);
   }
 
   bool checkDates(DateTime date1, DateTime date2) {
@@ -146,6 +149,7 @@ class _NextAvailabilityScreenState extends State<NextAvailabilityScreen>
                         if (day != null) {
                           selected[_tabController.index]
                               .addAll(day!.availableSlots);
+
                         }
                         AvailabilityModel slots = AvailabilityModel(
                             date: dateList[_tabController.index],
