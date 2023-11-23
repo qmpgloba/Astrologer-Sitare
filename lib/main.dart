@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cron/cron.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -40,6 +41,7 @@ void main() async {
   tzdata.initializeTimeZones();
   tz.setLocalLocation(tz.getLocation('Asia/Kolkata'));
   await _initFCM();
+  scheduleCronJob();
   runApp(const MyApp());
 }
 
@@ -61,7 +63,7 @@ class MyApp extends StatelessWidget {
         future: fetchBookedSlotsAndNotify(DateTime.now()),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
+            return const Center(
                 child: CircularProgressIndicator()); // Show a loading indicator
           } else if (snapshot.hasError) {
             return Text('Error: ${snapshot.error}');
@@ -178,9 +180,74 @@ void saveNotificationToFirestore(
       .then((_) {})
       .catchError((error) {});
 }
+
+// Future<void> fetchBookedSlotsAndNotify(DateTime selectedDate) async {
+//   try {
+//     List<AvailabilityModel> availableSlots = await getAvailableSlotsForDate(currentUser!.uid, selectedDate);
+
+//     if (availableSlots.isNotEmpty) {
+//       DateTime now = tz.TZDateTime.now(tz.local);
+//       for (var slot in availableSlots) {
+//         for (var timeString in slot.bookedSlots) {
+//           List<String> timeComponents = timeString.split(':');
+//           int hours = int.parse(timeComponents[0]);
+//           int minutes = int.parse(timeComponents[1]);
+
+//           DateTime slotTime = DateTime(selectedDate.year, selectedDate.month,
+//                                        selectedDate.day, hours, minutes);
+
+//           if (slotTime.isAfter(now)) {
+//             DateTime notificationTime = slotTime.subtract(Duration(minutes: 10));
+//             await scheduleNotification(notificationTime);
+//           }
+//         }
+//       }
+//     }
+//   } catch (e) {
+//     print('Error fetching available slots: $e');
+//   }
+// }
+
+// List<int> scheduledNotificationIds = [];
+
+// Future<void> scheduleNotification(DateTime notificationTime) async {
+//   int notificationId = 19;
+//   scheduledNotificationIds.add(notificationId);
+//   print(scheduledNotificationIds);
+//   print(notificationTime);
+//   print(tz.local);
+// print(tz.TZDateTime.now(tz.local));
+//   // Check if the notification time is in the future
+//   if (notificationTime.isAfter(tz.TZDateTime.now(tz.local))) {
+//     await flutterLocalNotificationsPlugin.zonedSchedule(
+//       notificationId,
+//       'Appointment Reminder',
+//       'Your appointment is in 10 minutes!',
+//       tz.TZDateTime.from(notificationTime, tz.local),
+//       NotificationDetails(
+//         android: AndroidNotificationDetails(
+//           channel.id,
+//           channel.name,
+//           channelDescription: channel.description,
+//           color: Colors.white,
+//           playSound: true,
+//           icon: "@mipmap/ic_launcher"),
+//       ),
+//       // androidAllowWhileIdle: true,
+//       uiLocalNotificationDateInterpretation:
+//           UILocalNotificationDateInterpretation.absoluteTime,
+
+//     );
+//   } else {
+//     print('Notification time is not in the future: $notificationTime');
+//   }
+// }
+
 Future<void> fetchBookedSlotsAndNotify(DateTime selectedDate) async {
   try {
-    List<AvailabilityModel> availableSlots = await getAvailableSlotsForDate(currentUser!.uid, selectedDate);
+    List<AvailabilityModel> availableSlots =
+        await getAvailableSlotsForDate(currentUser!.uid, selectedDate);
+    print(availableSlots.length);
 
     if (availableSlots.isNotEmpty) {
       DateTime now = tz.TZDateTime.now(tz.local);
@@ -191,11 +258,17 @@ Future<void> fetchBookedSlotsAndNotify(DateTime selectedDate) async {
           int minutes = int.parse(timeComponents[1]);
 
           DateTime slotTime = DateTime(selectedDate.year, selectedDate.month,
-                                       selectedDate.day, hours, minutes);
+              selectedDate.day, hours, minutes);
 
-          if (slotTime.isAfter(now)) {
-            DateTime notificationTime = slotTime.subtract(Duration(minutes: 10));
-            await scheduleNotification(notificationTime);
+          DateTime notificationTime = slotTime.subtract(const Duration(minutes: 13));
+          print(notificationTime);
+          print(now.isAfter(notificationTime) && now.isBefore(slotTime));
+          if (now.isAfter(notificationTime) && now.isBefore(slotTime)) {
+           Duration difference = slotTime.difference(now);
+          int differenceInMinutes = difference.inMinutes;
+          print(differenceInMinutes);
+            await sendNotification(
+                'Appointment Reminder', 'Your appointment is in $differenceInMinutes minutes!');
           }
         }
       }
@@ -205,38 +278,31 @@ Future<void> fetchBookedSlotsAndNotify(DateTime selectedDate) async {
   }
 }
 
-List<int> scheduledNotificationIds = [];
-
-Future<void> scheduleNotification(DateTime notificationTime) async {
-  int notificationId = 19;
-  scheduledNotificationIds.add(notificationId);
-  print(scheduledNotificationIds);
-  print(notificationTime);
-  print(tz.local);
-print(tz.TZDateTime.now(tz.local));
-  // Check if the notification time is in the future
-  if (notificationTime.isAfter(tz.TZDateTime.now(tz.local))) {
-    await flutterLocalNotificationsPlugin.zonedSchedule(
-      notificationId,
-      'Appointment Reminder',
-      'Your appointment is in 10 minutes!',
-      tz.TZDateTime.from(notificationTime, tz.local),
-      NotificationDetails(
-        android: AndroidNotificationDetails(
-          channel.id,
-          channel.name,
+Future<void> sendNotification(String title, String body) async {
+  AndroidNotificationDetails androidPlatformChannelSpecifics =
+      AndroidNotificationDetails(channel.id, channel.name,
           channelDescription: channel.description,
           color: Colors.white,
           playSound: true,
-          icon: "@mipmap/ic_launcher"),
-      ),
-      // androidAllowWhileIdle: true,
-      uiLocalNotificationDateInterpretation:
-          UILocalNotificationDateInterpretation.absoluteTime,
-          
-    );
-  } else {
-    print('Notification time is not in the future: $notificationTime');
-  }
+          icon: "@mipmap/ic_launcher");
+
+  NotificationDetails platformChannelSpecifics =
+      NotificationDetails(android: androidPlatformChannelSpecifics);
+
+  await flutterLocalNotificationsPlugin.show(
+    0, // Notification ID
+    title,
+    body,
+    platformChannelSpecifics,
+  );
 }
 
+void scheduleCronJob() {
+  final cron = Cron();
+
+  const cronExpression = '*/5 * * * *'; 
+
+  cron.schedule(Schedule.parse(cronExpression), () async {
+    await fetchBookedSlotsAndNotify(DateTime.now());
+  });
+}
