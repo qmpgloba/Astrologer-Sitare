@@ -7,6 +7,7 @@ import 'package:sitare_astrologer_partner/functions/available_slots_function/ava
 import 'package:sitare_astrologer_partner/functions/firebase_auth_methods.dart';
 import 'package:sitare_astrologer_partner/model/availability_slots_model.dart';
 import 'package:sitare_astrologer_partner/screens/home%20screen/home_screen.dart';
+import 'package:sitare_astrologer_partner/screens/next%20availability%20screen/widgets/shimmer/shimmer.dart';
 import 'package:sitare_astrologer_partner/screens/next%20availability%20screen/widgets/time_slots_widget.dart';
 import 'package:sitare_astrologer_partner/widgets/flutter_toast.dart';
 
@@ -52,6 +53,7 @@ class _NextAvailabilityScreenState extends State<NextAvailabilityScreen>
       dateList.add(now.add(Duration(days: i)));
     }
   }
+
   AvailabilityModel? day;
 
   @override
@@ -61,7 +63,7 @@ class _NextAvailabilityScreenState extends State<NextAvailabilityScreen>
         future: getAvailableSlots(currentUser!.uid),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(child: AvailabilityShimmer());
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else {
@@ -125,32 +127,35 @@ class _NextAvailabilityScreenState extends State<NextAvailabilityScreen>
                     ),
                     GestureDetector(
                       onTap: () async {
-                         if (selectedSlots.isNotEmpty) {
-                           day = selectedSlots.firstWhere(
+                        if (selectedSlots.isNotEmpty) {
+                          day = selectedSlots.firstWhere(
                             (element) {
                               var currDate =
                                   DateFormat('dd/MM/yyyy').format(element.date);
-                              var date =
-                                  DateFormat('dd/MM/yyyy').format(dateList[_tabController.index]);
+                              var date = DateFormat('dd/MM/yyyy')
+                                  .format(dateList[_tabController.index]);
                               return currDate == date;
                             },
                             orElse: () => AvailabilityModel(
-                                date: dateList[_tabController.index],
-                                availableSlots: [],
-                                bookedSlots: []),
+                              date: dateList[_tabController.index],
+                              availableSlots: [],
+                              bookedSlots: [],
+                            ),
                           );
                         }
-                        if(day!= null){
-                          selected[_tabController.index].addAll(day!.availableSlots);
+                        if (day != null) {
+                          selected[_tabController.index]
+                              .addAll(day!.availableSlots);
                         }
                         AvailabilityModel slots = AvailabilityModel(
                             date: dateList[_tabController.index],
                             availableSlots: selected[_tabController.index],
                             bookedSlots: []);
-                       
+
                         await addAvailableSlotsToFireBase(
-                                currentUser!.uid, slots, )
-                            .then((value) {
+                          currentUser!.uid,
+                          slots,
+                        ).then((value) {
                           showToast('Slot updated succesfully', greenColor);
                           Navigator.pushAndRemoveUntil(
                               context,
