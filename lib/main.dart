@@ -58,6 +58,18 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: blackColor),
         // scaffoldBackgroundColor: PRIMARY_COLOR,
         useMaterial3: true,
+        appBarTheme: const AppBarTheme(
+          centerTitle: true,
+          backgroundColor: blackColor,
+          titleTextStyle: TextStyle(
+            color: whiteColor,
+            fontWeight: FontWeight.bold,
+            fontSize: 22,
+          ),
+          iconTheme: IconThemeData(
+            color: whiteColor,
+          ),
+        ),
       ),
       home: FutureBuilder(
         future: fetchBookedSlotsAndNotify(DateTime.now()),

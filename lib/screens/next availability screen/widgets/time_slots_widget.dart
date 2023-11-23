@@ -32,17 +32,20 @@ class _TimeSlotsWidgetState extends State<TimeSlotsWidget> {
       AvailabilityModel? day = widget.selectedSlots.firstWhere(
         (element) {
           var currDate = DateFormat('dd/MM/yyyy').format(element.date);
-          return currDate ==
-              date;
+          return currDate == date;
         },
-        orElse: () => AvailabilityModel(date: widget.dateTime, availableSlots: [], bookedSlots: []),
+        orElse: () => AvailabilityModel(
+            date: widget.dateTime, availableSlots: [], bookedSlots: []),
       );
       timings = day.availableSlots;
     }
     return SizedBox(
       child: GridView.builder(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 4, mainAxisSpacing: 10, crossAxisSpacing: 10),
+          crossAxisCount: 4,
+          mainAxisSpacing: 10,
+          crossAxisSpacing: 10,
+        ),
         itemCount: timeSlots.length,
         itemBuilder: (context, index) {
           if (timings.contains(timeSlots[index])) {
@@ -78,11 +81,12 @@ class _TimeSlotsWidgetState extends State<TimeSlotsWidget> {
                   child: Text(
                     timeSlots[index],
                     style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: widget.selectedIndex.contains(index)
-                            ? whiteColor
-                            : Colors.black),
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: widget.selectedIndex.contains(index)
+                          ? whiteColor
+                          : Colors.black,
+                    ),
                   ),
                 ),
               ),
