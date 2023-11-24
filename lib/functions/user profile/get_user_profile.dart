@@ -49,10 +49,10 @@ Future<String?> fetchFcmToken(String userUid) async {
      
       return userData['fcmToken'] as String?;
     } else {
-      return null; // Return null if the user does not exist
+      return null; 
     }
   } catch (e) {
-    return null; // Return null in case of any errors
+    return null;
   }
 }
 

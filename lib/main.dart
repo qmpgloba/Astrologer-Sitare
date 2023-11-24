@@ -176,21 +176,26 @@ _initFCM() async {
 
 void saveNotificationToFirestore(
     RemoteNotification notification, Map<String, dynamic> data) {
+  print('notification');
   final firestore = FirebaseFirestore.instance;
 
-  final notificationData = {
-    'title': notification.title,
-    'body': notification.body,
-    'timestamp': DateTime.now(),
-    'uid': currentUser!.uid,
-    'user_uid': data['uid'],
-  };
+  try {
+    final notificationData = {
+      'title': notification.title,
+      'body': notification.body,
+      'timestamp': DateTime.now(),
+      'uid': currentUser!.uid,
+      'user_uid': data['uid'],
+    };
 
-  firestore
-      .collection('Notification')
-      .add(notificationData)
-      .then((_) {})
-      .catchError((error) {});
+    firestore
+        .collection('Notification')
+        .add(notificationData)
+        .then((_) {})
+        .catchError((error) {});
+  } catch (e) {
+    print(e.toString());
+  }
 }
 
 // Future<void> fetchBookedSlotsAndNotify(DateTime selectedDate) async {
@@ -272,15 +277,16 @@ Future<void> fetchBookedSlotsAndNotify(DateTime selectedDate) async {
           DateTime slotTime = DateTime(selectedDate.year, selectedDate.month,
               selectedDate.day, hours, minutes);
 
-          DateTime notificationTime = slotTime.subtract(const Duration(minutes: 13));
+          DateTime notificationTime =
+              slotTime.subtract(const Duration(minutes: 13));
           print(notificationTime);
           print(now.isAfter(notificationTime) && now.isBefore(slotTime));
           if (now.isAfter(notificationTime) && now.isBefore(slotTime)) {
-           Duration difference = slotTime.difference(now);
-          int differenceInMinutes = difference.inMinutes;
-          print(differenceInMinutes);
-            await sendNotification(
-                'Appointment Reminder', 'Your appointment is in $differenceInMinutes minutes!');
+            Duration difference = slotTime.difference(now);
+            int differenceInMinutes = difference.inMinutes;
+            print(differenceInMinutes);
+            await sendNotification('Appointment Reminder',
+                'Your appointment is in ${differenceInMinutes +1} minutes!');
           }
         }
       }
@@ -312,7 +318,7 @@ Future<void> sendNotification(String title, String body) async {
 void scheduleCronJob() {
   final cron = Cron();
 
-  const cronExpression = '*/5 * * * *'; 
+  const cronExpression = '*/5 * * * *';
 
   cron.schedule(Schedule.parse(cronExpression), () async {
     await fetchBookedSlotsAndNotify(DateTime.now());
