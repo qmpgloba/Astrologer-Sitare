@@ -150,11 +150,13 @@ class _NextAvailabilityScreenState extends State<NextAvailabilityScreen>
                           selected[_tabController.index]
                               .addAll(day!.availableSlots);
 
+                          bookedSlots[_tabController.index]
+                              .addAll(day!.bookedSlots);
                         }
                         AvailabilityModel slots = AvailabilityModel(
                             date: dateList[_tabController.index],
                             availableSlots: selected[_tabController.index],
-                            bookedSlots: []);
+                            bookedSlots: bookedSlots[_tabController.index]);
 
                         await addAvailableSlotsToFireBase(
                           currentUser!.uid,
