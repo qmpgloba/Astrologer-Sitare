@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sitare_astrologer_partner/constants/ui_constants.dart';
+import 'package:sitare_astrologer_partner/screens/bookings%20screen/bookings_screen.dart';
 import 'package:sitare_astrologer_partner/screens/chat%20list/chat_list.dart';
 import 'package:sitare_astrologer_partner/screens/home%20screen/widgets/homescreen_cateogory_widget.dart';
 import 'package:sitare_astrologer_partner/screens/next%20availability%20screen/next_availability_screen.dart';
@@ -82,16 +83,17 @@ class HomeScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  // GestureDetector(
-                  //     onTap: () {
-                  //       Navigator.of(context).push(MaterialPageRoute(
-                  //         builder: (context) => const WebView(),
-                  //       ));
-                  //     },
-                  //     child: HomeScreenCategoryWidget(
-                  //         size: size,
-                  //         text: 'Multi-Method Calculator',
-                  //         icon: Icons.calculate)),
+                  GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const BoookingsScreen(),
+                        ));
+                        
+                      },
+                      child: HomeScreenCategoryWidget(
+                          size: size,
+                          text: 'Bookings',
+                          icon: Icons.list)),
                   GestureDetector(
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(

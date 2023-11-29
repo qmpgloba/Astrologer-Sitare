@@ -1,4 +1,5 @@
 class UserModel {
+   final String fcmToken;
   final String uid;
   final String name;
   final String email;
@@ -10,6 +11,7 @@ class UserModel {
   final String? timeofBirth;
   final String? maritalStatus;
   final String? problem;
+  final String? wallet;
   final List<String?>? partnerDetails;
 
   UserModel({
@@ -19,7 +21,9 @@ class UserModel {
     this.timeofBirth,
     this.maritalStatus,
     this.problem,
+    this.wallet,
     required this.userProfileImage,
+    required  this.fcmToken,
     required this.uid,
     required this.name,
     required this.email,
@@ -29,11 +33,12 @@ class UserModel {
 
   toJson() {
     return {
+      'fcmToken': fcmToken,
       'uid': uid,
       'full name': name,
       'email': email,
+      'profile image': userProfileImage,
       'phone number': phoneNumber,
-      'profile image':userProfileImage,
       'gender': gender,
       'dateofBirth': dateofBirth,
       'placeofBirth': placeofBirth,
@@ -41,11 +46,13 @@ class UserModel {
       'maritalStatus': maritalStatus,
       'problem': problem,
       'PartnerDetails': partnerDetails,
+      'wallet': wallet,
     };
   }
 
   factory UserModel.fromMap(Map<String, dynamic> data) {
     return UserModel(
+      fcmToken: data['fcmToken'],
       uid: data['uid'],
       name: data['full name'],
       email: data['email'],
@@ -57,6 +64,7 @@ class UserModel {
       timeofBirth: data['timeofBirth'],
       maritalStatus: data['maritalStatus'],
       problem: data['problem'],
+      wallet: data['wallet'],
       partnerDetails: List<String?>.from(data['PartnerDetails'] ?? []),
     );
   }
