@@ -40,8 +40,8 @@ class BoookingsScreen extends StatelessWidget {
               itemBuilder: (context, index) {
                 return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
                     stream: FirebaseFirestore.instance
-                        .collection('Astrologerdetails')
-                        .where('uid', isEqualTo: list[index].astrologerId)
+                        .collection('users')
+                        .where('uid', isEqualTo: list[index].userUid)
                         .snapshots(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
@@ -75,30 +75,30 @@ class BoookingsScreen extends StatelessWidget {
                                             CrossAxisAlignment.start,
                                         children: [
                                           AutoSizeText(
-                                            docs['name'],
+                                            docs['full name'],
                                             style: const TextStyle(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.bold),
                                             maxFontSize: 16,
                                             maxLines: 1,
                                           ),
-                                          AutoSizeText(
-                                            docs['skills'].take(2).join(', '),
-                                            // maxLines: 1,
-                                            maxFontSize: 12,
-                                            style: const TextStyle(
-                                                fontSize: 10,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                          AutoSizeText(
-                                              docs['languages']
-                                                  .take(2)
-                                                  .join(', '),
-                                              // maxLines: 1,
-                                              maxFontSize: 12,
-                                              style: const TextStyle(
-                                                  fontSize: 10,
-                                                  fontWeight: FontWeight.bold)),
+                                          // AutoSizeText(
+                                          //   docs['skills'].take(2).join(', '),
+                                          //   // maxLines: 1,
+                                          //   maxFontSize: 12,
+                                          //   style: const TextStyle(
+                                          //       fontSize: 10,
+                                          //       fontWeight: FontWeight.bold),
+                                          // ),
+                                          // AutoSizeText(
+                                          //     docs['languages']
+                                          //         .take(2)
+                                          //         .join(', '),
+                                          //     // maxLines: 1,
+                                          //     maxFontSize: 12,
+                                          //     style: const TextStyle(
+                                          //         fontSize: 10,
+                                          //         fontWeight: FontWeight.bold)),
                                           Text(
                                             '${DateFormat('dd MMM yyyy').format(list[index].date)} Time: ${list[index].slotBooked}',
                                             style: const TextStyle(

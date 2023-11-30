@@ -78,7 +78,6 @@ Future<List<AvailabilityModel>> getAvailableSlotsForDate(String astrologerId, Da
       throw Exception('uid does not exist');
     }
   } catch (e) {
-    print('Error fetching available slots for date: $e');
     // Handle the error appropriately
   }
   availableSlots.sort((a, b) => a.date.compareTo(b.date));
