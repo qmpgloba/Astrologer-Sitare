@@ -1,3 +1,5 @@
+// ignore_for_file: empty_catches
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cron/cron.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -176,7 +178,6 @@ _initFCM() async {
 
 void saveNotificationToFirestore(
     RemoteNotification notification, Map<String, dynamic> data) {
-  print('notification');
   final firestore = FirebaseFirestore.instance;
 
   try {
@@ -194,7 +195,6 @@ void saveNotificationToFirestore(
         .then((_) {})
         .catchError((error) {});
   } catch (e) {
-    print(e.toString());
   }
 }
 
@@ -264,7 +264,6 @@ Future<void> fetchBookedSlotsAndNotify(DateTime selectedDate) async {
   try {
     List<AvailabilityModel> availableSlots =
         await getAvailableSlotsForDate(currentUser!.uid, selectedDate);
-    print(availableSlots.length);
 
     if (availableSlots.isNotEmpty) {
       DateTime now = tz.TZDateTime.now(tz.local);
@@ -279,12 +278,9 @@ Future<void> fetchBookedSlotsAndNotify(DateTime selectedDate) async {
 
           DateTime notificationTime =
               slotTime.subtract(const Duration(minutes: 13));
-          print(notificationTime);
-          print(now.isAfter(notificationTime) && now.isBefore(slotTime));
           if (now.isAfter(notificationTime) && now.isBefore(slotTime)) {
             Duration difference = slotTime.difference(now);
             int differenceInMinutes = difference.inMinutes;
-            print(differenceInMinutes);
             await sendNotification('Appointment Reminder',
                 'Your appointment is in ${differenceInMinutes +1} minutes!');
           }
@@ -292,7 +288,6 @@ Future<void> fetchBookedSlotsAndNotify(DateTime selectedDate) async {
       }
     }
   } catch (e) {
-    print('Error fetching available slots: $e');
   }
 }
 
