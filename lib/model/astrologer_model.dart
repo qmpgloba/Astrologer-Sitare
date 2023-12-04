@@ -66,16 +66,6 @@ class AstrologerModel {
     required this.rpm,
   });
 
-  // AstrologerModel(
-  //     {required this.fullName,
-  //     required this.emailAddress,
-  //     required this.phoneNumber,
-
-  //     required this.officeAddress,
-  //     required this.description,
-  //     required this.years,
-  //     });
-
   toJson() {
     return {
       "uid": uid,
