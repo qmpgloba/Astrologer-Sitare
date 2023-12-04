@@ -72,6 +72,7 @@ class MyApp extends StatelessWidget {
             color: whiteColor,
           ),
         ),
+        buttonTheme: const ButtonThemeData(buttonColor: blackColor),
       ),
       home: FutureBuilder(
         future: fetchBookedSlotsAndNotify(DateTime.now()),
@@ -100,38 +101,39 @@ _initFCM() async {
           await getAstroDetailsByUid(currentUser!.uid);
 
       AstrologerModel astrologer = AstrologerModel(
-          uid: currentUser!.uid,
-          fullName: userData!['name'],
-          emailAddress: userData['email'],
-          phoneNumber: userData['phone number'],
-          profilePic: userData['profile image'],
-          officeAddress: userData['office address'],
-          description: userData['personal description'],
-          experienceYears: userData['experience(in years)'],
-          contributeHours: userData['hours of contribution'],
-          heardAboutSitare: userData['Where did you hear about sitare'],
-          gender: userData['gender'],
-          martialStatus: userData['martial status'],
-          dateOfBirth: userData['date of birth'],
-          languages: userData['languages'],
-          skills: userData['skills'],
-          workingOnlinePLatform:
-              userData['working on any other online platform'],
-          instagramLink: userData['instagram profile link'],
-          linkedInLink: userData['linkedin profile link'],
-          websiteLink: userData['website profile link'],
-          facebookLink: userData['facebook profile link'],
-          youtubeLink: userData['youtube profile link'],
-          business: userData['main source of business'],
-          anyoneReferSitare: userData['did anyone refer sitare'],
-          onBorad: userData['onboard you'],
-          qualification: userData['highest qualification'],
-          earningExpectation: userData['minimum earning expectation'],
-          learnAboutAstrology: userData['form where did you learn astrology'],
-          foreignCountries: userData['Number of foreign countries'],
-          biggestChallenge: userData['biggest challenge'],
-          currentWorkingStatus: userData['current working status'],
-          fcmToken: fcmKeyToken!);
+        uid: currentUser!.uid,
+        fullName: userData!['name'],
+        emailAddress: userData['email'],
+        phoneNumber: userData['phone number'],
+        profilePic: userData['profile image'],
+        officeAddress: userData['office address'],
+        description: userData['personal description'],
+        experienceYears: userData['experience(in years)'],
+        contributeHours: userData['hours of contribution'],
+        heardAboutSitare: userData['Where did you hear about sitare'],
+        gender: userData['gender'],
+        martialStatus: userData['martial status'],
+        dateOfBirth: userData['date of birth'],
+        languages: userData['languages'],
+        skills: userData['skills'],
+        workingOnlinePLatform: userData['working on any other online platform'],
+        instagramLink: userData['instagram profile link'],
+        linkedInLink: userData['linkedin profile link'],
+        websiteLink: userData['website profile link'],
+        facebookLink: userData['facebook profile link'],
+        youtubeLink: userData['youtube profile link'],
+        business: userData['main source of business'],
+        anyoneReferSitare: userData['did anyone refer sitare'],
+        onBorad: userData['onboard you'],
+        qualification: userData['highest qualification'],
+        earningExpectation: userData['minimum earning expectation'],
+        learnAboutAstrology: userData['form where did you learn astrology'],
+        foreignCountries: userData['Number of foreign countries'],
+        biggestChallenge: userData['biggest challenge'],
+        currentWorkingStatus: userData['current working status'],
+        fcmToken: fcmKeyToken!,
+        rpm: userData['rpm'],
+      );
       await updateAstrologer(astrologer, currentUser!.uid);
     }
   }
@@ -165,11 +167,14 @@ _initFCM() async {
         notification.title,
         notification.body,
         NotificationDetails(
-          android: AndroidNotificationDetails(channel.id, channel.name,
-              channelDescription: channel.description,
-              color: Colors.white,
-              playSound: true,
-              icon: "@mipmap/ic_launcher"),
+          android: AndroidNotificationDetails(
+            channel.id,
+            channel.name,
+            channelDescription: channel.description,
+            color: Colors.white,
+            playSound: true,
+            icon: "@mipmap/ic_launcher",
+          ),
         ),
       );
     }
@@ -194,8 +199,7 @@ void saveNotificationToFirestore(
         .add(notificationData)
         .then((_) {})
         .catchError((error) {});
-  } catch (e) {
-  }
+  } catch (e) {}
 }
 
 // Future<void> fetchBookedSlotsAndNotify(DateTime selectedDate) async {
@@ -281,23 +285,27 @@ Future<void> fetchBookedSlotsAndNotify(DateTime selectedDate) async {
           if (now.isAfter(notificationTime) && now.isBefore(slotTime)) {
             Duration difference = slotTime.difference(now);
             int differenceInMinutes = difference.inMinutes;
-            await sendNotification('Appointment Reminder',
-                'Your appointment is in ${differenceInMinutes +1} minutes!');
+            await sendNotification(
+              'Appointment Reminder',
+              'Your appointment is in ${differenceInMinutes + 1} minutes!',
+            );
           }
         }
       }
     }
-  } catch (e) {
-  }
+  } catch (e) {}
 }
 
 Future<void> sendNotification(String title, String body) async {
   AndroidNotificationDetails androidPlatformChannelSpecifics =
-      AndroidNotificationDetails(channel.id, channel.name,
-          channelDescription: channel.description,
-          color: Colors.white,
-          playSound: true,
-          icon: "@mipmap/ic_launcher");
+      AndroidNotificationDetails(
+    channel.id,
+    channel.name,
+    channelDescription: channel.description,
+    color: Colors.white,
+    playSound: true,
+    icon: "@mipmap/ic_launcher",
+  );
 
   NotificationDetails platformChannelSpecifics =
       NotificationDetails(android: androidPlatformChannelSpecifics);

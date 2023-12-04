@@ -7,6 +7,7 @@ import 'package:sitare_astrologer_partner/screens/home%20screen/widgets/homescre
 import 'package:sitare_astrologer_partner/screens/next%20availability%20screen/next_availability_screen.dart';
 import 'package:sitare_astrologer_partner/screens/notification/notification_screen.dart';
 import 'package:sitare_astrologer_partner/screens/profile%20screen/profile_screen.dart';
+import 'package:sitare_astrologer_partner/screens/rate%20per%20minute/rate_per_minute.dart';
 import 'package:sitare_astrologer_partner/screens/welcome%20screen/welcome_screen.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -54,6 +55,7 @@ class HomeScreen extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.all(size.width / 16),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // const Text('Registered Succesfully'),
               Row(
@@ -120,31 +122,18 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //   children: [
-              //     GestureDetector(
-              //         onTap: () {
-              //           // Navigator.of(context).push(MaterialPageRoute(
-              //           //   builder: (context) => const WebView(),
-              //           // ));
-              //         },
-              //         child: HomeScreenCategoryWidget(
-              //             size: size,
-              //             text: 'Bookings',
-              //             icon: Icons.pending_actions_sharp)),
-              //     GestureDetector(
-              //         onTap: () {
-              //           // Navigator.of(context).push(MaterialPageRoute(
-              //           //   builder: (context) => const NextAvailabilityScreen(),
-              //           // ));
-              //         },
-              //         child: HomeScreenCategoryWidget(
-              //             size: size,
-              //             text: 'Next Availability',
-              //             icon: Icons.calendar_month_outlined))
-              //   ],
-              // ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const RatePerMinuteScreen(),
+                  ));
+                },
+                child: HomeScreenCategoryWidget(
+                  size: size,
+                  text: 'Rate Per Minute',
+                  icon: Icons.currency_rupee,
+                ),
+              ),
             ],
           ),
         ),
