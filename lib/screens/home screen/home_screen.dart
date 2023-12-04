@@ -54,6 +54,7 @@ class HomeScreen extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.all(size.width / 16),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // const Text('Registered Succesfully'),
               Row(
@@ -120,31 +121,18 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //   children: [
-              //     GestureDetector(
-              //         onTap: () {
-              //           // Navigator.of(context).push(MaterialPageRoute(
-              //           //   builder: (context) => const WebView(),
-              //           // ));
-              //         },
-              //         child: HomeScreenCategoryWidget(
-              //             size: size,
-              //             text: 'Bookings',
-              //             icon: Icons.pending_actions_sharp)),
-              //     GestureDetector(
-              //         onTap: () {
-              //           // Navigator.of(context).push(MaterialPageRoute(
-              //           //   builder: (context) => const NextAvailabilityScreen(),
-              //           // ));
-              //         },
-              //         child: HomeScreenCategoryWidget(
-              //             size: size,
-              //             text: 'Next Availability',
-              //             icon: Icons.calendar_month_outlined))
-              //   ],
-              // ),
+              GestureDetector(
+                onTap: () {
+                  // Navigator.of(context).push(MaterialPageRoute(
+                  //   builder: (context) => const WebView(),
+                  // ));
+                },
+                child: HomeScreenCategoryWidget(
+                  size: size,
+                  text: 'Rate Per Minute',
+                  icon: Icons.currency_rupee,
+                ),
+              ),
             ],
           ),
         ),
