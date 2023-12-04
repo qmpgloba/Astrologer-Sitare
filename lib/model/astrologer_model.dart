@@ -30,38 +30,41 @@ class AstrologerModel {
   final String currentWorkingStatus;
   final String fcmToken;
   final String uid;
-  AstrologerModel(
-      {required this.uid,
-      required this.fullName,
-      required this.emailAddress,
-      required this.phoneNumber,
-      required this.profilePic,
-      required this.officeAddress,
-      required this.description,
-      required this.experienceYears,
-      required this.contributeHours,
-      required this.heardAboutSitare,
-      required this.gender,
-      required this.martialStatus,
-      required this.dateOfBirth,
-      required this.languages,
-      required this.skills,
-      required this.workingOnlinePLatform,
-      required this.instagramLink,
-      required this.linkedInLink,
-      required this.websiteLink,
-      required this.facebookLink,
-      required this.youtubeLink,
-      required this.business,
-      required this.anyoneReferSitare,
-      required this.onBorad,
-      required this.qualification,
-      required this.earningExpectation,
-      required this.learnAboutAstrology,
-      required this.foreignCountries,
-      required this.biggestChallenge,
-      required this.currentWorkingStatus,
-      required this.fcmToken});
+  final String rpm;
+  AstrologerModel({
+    required this.uid,
+    required this.fullName,
+    required this.emailAddress,
+    required this.phoneNumber,
+    required this.profilePic,
+    required this.officeAddress,
+    required this.description,
+    required this.experienceYears,
+    required this.contributeHours,
+    required this.heardAboutSitare,
+    required this.gender,
+    required this.martialStatus,
+    required this.dateOfBirth,
+    required this.languages,
+    required this.skills,
+    required this.workingOnlinePLatform,
+    required this.instagramLink,
+    required this.linkedInLink,
+    required this.websiteLink,
+    required this.facebookLink,
+    required this.youtubeLink,
+    required this.business,
+    required this.anyoneReferSitare,
+    required this.onBorad,
+    required this.qualification,
+    required this.earningExpectation,
+    required this.learnAboutAstrology,
+    required this.foreignCountries,
+    required this.biggestChallenge,
+    required this.currentWorkingStatus,
+    required this.fcmToken,
+    required this.rpm,
+  });
 
   // AstrologerModel(
   //     {required this.fullName,
@@ -105,7 +108,8 @@ class AstrologerModel {
       "Number of foreign countries": foreignCountries,
       "biggest challenge": biggestChallenge,
       "current working status": currentWorkingStatus,
-      "fcmToken": fcmToken
+      "fcmToken": fcmToken,
+      "rpm": rpm
     };
   }
 }
