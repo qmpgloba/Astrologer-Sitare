@@ -100,7 +100,7 @@ _initFCM() async {
       Map<String, dynamic>? userData =
           await getAstroDetailsByUid(currentUser!.uid);
 
-      AstrologerModel astrologer = (
+      AstrologerModel astrologer = AstrologerModel(
         uid: currentUser!.uid,
         fullName: userData!['name'],
         emailAddress: userData['email'],
@@ -133,7 +133,7 @@ _initFCM() async {
         currentWorkingStatus: userData['current working status'],
         fcmToken: fcmKeyToken!,
         rpm: userData['rpm'],
-      ) as AstrologerModel;
+      );
       await updateAstrologer(astrologer, currentUser!.uid);
     }
   }

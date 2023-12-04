@@ -1,5 +1,10 @@
+// ignore_for_file: avoid_print
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sitare_astrologer_partner/constants/ui_constants.dart';
+import 'package:sitare_astrologer_partner/widgets/flutter_toast.dart';
 
 class RatePerMinuteScreen extends StatefulWidget {
   const RatePerMinuteScreen({super.key});
@@ -38,7 +43,7 @@ class _RatePerMinuteScreenState extends State<RatePerMinuteScreen> {
                 height: 10,
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () => onTapConfirm(rateController.text),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: blackColor,
                 ),
@@ -54,7 +59,31 @@ class _RatePerMinuteScreenState extends State<RatePerMinuteScreen> {
     );
   }
 
-  onTapConfirm(String rate) {
-    if (0 < int.parse(rate) && int.parse(rate) < 10) {}
+  onTapConfirm(
+    String rate,
+  ) async {
+    var astrologerId = FirebaseAuth.instance.currentUser!.uid;
+    final db = FirebaseFirestore.instance;
+
+    var rpm = double.parse(rate);
+    if (0 < rpm && rpm < 10) {
+      try {
+        QuerySnapshot snapshot = await db
+            .collection('Astrologerdetails')
+            .where('uid', isEqualTo: astrologerId)
+            .get();
+        if (snapshot.docs.isNotEmpty) {
+          DocumentSnapshot documentSnapshot = snapshot.docs.first;
+          await documentSnapshot.reference.update({'rpm': rpm.toString()});
+          print('rpm added');
+        } else {
+          print('Astrologer document does not exist');
+        }
+      } catch (e) {
+        print('Error updating rpm');
+      }
+    } else {
+      showToast('Please enter an amount between 0-10', Colors.red);
+    }
   }
 }
