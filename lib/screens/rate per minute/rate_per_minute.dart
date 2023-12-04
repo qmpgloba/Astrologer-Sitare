@@ -10,6 +10,8 @@ class RatePerMinuteScreen extends StatefulWidget {
 class _RatePerMinuteScreenState extends State<RatePerMinuteScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold();
+    return Scaffold(
+      appBar: AppBar(),
+    );
   }
 }

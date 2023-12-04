@@ -7,6 +7,7 @@ import 'package:sitare_astrologer_partner/screens/home%20screen/widgets/homescre
 import 'package:sitare_astrologer_partner/screens/next%20availability%20screen/next_availability_screen.dart';
 import 'package:sitare_astrologer_partner/screens/notification/notification_screen.dart';
 import 'package:sitare_astrologer_partner/screens/profile%20screen/profile_screen.dart';
+import 'package:sitare_astrologer_partner/screens/rate%20per%20minute/rate_per_minute.dart';
 import 'package:sitare_astrologer_partner/screens/welcome%20screen/welcome_screen.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -123,9 +124,9 @@ class HomeScreen extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  // Navigator.of(context).push(MaterialPageRoute(
-                  //   builder: (context) => const WebView(),
-                  // ));
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const RatePerMinuteScreen(),
+                  ));
                 },
                 child: HomeScreenCategoryWidget(
                   size: size,
