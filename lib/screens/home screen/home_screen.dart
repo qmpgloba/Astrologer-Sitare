@@ -26,25 +26,27 @@ class HomeScreen extends StatelessWidget {
         ),
         centerTitle: true,
         leading: IconButton(
-            onPressed: () async {
-              await FirebaseAuth.instance.signOut().then((value) {
-                Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const WelcomeScreen(),
-                    ),
-                    (route) => false);
-              });
-            },
-            icon: const Icon(Icons.logout)),
+          onPressed: () async {
+            await FirebaseAuth.instance.signOut().then((value) {
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const WelcomeScreen(),
+                  ),
+                  (route) => false);
+            });
+          },
+          icon: const Icon(Icons.logout),
+        ),
         actions: [
           IconButton(
-              onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const ProfileScreen(),
-                ));
-              },
-              icon: const Icon(Icons.person))
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => const ProfileScreen(),
+              ));
+            },
+            icon: const Icon(Icons.person),
+          )
         ],
       ),
       body: SafeArea(
@@ -58,23 +60,29 @@ class HomeScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => NotificationScreen(),
-                        ));
-                      },
-                      child: HomeScreenCategoryWidget(
-                          size: size,
-                          text: 'Notifications',
-                          icon: Icons.notifications)),
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => NotificationScreen(),
+                      ));
+                    },
+                    child: HomeScreenCategoryWidget(
+                      size: size,
+                      text: 'Notifications',
+                      icon: Icons.notifications,
+                    ),
+                  ),
                   GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const ChatList(),
-                        ));
-                      },
-                      child: HomeScreenCategoryWidget(
-                          size: size, text: 'Chats', icon: Icons.chat))
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const ChatList(),
+                      ));
+                    },
+                    child: HomeScreenCategoryWidget(
+                      size: size,
+                      text: 'Chats',
+                      icon: Icons.chat,
+                    ),
+                  )
                 ],
               ),
               const SizedBox(
@@ -84,26 +92,29 @@ class HomeScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const BoookingsScreen(),
-                        ));
-                        
-                      },
-                      child: HomeScreenCategoryWidget(
-                          size: size,
-                          text: 'Bookings',
-                          icon: Icons.list)),
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const BoookingsScreen(),
+                      ));
+                    },
+                    child: HomeScreenCategoryWidget(
+                      size: size,
+                      text: 'Bookings',
+                      icon: Icons.list,
+                    ),
+                  ),
                   GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const NextAvailabilityScreen(),
-                        ));
-                      },
-                      child: HomeScreenCategoryWidget(
-                          size: size,
-                          text: 'Next Availability',
-                          icon: Icons.calendar_month_outlined))
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const NextAvailabilityScreen(),
+                      ));
+                    },
+                    child: HomeScreenCategoryWidget(
+                      size: size,
+                      text: 'Next Availability',
+                      icon: Icons.calendar_month_outlined,
+                    ),
+                  )
                 ],
               ),
               const SizedBox(
