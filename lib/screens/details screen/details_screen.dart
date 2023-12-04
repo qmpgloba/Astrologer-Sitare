@@ -218,7 +218,8 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
                         biggestChallenge:
                             _challengesFacedTextController.text.trim(),
                         currentWorkingStatus: workingStatus!,
-                        fcmToken: fcmKeyToken ?? "ERROR");
+                        fcmToken: fcmKeyToken ?? "ERROR",
+                        rpm: '0.0');
                     await createAstrologer(astrologer);
                     Navigator.of(context).pushAndRemoveUntil(
                         MaterialPageRoute(
