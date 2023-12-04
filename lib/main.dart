@@ -72,6 +72,7 @@ class MyApp extends StatelessWidget {
             color: whiteColor,
           ),
         ),
+        buttonTheme: const ButtonThemeData(buttonColor: blackColor),
       ),
       home: FutureBuilder(
         future: fetchBookedSlotsAndNotify(DateTime.now()),
@@ -165,11 +166,14 @@ _initFCM() async {
         notification.title,
         notification.body,
         NotificationDetails(
-          android: AndroidNotificationDetails(channel.id, channel.name,
-              channelDescription: channel.description,
-              color: Colors.white,
-              playSound: true,
-              icon: "@mipmap/ic_launcher"),
+          android: AndroidNotificationDetails(
+            channel.id,
+            channel.name,
+            channelDescription: channel.description,
+            color: Colors.white,
+            playSound: true,
+            icon: "@mipmap/ic_launcher",
+          ),
         ),
       );
     }
@@ -194,8 +198,7 @@ void saveNotificationToFirestore(
         .add(notificationData)
         .then((_) {})
         .catchError((error) {});
-  } catch (e) {
-  }
+  } catch (e) {}
 }
 
 // Future<void> fetchBookedSlotsAndNotify(DateTime selectedDate) async {
@@ -281,23 +284,27 @@ Future<void> fetchBookedSlotsAndNotify(DateTime selectedDate) async {
           if (now.isAfter(notificationTime) && now.isBefore(slotTime)) {
             Duration difference = slotTime.difference(now);
             int differenceInMinutes = difference.inMinutes;
-            await sendNotification('Appointment Reminder',
-                'Your appointment is in ${differenceInMinutes +1} minutes!');
+            await sendNotification(
+              'Appointment Reminder',
+              'Your appointment is in ${differenceInMinutes + 1} minutes!',
+            );
           }
         }
       }
     }
-  } catch (e) {
-  }
+  } catch (e) {}
 }
 
 Future<void> sendNotification(String title, String body) async {
   AndroidNotificationDetails androidPlatformChannelSpecifics =
-      AndroidNotificationDetails(channel.id, channel.name,
-          channelDescription: channel.description,
-          color: Colors.white,
-          playSound: true,
-          icon: "@mipmap/ic_launcher");
+      AndroidNotificationDetails(
+    channel.id,
+    channel.name,
+    channelDescription: channel.description,
+    color: Colors.white,
+    playSound: true,
+    icon: "@mipmap/ic_launcher",
+  );
 
   NotificationDetails platformChannelSpecifics =
       NotificationDetails(android: androidPlatformChannelSpecifics);
