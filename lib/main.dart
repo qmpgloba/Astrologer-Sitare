@@ -43,12 +43,13 @@ void main() async {
   if (kIsWeb) {
     await Firebase.initializeApp(
       options: const FirebaseOptions(
-          apiKey: "AIzaSyCyY2g27oNebbND84uPRKvx8MwrfZziKC4",
-          authDomain: "sitare-afebd.firebaseapp.com",
-          projectId: "sitare-afebd",
-          storageBucket: "sitare-afebd.appspot.com",
-          messagingSenderId: "1090327514590",
-          appId: "1:1090327514590:web:51ffb157f87d5cc23d214f"),
+        apiKey: "AIzaSyCyY2g27oNebbND84uPRKvx8MwrfZziKC4",
+        authDomain: "sitare-afebd.firebaseapp.com",
+        projectId: "sitare-afebd",
+        storageBucket: "sitare-afebd.appspot.com",
+        messagingSenderId: "1090327514590",
+        appId: "1:1090327514590:web:51ffb157f87d5cc23d214f",
+      ),
     );
   } else {
     await Firebase.initializeApp();
