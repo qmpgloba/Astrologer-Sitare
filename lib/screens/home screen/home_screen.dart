@@ -56,6 +56,7 @@ class HomeScreen extends StatelessWidget {
           padding: EdgeInsets.all(size.width / 16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            
             children: [
               // const Text('Registered Succesfully'),
               Row(
