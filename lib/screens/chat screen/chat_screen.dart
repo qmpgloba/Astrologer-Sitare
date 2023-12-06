@@ -170,16 +170,19 @@ class _ChatScreenState extends State<ChatScreen> {
       alignment: alignment,
       child: Padding(
         padding: const EdgeInsets.all(10),
-        child: Container(
-          decoration: BoxDecoration(
-            color: (data['senderId'] == _firebaseAuth.currentUser!.uid)
-                ? Colors.blue
-                : greyColor,
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(10),
-            child: Text(data['message']),
+        child: ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: size.width*.7),
+          child: Container(
+            decoration: BoxDecoration(
+              color: (data['senderId'] == _firebaseAuth.currentUser!.uid)
+                  ? Colors.blue
+                  : greyColor,
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Text(data['message']),
+            ),
           ),
         ),
       ),
