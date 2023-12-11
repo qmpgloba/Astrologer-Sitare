@@ -134,9 +134,10 @@ class _EditProfileScreenState extends State<EditProfileScreen>
           title: const Text('Edit Profile'),
           bottom: TabBar(
             isScrollable: true,
-            unselectedLabelColor: Colors.grey,
-            labelColor: Colors.black,
-            indicatorColor: Colors.black,
+            unselectedLabelColor: greyColor,
+            
+            labelColor: whiteColor,
+            indicatorColor: whiteColor,
             controller: _tabController,
             tabs: const [
               Tab(
