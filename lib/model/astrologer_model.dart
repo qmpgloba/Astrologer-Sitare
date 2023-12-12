@@ -31,6 +31,8 @@ class AstrologerModel {
   final String fcmToken;
   final String uid;
   final String rpm;
+  final bool isOnline;
+
   AstrologerModel({
     required this.uid,
     required this.fullName,
@@ -64,6 +66,7 @@ class AstrologerModel {
     required this.currentWorkingStatus,
     required this.fcmToken,
     required this.rpm,
+    required this.isOnline,
   });
 
   toJson() {
@@ -99,7 +102,8 @@ class AstrologerModel {
       "biggest challenge": biggestChallenge,
       "current working status": currentWorkingStatus,
       "fcmToken": fcmToken,
-      "rpm": rpm
+      "rpm": rpm,
+      "isOnline": isOnline
     };
   }
 }

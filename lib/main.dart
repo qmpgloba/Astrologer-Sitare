@@ -1,5 +1,7 @@
 // ignore_for_file: empty_catches
 
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cron/cron.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -14,6 +16,7 @@ import 'package:sitare_astrologer_partner/functions/user%20profile/get_user_prof
 import 'package:sitare_astrologer_partner/model/astrologer_model.dart';
 import 'package:sitare_astrologer_partner/model/availability_slots_model.dart';
 import 'package:sitare_astrologer_partner/screens/auth%20wrapper/auth_wrapper.dart';
+import 'package:sitare_astrologer_partner/screens/home%20screen/home_screen.dart';
 import 'package:timezone/data/latest_all.dart' as tzdata;
 import 'package:timezone/timezone.dart' as tz;
 
@@ -83,6 +86,7 @@ class MyApp extends StatelessWidget {
           } else if (snapshot.hasError) {
             return Text('Error: ${snapshot.error}');
           } else {
+            WidgetsBinding.instance.addObserver(AppLifecycleObserver());
             return const AuthWrapper();
           }
         },
@@ -101,8 +105,9 @@ _initFCM() async {
           await getAstroDetailsByUid(currentUser!.uid);
 
       AstrologerModel astrologer = AstrologerModel(
+        isOnline: userData!['isOnline'],
         uid: currentUser!.uid,
-        fullName: userData!['name'],
+        fullName: userData['name'],
         emailAddress: userData['email'],
         phoneNumber: userData['phone number'],
         profilePic: userData['profile image'],
@@ -264,4 +269,71 @@ void scheduleCronJob() {
   cron.schedule(Schedule.parse(cronExpression), () async {
     await fetchBookedSlotsAndNotify(DateTime.now());
   });
+}
+
+class AppLifecycleObserver extends WidgetsBindingObserver {
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused) {
+      print('paused');
+      // App is in the background
+      // Check if the toggle is on, and start the 30-minute timer if true
+      if (userData!['isOnline']) {
+        startTimer();
+      }
+    } else if (state == AppLifecycleState.resumed) {
+      print('resumed');
+      // App is resumed
+      // Cancel the timer if the app is active
+      cancelTimer();
+    }
+  }
+}
+
+void startTimer() {
+  const thirtyMinutes = Duration(minutes: 30);
+  _timer = Timer(thirtyMinutes, () {
+    AstrologerModel astrologer = AstrologerModel(
+      isOnline: false,
+      uid: currentUser!.uid,
+      fullName: userData!['name'],
+      emailAddress: userData!['email'],
+      phoneNumber: userData!['phone number'],
+      profilePic: userData!['profile image'],
+      officeAddress: userData!['office address'],
+      description: userData!['personal description'],
+      experienceYears: userData!['experience(in years)'],
+      contributeHours: userData!['hours of contribution'],
+      heardAboutSitare: userData!['Where did you hear about sitare'],
+      gender: userData!['gender'],
+      martialStatus: userData!['martial status'],
+      dateOfBirth: userData!['date of birth'],
+      languages: userData!['languages'],
+      skills: userData!['skills'],
+      workingOnlinePLatform: userData!['working on any other online platform'],
+      instagramLink: userData!['instagram profile link'],
+      linkedInLink: userData!['linkedin profile link'],
+      websiteLink: userData!['website profile link'],
+      facebookLink: userData!['facebook profile link'],
+      youtubeLink: userData!['youtube profile link'],
+      business: userData!['main source of business'],
+      anyoneReferSitare: userData!['did anyone refer sitare'],
+      onBorad: userData!['onboard you'],
+      qualification: userData!['highest qualification'],
+      earningExpectation: userData!['minimum earning expectation'],
+      learnAboutAstrology: userData!['form where did you learn astrology'],
+      foreignCountries: userData!['Number of foreign countries'],
+      biggestChallenge: userData!['biggest challenge'],
+      currentWorkingStatus: userData!['current working status'],
+      fcmToken: userData!['fcmToken']!,
+      rpm: userData!['rpm'],
+    );
+    updateAstrologer(astrologer, currentUser!.uid);
+    // updateStatus(false); // Set astrologer's status to offline after 30 minutes of inactivity
+  });
+}
+
+Timer? _timer;
+void cancelTimer() {
+  _timer?.cancel(); // Cancel the timer if it's active
 }

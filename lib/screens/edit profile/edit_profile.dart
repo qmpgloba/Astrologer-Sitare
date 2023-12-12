@@ -15,6 +15,7 @@ import 'package:sitare_astrologer_partner/functions/firebase_auth_methods.dart';
 import 'package:sitare_astrologer_partner/functions/user%20profile/get_user_profile.dart';
 import 'package:sitare_astrologer_partner/screens/edit%20profile/widgets/others_tab_widget.dart';
 import 'package:sitare_astrologer_partner/screens/edit%20profile/widgets/skills_tab_widget.dart';
+import 'package:sitare_astrologer_partner/screens/home%20screen/home_screen.dart';
 
 import '../../constants/app_constants.dart';
 import '../../constants/ui_constants.dart';
@@ -779,6 +780,7 @@ class _EditProfileScreenState extends State<EditProfileScreen>
   updateTab1() async {
     if (_formKey.currentState!.validate()) {
       AstrologerModel astrologer = AstrologerModel(
+        isOnline: userData!['isOnline'],
         uid: currentUser!.uid,
         fullName: _nameTextController.text.trim(),
         emailAddress: userData!['email'],
@@ -834,6 +836,7 @@ class _EditProfileScreenState extends State<EditProfileScreen>
         languagesDropdown.isNotEmpty &&
         skillsDropdown.isNotEmpty) {
       AstrologerModel astrologer = AstrologerModel(
+         isOnline: userData!['isOnline'],
         uid: currentUser!.uid,
         fullName: userData!['name'],
         emailAddress: userData!['email'],
@@ -885,6 +888,7 @@ class _EditProfileScreenState extends State<EditProfileScreen>
   updateTab3() async {
     if (_formKey.currentState!.validate()) {
       AstrologerModel astrologer = AstrologerModel(
+         isOnline: userData!['isOnline'],
         uid: currentUser!.uid,
         fullName: userData!['name'],
         emailAddress: userData!['email'],
@@ -935,6 +939,7 @@ class _EditProfileScreenState extends State<EditProfileScreen>
   updateTab4() async {
     if (_formKey.currentState!.validate()) {
       AstrologerModel astrologer = AstrologerModel(
+         isOnline: userData!['isOnline'],
         uid: currentUser!.uid,
         fullName: userData!['name'],
         emailAddress: userData!['email'],

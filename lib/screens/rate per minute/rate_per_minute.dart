@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sitare_astrologer_partner/constants/ui_constants.dart';
 import 'package:sitare_astrologer_partner/screens/home%20screen/home_screen.dart';
-import 'package:sitare_astrologer_partner/widgets/flutter_toast.dart';
+import 'package:sitare_astrologer_partner/screens/widgets/flutter_toast.dart';
 
 class RatePerMinuteScreen extends StatefulWidget {
   const RatePerMinuteScreen({super.key});
@@ -109,7 +109,7 @@ class _RatePerMinuteScreenState extends State<RatePerMinuteScreen> {
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(
-        builder: (context) => const HomeScreen(),
+        builder: (context) =>  HomeScreen(),
       ),
       (route) => false,
     );

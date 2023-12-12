@@ -3,7 +3,7 @@ import 'package:sitare_astrologer_partner/constants/ui_constants.dart';
 import 'package:sitare_astrologer_partner/functions/firebase_auth_methods.dart';
 import 'package:sitare_astrologer_partner/screens/login%20screen/widgets/mobile_number_textfeild_widget.dart';
 import 'package:sitare_astrologer_partner/screens/otp%20screen/otp_screen.dart';
-import 'package:sitare_astrologer_partner/widgets/alertbox.dart';
+import 'package:sitare_astrologer_partner/screens/widgets/alertbox.dart';
 
 // ignore: must_be_immutable
 class LoginScreen extends StatelessWidget {

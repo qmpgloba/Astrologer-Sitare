@@ -12,7 +12,7 @@ import 'package:sitare_astrologer_partner/functions/add_astrologer_function.dart
 import 'package:sitare_astrologer_partner/functions/firebase_auth_methods.dart';
 import 'package:sitare_astrologer_partner/model/astrologer_model.dart';
 import 'package:sitare_astrologer_partner/screens/home%20screen/home_screen.dart';
-import 'package:sitare_astrologer_partner/widgets/alertbox.dart';
+import 'package:sitare_astrologer_partner/screens/widgets/alertbox.dart';
 import 'widgets/textfeild_widget.dart';
 import 'widgets/details_page_one_widget.dart';
 import 'widgets/details_page_three_widget.dart';
@@ -181,6 +181,7 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
                       qualificationValue != null ||
                       workingStatus != null) {
                     AstrologerModel astrologer = AstrologerModel(
+                      isOnline: false,
                         uid: currentUser!.uid,
                         fullName: _nameTextController.text.trim(),
                         emailAddress: _emailTextController.text.trim(),
@@ -223,7 +224,7 @@ class _DetailsEnterScreenState extends State<DetailsEnterScreen> {
                     await createAstrologer(astrologer);
                     Navigator.of(context).pushAndRemoveUntil(
                         MaterialPageRoute(
-                          builder: (context) => const HomeScreen(),
+                          builder: (context) =>  HomeScreen(),
                         ),
                         (route) => false);
                   } else {

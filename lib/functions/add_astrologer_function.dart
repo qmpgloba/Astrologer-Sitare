@@ -47,6 +47,8 @@ Future<void> updateAstrologer(AstrologerModel astrologer, String uid) async {
     if (querySnapshot.docs.isNotEmpty) {
       DocumentSnapshot documentSnapshot = querySnapshot.docs.first;
       await documentSnapshot.reference.update(astrologer.toJson());
+      
+      print('updated');
       // return true;
     } else {
       // return false;
@@ -94,21 +96,19 @@ String? getFileNameFromUrl(String url) {
 // }
 
 Future<void> addAvailableSlotsToFireBase(
-    String uid,
-    AvailabilityModel availableSlots,
-    ) async {
+  String uid,
+  AvailabilityModel availableSlots,
+) async {
   try {
     final querySnapshot = await FirebaseFirestore.instance
         .collection('Astrologerdetails')
         .where('uid', isEqualTo: uid)
         .get();
-    
 
     if (querySnapshot.docs.isNotEmpty) {
       final userDoc = querySnapshot.docs.first;
       final userUid = userDoc.id;
 
-      
       final DateTime dateOnly = DateTime(
         availableSlots.date.year,
         availableSlots.date.month,
@@ -128,7 +128,6 @@ Future<void> addAvailableSlotsToFireBase(
           .get();
 
       if (existingSlots.docs.isNotEmpty) {
-       
         final docId = existingSlots.docs.first.id;
         await FirebaseFirestore.instance
             .collection('Astrologerdetails')
@@ -137,7 +136,6 @@ Future<void> addAvailableSlotsToFireBase(
             .doc(docId)
             .update(availableSlots.toJson());
       } else {
-        
         await FirebaseFirestore.instance
             .collection('Astrologerdetails')
             .doc(userUid)

@@ -7,7 +7,7 @@ import 'package:sitare_astrologer_partner/constants/ui_constants.dart';
 import 'package:sitare_astrologer_partner/functions/firebase_auth_methods.dart';
 import 'package:sitare_astrologer_partner/screens/details%20screen/details_screen.dart';
 import 'package:sitare_astrologer_partner/screens/home%20screen/home_screen.dart';
-import 'package:sitare_astrologer_partner/widgets/alertbox.dart';
+import 'package:sitare_astrologer_partner/screens/widgets/alertbox.dart';
 
 // ignore: must_be_immutable
 class OTPScreen extends StatelessWidget {
@@ -48,7 +48,7 @@ class OTPScreen extends StatelessWidget {
                       // ignore: use_build_context_synchronously
                       Navigator.of(context).pushAndRemoveUntil(
                           MaterialPageRoute(
-                            builder: (context) => const HomeScreen(),
+                            builder: (context) =>  HomeScreen(),
                           ),
                           (route) => false);
                     } else {

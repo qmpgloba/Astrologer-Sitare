@@ -9,7 +9,6 @@ import 'package:sitare_astrologer_partner/screens/home%20screen/home_screen.dart
 import 'package:sitare_astrologer_partner/screens/login%20screen/login_screen.dart';
 import 'package:sitare_astrologer_partner/screens/profile%20screen/widgets/astrologer_profile_widget.dart';
 
-Map<String, dynamic>? userData;
 String? documentID;
 
 class ProfileScreen extends StatelessWidget {
@@ -26,7 +25,7 @@ class ProfileScreen extends StatelessWidget {
               onPressed: () async {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => const HomeScreen(),
+                    builder: (context) =>  HomeScreen(),
                   ),
                 );
               },
@@ -44,7 +43,7 @@ class ProfileScreen extends StatelessWidget {
                         (route) => false);
                   });
                 },
-                icon: const Icon(Icons.more_vert))
+                icon: const Icon(Icons.logout_outlined))
           ],
         ),
         body: FutureBuilder<DocumentSnapshot?>(

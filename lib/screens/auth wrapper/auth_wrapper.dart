@@ -11,7 +11,7 @@ class AuthWrapper extends StatelessWidget {
     // final firebaseUser = context.watch<User?>();
 
     if(currentUser != null){
-      return const HomeScreen();
+      return  HomeScreen();
     }else{
       return   const WelcomeScreen();
     }
