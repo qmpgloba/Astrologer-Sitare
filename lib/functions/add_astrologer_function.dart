@@ -36,6 +36,7 @@ Future<String> addProfileImge(XFile imagePicked) async {
 }
 
 Future<void> updateAstrologer(AstrologerModel astrologer, String uid) async {
+  
   final db = FirebaseFirestore.instance;
 
   try {
@@ -47,8 +48,7 @@ Future<void> updateAstrologer(AstrologerModel astrologer, String uid) async {
     if (querySnapshot.docs.isNotEmpty) {
       DocumentSnapshot documentSnapshot = querySnapshot.docs.first;
       await documentSnapshot.reference.update(astrologer.toJson());
-      
-      print('updated');
+
       // return true;
     } else {
       // return false;

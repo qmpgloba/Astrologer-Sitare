@@ -25,7 +25,7 @@ class ProfileScreen extends StatelessWidget {
               onPressed: () async {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) =>  HomeScreen(),
+                    builder: (context) =>  const HomeScreen(),
                   ),
                 );
               },

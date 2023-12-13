@@ -109,7 +109,7 @@ class _RatePerMinuteScreenState extends State<RatePerMinuteScreen> {
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(
-        builder: (context) =>  HomeScreen(),
+        builder: (context) =>  const HomeScreen(),
       ),
       (route) => false,
     );

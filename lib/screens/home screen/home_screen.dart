@@ -16,7 +16,7 @@ import 'package:sitare_astrologer_partner/screens/rate%20per%20minute/rate_per_m
 Map<String, dynamic>? userData;
 
 class HomeScreen extends StatefulWidget {
-  HomeScreen({super.key});
+  const HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -101,7 +101,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
                   
 
-                  print(userData!['isOnline']);
                 },
               ),
               actions: [
@@ -206,7 +205,7 @@ class _HomeScreenState extends State<HomeScreen> {
             )),
           );
         } else {
-          return Center(
+          return const Center(
             child: Text('Something went wrong!!'),
           );
         }

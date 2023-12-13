@@ -48,7 +48,7 @@ class OTPScreen extends StatelessWidget {
                       // ignore: use_build_context_synchronously
                       Navigator.of(context).pushAndRemoveUntil(
                           MaterialPageRoute(
-                            builder: (context) =>  HomeScreen(),
+                            builder: (context) =>  const HomeScreen(),
                           ),
                           (route) => false);
                     } else {
