@@ -21,7 +21,7 @@ import 'package:timezone/data/latest_all.dart' as tzdata;
 import 'package:timezone/timezone.dart' as tz;
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-    FlutterLocalNotificationsPlugin();
+    FlutterLocalNotificationsPlugin(); 
 
 const AndroidNotificationChannel channel = AndroidNotificationChannel(
     'High Important channel' //id,
