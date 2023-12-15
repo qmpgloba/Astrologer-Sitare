@@ -87,7 +87,7 @@ class _RatePerMinuteScreenState extends State<RatePerMinuteScreen> {
     final db = FirebaseFirestore.instance;
 
     var rpm = double.parse(rate);
-    if (0 < rpm && rpm < 10) {
+    if (0 <= rpm && rpm < 10) {
       try {
         QuerySnapshot snapshot = await db
             .collection('Astrologerdetails')
